@@ -1,0 +1,26 @@
+{
+  "name": "neighborhoods/kojo-worker-decorator-component",
+  "description": "A set of Kojo Worker Decorators that fulfill often repeated code.",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Oleg Kulyk",
+      "email": "olegkulik1985@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "^7.3"
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-master"
+  },
+  "autoload": {
+    "psr-4": {
+      "Neighborhoods\\KojoWorkerDecoratorComponent\\": [
+        "src",
+        "fab"
+      ]
+    }
+  }
+}
