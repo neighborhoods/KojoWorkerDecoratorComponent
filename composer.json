@@ -16,14 +16,20 @@
     "neighborhoods/exception-component": "^1"
   },
   "require-dev": {
-    "roave/security-advisories": "dev-master"
+    "ext-json": "*",
+    "roave/security-advisories": "dev-master",
+    "phpunit/phpunit": "^9.2"
   },
   "autoload": {
     "psr-4": {
       "Neighborhoods\\KojoWorkerDecoratorComponent\\": [
-        "src",
-        "fab"
+        "src"
       ]
+    },
+    "autoload-dev": {
+      "psr-4": {
+        "Neighborhoods\\KojoWorkerDecoratorComponent\\Tests\\": "tests"
+      }
     }
   }
 }
