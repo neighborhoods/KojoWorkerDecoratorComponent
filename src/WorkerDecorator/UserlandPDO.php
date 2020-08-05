@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Neighborhoods\KojoWorkerDecoratorComponent\WorkerDecorator;
 
-use Neighborhoods\Kojo\Api\V1\RDBMS\Connection\Service\AwareTrait;
 use Neighborhoods\KojoWorkerDecoratorComponent\Connection\ConnectionAwareTrait;
+use Neighborhoods\KojoWorkerDecoratorComponent\DelegateServiceGetterTrait;
 use Neighborhoods\KojoWorkerDecoratorComponent\Worker\WorkerAwareTrait;
 
 class UserlandPDO implements \Neighborhoods\KojoWorkerDecoratorComponent\DecoratorInterface
 {
     use WorkerAwareTrait;
-    use AwareTrait;
     use ConnectionAwareTrait;
+    use DelegateServiceGetterTrait;
 
     public function work(): void
     {

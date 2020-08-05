@@ -5,15 +5,13 @@ declare(strict_types=1);
 namespace Neighborhoods\KojoWorkerDecoratorComponent\WorkerDecorator;
 
 use Neighborhoods\ExceptionComponent\TransientException;
-use Neighborhoods\Kojo\Api\V1\Worker\Service\AwareTrait;
+use Neighborhoods\KojoWorkerDecoratorComponent\DelegateServiceGetterTrait;
 use Neighborhoods\KojoWorkerDecoratorComponent\Worker\WorkerAwareTrait;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 class ExceptionHandling implements \Neighborhoods\KojoWorkerDecoratorComponent\DecoratorInterface
 {
-    use AwareTrait;
-    use ContainerAwareTrait;
     use WorkerAwareTrait;
+    use DelegateServiceGetterTrait;
 
     public function work(): void
     {
