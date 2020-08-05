@@ -25,11 +25,11 @@
       "Neighborhoods\\KojoWorkerDecoratorComponent\\": [
         "src"
       ]
-    },
-    "autoload-dev": {
-      "psr-4": {
-        "Neighborhoods\\KojoWorkerDecoratorComponent\\Tests\\": "tests"
-      }
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Neighborhoods\\KojoWorkerDecoratorComponent\\Tests\\": "tests"
     }
   }
 }
