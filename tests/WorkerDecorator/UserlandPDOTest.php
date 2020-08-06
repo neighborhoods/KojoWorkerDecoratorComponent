@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WorkerDecorator;
+namespace Neighborhoods\KojoWorkerDecoratorComponent\Tests\WorkerDecorator;
 
 use Neighborhoods\Kojo\Doctrine\Connection\Decorator;
 use Neighborhoods\Kojo\Doctrine\Connection\Decorator\Repository\AwareTrait;

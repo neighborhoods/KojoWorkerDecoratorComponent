@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Neighborhoods\KojoWorkerDecoratorComponent\WorkerDecorator;
 
 use Neighborhoods\ExceptionComponent\TransientException;
-use Neighborhoods\KojoWorkerDecoratorComponent\DelegateServiceGetterTrait;
+use Neighborhoods\Kojo\Api\V1\Worker\Service\AwareTrait;
 use Neighborhoods\KojoWorkerDecoratorComponent\Worker\WorkerAwareTrait;
 
 class ExceptionHandling implements \Neighborhoods\KojoWorkerDecoratorComponent\DecoratorInterface
 {
     use WorkerAwareTrait;
-    use DelegateServiceGetterTrait;
+    use AwareTrait;
 
     public function work(): void
     {

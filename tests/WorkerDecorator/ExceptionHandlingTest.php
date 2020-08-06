@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WorkerDecorator;
+namespace Neighborhoods\KojoWorkerDecoratorComponent\Tests\WorkerDecorator;
 
 use Neighborhoods\ExceptionComponent\TransientException;
 use Neighborhoods\Kojo\Api\V1\LoggerInterface;
