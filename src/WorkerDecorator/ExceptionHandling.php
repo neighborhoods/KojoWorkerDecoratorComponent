@@ -13,12 +13,21 @@ class ExceptionHandling implements \Neighborhoods\KojoWorkerDecoratorComponent\D
     use WorkerAwareTrait;
     use AwareTrait;
 
+    /**
+     * @var \DateInterval|null
+     */
+    private $interval;
+
     public function work(): void
     {
         try {
             \call_user_func([$this->getWorker(), $this->getWorkerMethod()]);
         } catch (TransientException $transientException) {
-            $this->getApiV1WorkerService()->requestRetry(new \DateTime())->applyRequest();
+            $time = new \DateTime();
+            if ($this->interval) {
+                $time = $time->add($this->interval);
+            }
+            $this->getApiV1WorkerService()->requestRetry($time)->applyRequest();
             $this->logThrowable($transientException);
         } catch (\Throwable $throwable) {
             $this->getApiV1WorkerService()->requestHold()->applyRequest();
@@ -35,5 +44,14 @@ class ExceptionHandling implements \Neighborhoods\KojoWorkerDecoratorComponent\D
             'exception' => $throwable,
         ];
         $this->getApiV1WorkerService()->getLogger()->alert($throwable->getMessage(), $context);
+    }
+
+    public function setRetryIntervalDefinition(string $intervalDefinition): void
+    {
+        try {
+            $this->interval = new \DateInterval($intervalDefinition);
+        } catch (\Throwable $exception) {
+            throw new \InvalidArgumentException('Invalid interval definition provided', 0, $exception);
+        }
     }
 }
