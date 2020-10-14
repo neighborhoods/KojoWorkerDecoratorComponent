@@ -53,6 +53,7 @@ class ExceptionHandlingTest extends \PHPUnit\Framework\TestCase
 
         $workerService = $this->createMock(ServiceInterface::class);
         $decorator->setApiV1WorkerService($workerService);
+        $decorator->setRetryIntervalDefinition('PT1M');
         $workerService->expects($this->once())->method('requestRetry')->willReturnSelf();
         $workerService->expects($this->once())->method('applyRequest')->willReturnSelf();
 

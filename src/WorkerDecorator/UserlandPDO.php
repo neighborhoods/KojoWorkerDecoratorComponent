@@ -6,9 +6,10 @@ namespace Neighborhoods\KojoWorkerDecoratorComponent\WorkerDecorator;
 
 use Neighborhoods\Kojo\Api\V1\RDBMS\Connection\Service\AwareTrait;
 use Neighborhoods\KojoWorkerDecoratorComponent\Connection\ConnectionAwareTrait;
+use Neighborhoods\KojoWorkerDecoratorComponent\DecoratorInterface;
 use Neighborhoods\KojoWorkerDecoratorComponent\Worker\WorkerAwareTrait;
 
-class UserlandPDO implements \Neighborhoods\KojoWorkerDecoratorComponent\DecoratorInterface
+class UserlandPDO implements DecoratorInterface
 {
     use WorkerAwareTrait;
     use ConnectionAwareTrait;
@@ -16,12 +17,7 @@ class UserlandPDO implements \Neighborhoods\KojoWorkerDecoratorComponent\Decorat
 
     public function work(): void
     {
-        $this->updateKojoPDOConnection();
-        \call_user_func([$this->getWorker(), $this->getWorkerMethod()]);
-    }
-
-    private function updateKojoPDOConnection(): void
-    {
         $this->getApiV1RDBMSConnectionService()->usePDO($this->getConnection());
+        \call_user_func([$this->getWorker(), $this->getWorkerMethod()]);
     }
 }

@@ -41,16 +41,17 @@ class CrashedThresholdTest extends \PHPUnit\Framework\TestCase
         $workerService->method('getTimesCrashed')->willReturn(10);
 
         $decorator = new CrashedThreshold();
-        $decorator->setApiV1WorkerService($workerService);
-        $decorator->setWorker(
-            new class {
-                public function work()
-                {
-                    // do something
+        $decorator->setApiV1WorkerService($workerService)
+            ->setWorker(
+                new class {
+                    public function work()
+                    {
+                        // do something
+                    }
                 }
-            }
-        );
-        $decorator->setWorkerMethod('work');
+            )
+            ->setWorkerMethod('work')
+            ->setThreshold(0);
 
         $decorator->work();
     }

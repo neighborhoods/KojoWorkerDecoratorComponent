@@ -15,35 +15,41 @@ trait WorkerAwareTrait
      */
     private $workerMethod;
 
-    /**
-     * @return string
-     */
     public function getWorkerMethod(): string
     {
+        if ($this->workerMethod === null) {
+            throw new \LogicException('Worker Method is not set');
+        }
+
         return $this->workerMethod;
     }
 
-    /**
-     * @param string $workerMethod
-     */
-    public function setWorkerMethod(string $workerMethod): void
+    public function setWorkerMethod(string $workerMethod): self
     {
+        if (isset($this->workerMethod)) {
+            throw new \LogicException('Worker Method is already set');
+        }
         $this->workerMethod = $workerMethod;
+
+        return $this;
     }
 
-    /**
-     * @return object
-     */
     public function getWorker(): object
     {
+        if ($this->worker === null) {
+            throw new \LogicException('Worker is not set');
+        }
+
         return $this->worker;
     }
 
-    /**
-     * @param object $worker
-     */
-    public function setWorker(object $worker): void
+    public function setWorker(object $worker): self
     {
+        if (isset($this->worker)) {
+            throw new \LogicException('Worker is already set');
+        }
         $this->worker = $worker;
+
+        return $this;
     }
 }

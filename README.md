@@ -21,10 +21,16 @@ services:
     class: Neighborhoods\KojoWorkerDecoratorComponent\WorkerDecorator\ExceptionHandling
     public: true
     shared: false
-    decorates: example-worker.with-pdo
+    decorates: Neighborhoods\PeopleService\Worker1\ExampleWorkerInterface
     decoration_priority: 1
     calls:
       - [setWorker, ['@example-worker.with-exceptions.inner']]
       - [setWorkerMethod, ['work']]
       - [setApiV1WorkerService, ['@example-worker.apiV1WorkerService']]
+      - [setRetryIntervalDefinition, ['PT5M']]
 ``` 
+
+Now everywhere where `Neighborhoods\PeopleService\Worker1\ExampleWorkerInterface` is used,
+ `example-worker.with-exceptions` is going to be used instead (having lower `decoration_priority` means it wraps up other decorators).
+
+Usually `ExceptionHandling` decorator should be the outer wrapper among other decorators.

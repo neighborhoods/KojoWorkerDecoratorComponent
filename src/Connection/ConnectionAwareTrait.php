@@ -11,19 +11,22 @@ trait ConnectionAwareTrait
      */
     private $connection;
 
-    /**
-     * @return \PDO
-     */
     public function getConnection(): \PDO
     {
+        if ($this->connection === null) {
+            throw new \LogicException('Connection is not set');
+        }
+
         return $this->connection;
     }
 
-    /**
-     * @param \PDO $connection
-     */
-    public function setConnection(\PDO $connection): void
+    public function setConnection(\PDO $connection): self
     {
+        if (isset($this->connection)) {
+            throw new \LogicException('Connection is already set');
+        }
         $this->connection = $connection;
+
+        return $this;
     }
 }

@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace Neighborhoods\KojoWorkerDecoratorComponent\WorkerDecorator;
 
 use Neighborhoods\Kojo\Api\V1\Worker\Service\AwareTrait;
+use Neighborhoods\KojoWorkerDecoratorComponent\DecoratorInterface;
 use Neighborhoods\KojoWorkerDecoratorComponent\Worker\WorkerAwareTrait;
 
-class CrashedThreshold implements \Neighborhoods\KojoWorkerDecoratorComponent\DecoratorInterface
+class CrashedThreshold implements DecoratorInterface
 {
     use AwareTrait;
     use WorkerAwareTrait;
@@ -15,24 +16,46 @@ class CrashedThreshold implements \Neighborhoods\KojoWorkerDecoratorComponent\De
     /**
      * @var int
      */
-    private $threshold = 0;
+    private $threshold;
 
     public function work(): void
     {
-        if ($this->threshold > 0 && $this->getApiV1WorkerService()->getTimesCrashed() >= $this->threshold) {
+        $threshold = $this->getThreshold();
+        if ($threshold > 0 && $this->getApiV1WorkerService()->getTimesCrashed() >= $threshold) {
             $this->getApiV1WorkerService()->requestHold()->applyRequest();
             $this->getApiV1WorkerService()->getLogger()
-                ->critical(\sprintf('Worker exceeded crash threshold %d', $this->threshold));
-            return;
+                ->critical(\sprintf('Worker exceeded crash threshold %d', $threshold));
+        } else {
+            \call_user_func([$this->getWorker(), $this->getWorkerMethod()]);
         }
-        \call_user_func([$this->getWorker(), $this->getWorkerMethod()]);
     }
 
-    /**
-     * @param int $threshold
-     */
-    public function setThreshold(int $threshold): void
+    public function setThreshold(int $threshold): DecoratorInterface
     {
+        if (isset($this->threshold)) {
+            throw new \LogicException('Threshold is already set');
+        }
         $this->threshold = $threshold;
+
+        return $this;
+    }
+
+    public function unsetThreshold(): DecoratorInterface
+    {
+        if (!isset($this->threshold)) {
+            throw new \LogicException('Threshold is not set');
+        }
+        $this->threshold = null;
+
+        return $this;
+    }
+
+    public function getThreshold(): int
+    {
+        if (!isset($this->threshold)) {
+            throw new \LogicException('Threshold is not set');
+        }
+
+        return $this->threshold;
     }
 }
