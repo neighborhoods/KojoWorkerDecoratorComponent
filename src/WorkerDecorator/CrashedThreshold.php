@@ -26,7 +26,7 @@ class CrashedThreshold implements DecoratorInterface
             $this->getApiV1WorkerService()->getLogger()
                 ->critical(\sprintf('Worker exceeded crash threshold %d', $threshold));
         } else {
-            \call_user_func([$this->getWorker(), $this->getWorkerMethod()]);
+            $this->runWorker();
         }
     }
 

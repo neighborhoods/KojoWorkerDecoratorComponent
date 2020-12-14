@@ -22,7 +22,7 @@ class ExceptionHandling implements DecoratorInterface
     public function work(): void
     {
         try {
-            \call_user_func([$this->getWorker(), $this->getWorkerMethod()]);
+            $this->runWorker();
         } catch (TransientException $transientException) {
             $this->getApiV1WorkerService()->requestRetry((new \DateTime())->add($this->getInterval()))->applyRequest();
             $this->logThrowable($transientException);

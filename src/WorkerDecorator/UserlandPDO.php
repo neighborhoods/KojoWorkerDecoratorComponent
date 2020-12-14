@@ -18,6 +18,6 @@ class UserlandPDO implements DecoratorInterface
     public function work(): void
     {
         $this->getApiV1RDBMSConnectionService()->usePDO($this->getConnection());
-        \call_user_func([$this->getWorker(), $this->getWorkerMethod()]);
+        $this->runWorker();
     }
 }

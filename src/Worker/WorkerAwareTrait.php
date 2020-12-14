@@ -52,4 +52,11 @@ trait WorkerAwareTrait
 
         return $this;
     }
+
+    public function runWorker(): self
+    {
+        \call_user_func([$this->getWorker(), $this->getWorkerMethod()]);
+
+        return $this;
+    }
 }
