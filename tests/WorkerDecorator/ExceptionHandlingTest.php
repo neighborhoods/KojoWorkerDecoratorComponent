@@ -13,7 +13,7 @@ class ExceptionHandlingTest extends \PHPUnit\Framework\TestCase
 {
     public function testWrappedNonTransient(): void
     {
-        $worker = new class() {
+        $worker = new class () {
             public function doSomethingBad(): void
             {
                 throw new \LogicException('oops I did a bad thing');
@@ -39,7 +39,7 @@ class ExceptionHandlingTest extends \PHPUnit\Framework\TestCase
 
     public function testWrappedTransient(): void
     {
-        $worker = new class() {
+        $worker = new class () {
             public function doSomethingBad(): void
             {
                 throw (new class () extends TransientException {

@@ -55,5 +55,4 @@ class CrashedThresholdTest extends \PHPUnit\Framework\TestCase
 
         $decorator->work();
     }
-
 }

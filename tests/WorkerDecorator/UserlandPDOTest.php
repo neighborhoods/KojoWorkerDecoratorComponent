@@ -40,7 +40,7 @@ class UserlandPDOTest extends \PHPUnit\Framework\TestCase
         $newPDO = $this->createMock(\PDO::class);
         $worker = new class (
             function (bool $condition) {
-                $this->assertTrue($condition);
+            $this->assertTrue($condition);
             },
             $newPDO
         ) {
