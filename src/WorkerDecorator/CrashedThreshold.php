@@ -40,16 +40,6 @@ class CrashedThreshold implements DecoratorInterface
         return $this;
     }
 
-    public function unsetThreshold(): DecoratorInterface
-    {
-        if (!isset($this->threshold)) {
-            throw new \LogicException('Threshold is not set');
-        }
-        $this->threshold = null;
-
-        return $this;
-    }
-
     public function getThreshold(): int
     {
         if (!isset($this->threshold)) {

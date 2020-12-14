@@ -55,6 +55,7 @@ trait WorkerAwareTrait
 
     public function runWorker(): self
     {
+        // @phpstan-ignore-next-line
         \call_user_func([$this->getWorker(), $this->getWorkerMethod()]);
 
         return $this;

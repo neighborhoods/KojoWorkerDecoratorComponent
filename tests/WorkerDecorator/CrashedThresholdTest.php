@@ -20,7 +20,7 @@ class CrashedThresholdTest extends \PHPUnit\Framework\TestCase
         $decorator->setApiV1WorkerService($workerService);
         $decorator->setWorker(
             new class {
-                public function work()
+                public function work(): void
                 {
                     // do something
                     throw new \LogicException('Should have not get here.');
@@ -44,7 +44,7 @@ class CrashedThresholdTest extends \PHPUnit\Framework\TestCase
         $decorator->setApiV1WorkerService($workerService)
             ->setWorker(
                 new class {
-                    public function work()
+                    public function work(): void
                     {
                         // do something
                     }
