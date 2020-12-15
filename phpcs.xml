@@ -4,6 +4,7 @@
 
     <file>src</file>
     <file>tests</file>
+    <file>template-tree</file>
 
     <rule ref="PSR12"/>
 </ruleset>
