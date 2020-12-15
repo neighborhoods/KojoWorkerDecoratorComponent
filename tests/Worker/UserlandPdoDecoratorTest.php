@@ -2,16 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Neighborhoods\KojoWorkerDecoratorComponent\Tests\WorkerDecorator;
+namespace Neighborhoods\KojoWorkerDecoratorComponent\Tests\Worker;
 
 use Neighborhoods\Kojo\Doctrine\Connection\Decorator;
 use Neighborhoods\Kojo\Doctrine\Connection\Decorator\Repository\AwareTrait;
 use Neighborhoods\Kojo\Doctrine\Connection\DecoratorArray;
 use Neighborhoods\Kojo\Doctrine\Connection\DecoratorArray\Factory;
 use Neighborhoods\Kojo\PDO\Builder\FactoryInterface;
-use Neighborhoods\KojoWorkerDecoratorComponent\WorkerDecorator\UserlandPDO;
+use Neighborhoods\KojoWorkerDecoratorComponent\Worker\UserlandPdoDecorator;
+use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
 
-class UserlandPDOTest extends \PHPUnit\Framework\TestCase
+class UserlandPdoDecoratorTest extends \PHPUnit\Framework\TestCase
 {
     public function testPDOChanged(): void
     {
@@ -43,7 +44,7 @@ class UserlandPDOTest extends \PHPUnit\Framework\TestCase
             $this->assertTrue($condition);
             },
             $newPDO
-        ) {
+        ) implements WorkerInterface {
             use AwareTrait;
             use \Neighborhoods\Pylon\Data\Property\Defensive\AwareTrait;
 
@@ -62,7 +63,7 @@ class UserlandPDOTest extends \PHPUnit\Framework\TestCase
                 $this->newPdo = $newPdo;
             }
 
-            public function doSomething(): void
+            public function work(): WorkerInterface
             {
                 $reflection = new \ReflectionClass(Decorator::class);
                 $refProp = $reflection->getProperty('_pdo');
@@ -74,14 +75,15 @@ class UserlandPDOTest extends \PHPUnit\Framework\TestCase
 
                 // Asserting that PDO object has been changed
                 ($this->assert)($usedPDO === $this->newPdo);
+
+                return $this;
             }
         };
         $worker->setDoctrineConnectionDecoratorRepository($connectionDecoratorRepo);
 
-        $decorator = new UserlandPDO();
+        $decorator = new UserlandPdoDecorator();
         $decorator->setConnection($newPDO);
         $decorator->setWorker($worker);
-        $decorator->setWorkerMethod('doSomething');
         $decorator->setApiV1RDBMSConnectionService($workerService);
 
         $decorator->work();
