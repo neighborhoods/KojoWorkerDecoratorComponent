@@ -30,12 +30,14 @@
     "phpstan/phpstan": "^0.12.62",
     "phpstan/phpstan-phpunit": "^0.12.17",
     "phpstan/extension-installer": "^1.1",
-    "squizlabs/php_codesniffer": "^3.5"
+    "squizlabs/php_codesniffer": "^3.5",
+    "neighborhoods/buphalo": "^1.1"
   },
   "autoload": {
     "psr-4": {
       "Neighborhoods\\KojoWorkerDecoratorComponent\\": [
-        "src"
+        "src",
+        "fab"
       ]
     }
   },
