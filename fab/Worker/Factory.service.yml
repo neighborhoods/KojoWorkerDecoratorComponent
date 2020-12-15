@@ -1,0 +1,7 @@
+services:
+  Neighborhoods\KojoWorkerDecoratorComponent\Worker\FactoryInterface:
+    class: Neighborhoods\KojoWorkerDecoratorComponent\Worker\Factory
+    public: false
+    shared: true
+    calls:
+      - [setWorker, ['@Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface']]
