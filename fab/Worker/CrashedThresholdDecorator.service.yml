@@ -1,0 +1,5 @@
+services:
+  Neighborhoods\KojoWorkerDecoratorComponent\Worker\CrashedThresholdDecoratorInterface:
+    class: Neighborhoods\KojoWorkerDecoratorComponent\Worker\CrashedThresholdDecorator
+    public: false
+    shared: false

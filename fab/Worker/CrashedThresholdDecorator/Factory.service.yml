@@ -1,0 +1,7 @@
+services:
+  Neighborhoods\KojoWorkerDecoratorComponent\Worker\CrashedThresholdDecorator\FactoryInterface:
+    class: Neighborhoods\KojoWorkerDecoratorComponent\Worker\CrashedThresholdDecorator\Factory
+    public: false
+    shared: true
+    calls:
+      - [setWorkerDecorator, ['@Neighborhoods\KojoWorkerDecoratorComponent\Worker\CrashedThresholdDecoratorInterface']]

@@ -2,23 +2,22 @@
 
 declare(strict_types=1);
 
-namespace Neighborhoods\KojoWorkerDecoratorComponent\WorkerDecorator;
+namespace Neighborhoods\KojoWorkerDecoratorComponent\Worker;
 
-use Neighborhoods\Kojo\Api\V1\Worker\Service\AwareTrait;
-use Neighborhoods\KojoWorkerDecoratorComponent\DecoratorInterface;
-use Neighborhoods\KojoWorkerDecoratorComponent\Worker\WorkerAwareTrait;
+use Neighborhoods\Kojo\Api;
+use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
 
-class CrashedThreshold implements DecoratorInterface
+class CrashedThresholdDecorator implements CrashedThresholdDecoratorInterface
 {
     use AwareTrait;
-    use WorkerAwareTrait;
+    use Api\V1\Worker\Service\AwareTrait;
 
     /**
      * @var int
      */
     private $threshold;
 
-    public function work(): void
+    public function work(): WorkerInterface
     {
         $threshold = $this->getThreshold();
         if ($threshold > 0 && $this->getApiV1WorkerService()->getTimesCrashed() >= $threshold) {
@@ -26,11 +25,12 @@ class CrashedThreshold implements DecoratorInterface
             $this->getApiV1WorkerService()->getLogger()
                 ->critical(\sprintf('Worker exceeded crash threshold %d', $threshold));
         } else {
-            $this->runWorker();
+            $this->getWorker()->work();
         }
+        return $this;
     }
 
-    public function setThreshold(int $threshold): DecoratorInterface
+    public function setThreshold(int $threshold): CrashedThresholdDecoratorInterface
     {
         if (isset($this->threshold)) {
             throw new \LogicException('Threshold is already set');
@@ -40,7 +40,7 @@ class CrashedThreshold implements DecoratorInterface
         return $this;
     }
 
-    public function getThreshold(): int
+    private function getThreshold(): int
     {
         if (!isset($this->threshold)) {
             throw new \LogicException('Threshold is not set');

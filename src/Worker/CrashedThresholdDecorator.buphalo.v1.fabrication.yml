@@ -1,0 +1,11 @@
+actors:
+  <PrimaryActorName>.php:
+    template: KojoWorker/Decorator/PrimaryActorName.php
+  <PrimaryActorName>.service.yml:
+    template: KojoWorker/Decorator/PrimaryActorName.service.yml
+  <PrimaryActorName>Interface.php:
+    template: KojoWorker/Decorator/PrimaryActorNameInterface.php
+  <PrimaryActorName>/Factory.php:
+    template: KojoWorker/Decorator/PrimaryActorName/Factory.php
+  <PrimaryActorName>/Factory.service.yml:
+    template: KojoWorker/Decorator/PrimaryActorName/Factory.service.yml

@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Neighborhoods\KojoWorkerDecoratorComponent\Tests\WorkerDecorator;
+namespace Neighborhoods\KojoWorkerDecoratorComponent\Tests\Worker;
 
 use Neighborhoods\Kojo\Api\V1\Worker\ServiceInterface;
-use Neighborhoods\KojoWorkerDecoratorComponent\WorkerDecorator\CrashedThreshold;
+use Neighborhoods\KojoWorkerDecoratorComponent\Worker\CrashedThresholdDecorator;
+use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
 
-class CrashedThresholdTest extends \PHPUnit\Framework\TestCase
+class CrashedThresholdDecoratorTest extends \PHPUnit\Framework\TestCase
 {
     public function testExceedsCrashes(): void
     {
@@ -16,18 +17,17 @@ class CrashedThresholdTest extends \PHPUnit\Framework\TestCase
         $workerService->expects($this->once())->method('applyRequest')->willReturnSelf();
         $workerService->method('getTimesCrashed')->willReturn(10);
 
-        $decorator = new CrashedThreshold();
+        $decorator = new CrashedThresholdDecorator();
         $decorator->setApiV1WorkerService($workerService);
         $decorator->setWorker(
-            new class {
-                public function work(): void
+            new class implements WorkerInterface {
+                public function work(): WorkerInterface
                 {
                     // do something
                     throw new \LogicException('Should have not get here.');
                 }
             }
         );
-        $decorator->setWorkerMethod('work');
         $decorator->setThreshold(10);
 
         $decorator->work();
@@ -40,17 +40,16 @@ class CrashedThresholdTest extends \PHPUnit\Framework\TestCase
         $workerService->expects($this->never())->method('applyRequest');
         $workerService->method('getTimesCrashed')->willReturn(10);
 
-        $decorator = new CrashedThreshold();
+        $decorator = new CrashedThresholdDecorator();
         $decorator->setApiV1WorkerService($workerService)
             ->setWorker(
-                new class {
-                    public function work(): void
+                new class implements WorkerInterface{
+                    public function work(): WorkerInterface
                     {
-                        // do something
+                        return $this;
                     }
                 }
             )
-            ->setWorkerMethod('work')
             ->setThreshold(0);
 
         $decorator->work();
