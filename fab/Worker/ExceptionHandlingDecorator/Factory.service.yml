@@ -1,0 +1,7 @@
+services:
+  Neighborhoods\KojoWorkerDecoratorComponent\Worker\ExceptionHandlingDecorator\FactoryInterface:
+    class: Neighborhoods\KojoWorkerDecoratorComponent\Worker\ExceptionHandlingDecorator\Factory
+    public: false
+    shared: true
+    calls:
+      - [setWorkerDecorator, ['@Neighborhoods\KojoWorkerDecoratorComponent\Worker\ExceptionHandlingDecoratorInterface']]

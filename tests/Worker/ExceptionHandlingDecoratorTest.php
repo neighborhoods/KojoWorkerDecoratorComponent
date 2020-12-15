@@ -2,27 +2,27 @@
 
 declare(strict_types=1);
 
-namespace Neighborhoods\KojoWorkerDecoratorComponent\Tests\WorkerDecorator;
+namespace Neighborhoods\KojoWorkerDecoratorComponent\Tests\Worker;
 
 use Neighborhoods\ExceptionComponent\TransientException;
 use Neighborhoods\Kojo\Api\V1\LoggerInterface;
 use Neighborhoods\Kojo\Api\V1\Worker\ServiceInterface;
-use Neighborhoods\KojoWorkerDecoratorComponent\WorkerDecorator\ExceptionHandling;
+use Neighborhoods\KojoWorkerDecoratorComponent\Worker\ExceptionHandlingDecorator;
+use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
 
-class ExceptionHandlingTest extends \PHPUnit\Framework\TestCase
+class ExceptionHandlingDecoratorTest extends \PHPUnit\Framework\TestCase
 {
     public function testWrappedNonTransient(): void
     {
-        $worker = new class () {
-            public function doSomethingBad(): void
+        $worker = new class () implements WorkerInterface {
+            public function work(): WorkerInterface
             {
                 throw new \LogicException('oops I did a bad thing');
             }
         };
 
-        $decorator = new ExceptionHandling();
+        $decorator = new ExceptionHandlingDecorator();
         $decorator->setWorker($worker);
-        $decorator->setWorkerMethod('doSomethingBad');
 
         $workerService = $this->createMock(ServiceInterface::class);
         $decorator->setApiV1WorkerService($workerService);
@@ -39,17 +39,16 @@ class ExceptionHandlingTest extends \PHPUnit\Framework\TestCase
 
     public function testWrappedTransient(): void
     {
-        $worker = new class () {
-            public function doSomethingBad(): void
+        $worker = new class () implements WorkerInterface {
+            public function work(): WorkerInterface
             {
                 throw (new class () extends TransientException {
                 })->addMessage('I didn\'t do that bad');
             }
         };
 
-        $decorator = new ExceptionHandling();
+        $decorator = new ExceptionHandlingDecorator();
         $decorator->setWorker($worker);
-        $decorator->setWorkerMethod('doSomethingBad');
 
         $workerService = $this->createMock(ServiceInterface::class);
         $decorator->setApiV1WorkerService($workerService);

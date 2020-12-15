@@ -2,34 +2,35 @@
 
 declare(strict_types=1);
 
-namespace Neighborhoods\KojoWorkerDecoratorComponent\WorkerDecorator;
+namespace Neighborhoods\KojoWorkerDecoratorComponent\Worker;
 
-use Neighborhoods\ExceptionComponent\TransientException;
-use Neighborhoods\Kojo\Api\V1\Worker\Service\AwareTrait;
-use Neighborhoods\KojoWorkerDecoratorComponent\DecoratorInterface;
-use Neighborhoods\KojoWorkerDecoratorComponent\Worker\WorkerAwareTrait;
+use Neighborhoods\ExceptionComponent\TransientExceptionInterface;
+use Neighborhoods\Kojo\Api;
+use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
 
-class ExceptionHandling implements DecoratorInterface
+class ExceptionHandlingDecorator implements ExceptionHandlingDecoratorInterface
 {
-    use WorkerAwareTrait;
     use AwareTrait;
+    use Api\V1\Worker\Service\AwareTrait;
 
     /**
      * @var \DateInterval|null
      */
     private $interval;
 
-    public function work(): void
+    public function work(): WorkerInterface
     {
         try {
-            $this->runWorker();
-        } catch (TransientException $transientException) {
+            $this->getWorker()->work();
+        } catch (TransientExceptionInterface $transientException) {
             $this->getApiV1WorkerService()->requestRetry((new \DateTime())->add($this->getInterval()))->applyRequest();
             $this->logThrowable($transientException);
         } catch (\Throwable $throwable) {
             $this->getApiV1WorkerService()->requestHold()->applyRequest();
             $this->logThrowable($throwable);
         }
+
+        return $this;
     }
 
     private function logThrowable(\Throwable $throwable): void

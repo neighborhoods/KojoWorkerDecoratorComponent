@@ -1,0 +1,5 @@
+services:
+  Neighborhoods\KojoWorkerDecoratorComponent\Worker\ExceptionHandlingDecoratorInterface:
+    class: Neighborhoods\KojoWorkerDecoratorComponent\Worker\ExceptionHandlingDecorator
+    public: false
+    shared: false
