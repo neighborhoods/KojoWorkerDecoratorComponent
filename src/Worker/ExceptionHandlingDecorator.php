@@ -5,13 +5,11 @@ declare(strict_types=1);
 namespace Neighborhoods\KojoWorkerDecoratorComponent\Worker;
 
 use Neighborhoods\ExceptionComponent\TransientExceptionInterface;
-use Neighborhoods\Kojo\Api;
 use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
 
 class ExceptionHandlingDecorator implements ExceptionHandlingDecoratorInterface
 {
-    use AwareTrait;
-    use Api\V1\Worker\Service\AwareTrait;
+    use DecoratorTrait;
 
     /**
      * @var \DateInterval|null
@@ -21,7 +19,7 @@ class ExceptionHandlingDecorator implements ExceptionHandlingDecoratorInterface
     public function work(): WorkerInterface
     {
         try {
-            $this->getWorker()->work();
+            $this->runWorker();
         } catch (TransientExceptionInterface $transientException) {
             $this->getApiV1WorkerService()->requestRetry((new \DateTime())->add($this->getInterval()))->applyRequest();
             $this->logThrowable($transientException);

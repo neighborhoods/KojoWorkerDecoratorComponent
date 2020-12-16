@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Neighborhoods\KojoWorkerDecoratorComponent\Tests\Worker;
 
+use Neighborhoods\Kojo\Api\V1;
 use Neighborhoods\Kojo\Doctrine\Connection\Decorator;
 use Neighborhoods\Kojo\Doctrine\Connection\Decorator\Repository\AwareTrait;
 use Neighborhoods\Kojo\Doctrine\Connection\DecoratorArray;
@@ -85,6 +86,7 @@ class UserlandPdoDecoratorTest extends \PHPUnit\Framework\TestCase
         $decorator->setConnection($newPDO);
         $decorator->setWorker($worker);
         $decorator->setApiV1RDBMSConnectionService($workerService);
+        $decorator->setApiV1WorkerService($this->createMock(V1\Worker\ServiceInterface::class));
 
         $decorator->work();
     }

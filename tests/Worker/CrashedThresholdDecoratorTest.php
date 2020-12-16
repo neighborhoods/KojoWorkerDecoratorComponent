@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Neighborhoods\KojoWorkerDecoratorComponent\Tests\Worker;
 
+use Neighborhoods\Kojo\Api\V1;
 use Neighborhoods\Kojo\Api\V1\Worker\ServiceInterface;
 use Neighborhoods\KojoWorkerDecoratorComponent\Worker\CrashedThresholdDecorator;
 use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
@@ -19,6 +20,7 @@ class CrashedThresholdDecoratorTest extends \PHPUnit\Framework\TestCase
 
         $decorator = new CrashedThresholdDecorator();
         $decorator->setApiV1WorkerService($workerService);
+        $decorator->setApiV1RDBMSConnectionService($this->createMock(V1\RDBMS\Connection\ServiceInterface::class));
         $decorator->setWorker(
             new class implements WorkerInterface {
                 public function work(): WorkerInterface
@@ -41,6 +43,7 @@ class CrashedThresholdDecoratorTest extends \PHPUnit\Framework\TestCase
         $workerService->method('getTimesCrashed')->willReturn(10);
 
         $decorator = new CrashedThresholdDecorator();
+        $decorator->setApiV1RDBMSConnectionService($this->createMock(V1\RDBMS\Connection\ServiceInterface::class));
         $decorator->setApiV1WorkerService($workerService)
             ->setWorker(
                 new class implements WorkerInterface{

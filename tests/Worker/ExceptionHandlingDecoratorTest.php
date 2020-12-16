@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Neighborhoods\KojoWorkerDecoratorComponent\Tests\Worker;
 
 use Neighborhoods\ExceptionComponent\TransientException;
+use Neighborhoods\Kojo\Api\V1;
 use Neighborhoods\Kojo\Api\V1\LoggerInterface;
 use Neighborhoods\Kojo\Api\V1\Worker\ServiceInterface;
 use Neighborhoods\KojoWorkerDecoratorComponent\Worker\ExceptionHandlingDecorator;
@@ -23,6 +24,7 @@ class ExceptionHandlingDecoratorTest extends \PHPUnit\Framework\TestCase
 
         $decorator = new ExceptionHandlingDecorator();
         $decorator->setWorker($worker);
+        $decorator->setApiV1RDBMSConnectionService($this->createMock(V1\RDBMS\Connection\ServiceInterface::class));
 
         $workerService = $this->createMock(ServiceInterface::class);
         $decorator->setApiV1WorkerService($workerService);
@@ -49,6 +51,7 @@ class ExceptionHandlingDecoratorTest extends \PHPUnit\Framework\TestCase
 
         $decorator = new ExceptionHandlingDecorator();
         $decorator->setWorker($worker);
+        $decorator->setApiV1RDBMSConnectionService($this->createMock(V1\RDBMS\Connection\ServiceInterface::class));
 
         $workerService = $this->createMock(ServiceInterface::class);
         $decorator->setApiV1WorkerService($workerService);

@@ -19,9 +19,6 @@ final class Builder implements BuilderInterface
 
     public function build(): WorkerInterface
     {
-        $connectionService = $this->getApiV1RDBMSConnectionService();
-        $workerService = $this->getApiV1WorkerService();
-
         $worker = $this->getWorkerFactory()
             ->create();
 
@@ -29,6 +26,15 @@ final class Builder implements BuilderInterface
             $worker = $decoratorFactory
                 ->create()
                 ->setWorker($worker);
+        }
+
+        // Inject Worker Service
+        if (method_exists($worker, 'setApiV1WorkerService')) {
+            $worker->setApiV1WorkerService($this->getApiV1WorkerService());
+        }
+        // Inject RDBMS Connection Service
+        if (method_exists($worker, 'setApiV1RDBMSConnectionService')) {
+            $worker->setApiV1RDBMSConnectionService($this->getApiV1RDBMSConnectionService());
         }
 
         return $worker;

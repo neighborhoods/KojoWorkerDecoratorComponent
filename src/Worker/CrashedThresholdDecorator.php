@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace Neighborhoods\KojoWorkerDecoratorComponent\Worker;
 
-use Neighborhoods\Kojo\Api;
 use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
 
 class CrashedThresholdDecorator implements CrashedThresholdDecoratorInterface
 {
-    use AwareTrait;
-    use Api\V1\Worker\Service\AwareTrait;
+    use DecoratorTrait;
 
     /**
      * @var int
@@ -25,7 +23,7 @@ class CrashedThresholdDecorator implements CrashedThresholdDecoratorInterface
             $this->getApiV1WorkerService()->getLogger()
                 ->critical(\sprintf('Worker exceeded crash threshold %d', $threshold));
         } else {
-            $this->getWorker()->work();
+            $this->runWorker();
         }
         return $this;
     }
