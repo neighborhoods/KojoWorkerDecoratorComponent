@@ -1,0 +1,7 @@
+services:
+  Neighborhoods\KojoWorkerDecoratorComponent\Worker\StatusLoggingDecorator\FactoryInterface:
+    class: Neighborhoods\KojoWorkerDecoratorComponent\Worker\StatusLoggingDecorator\Factory
+    public: false
+    shared: true
+    calls:
+      - [setWorkerDecorator, ['@Neighborhoods\KojoWorkerDecoratorComponent\Worker\StatusLoggingDecoratorInterface']]
