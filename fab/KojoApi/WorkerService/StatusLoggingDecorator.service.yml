@@ -1,0 +1,5 @@
+services:
+  Neighborhoods\KojoWorkerDecoratorComponent\KojoApi\WorkerService\StatusLoggingDecoratorInterface:
+    class: Neighborhoods\KojoWorkerDecoratorComponent\KojoApi\WorkerService\StatusLoggingDecorator
+    public: false
+    shared: false
