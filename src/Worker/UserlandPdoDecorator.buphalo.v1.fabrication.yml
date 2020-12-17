@@ -13,3 +13,21 @@ actors:
     template: KojoWorkerDecoratorComponent/Decorator/PrimaryActorName/Factory.service.yml
   <PrimaryActorName>/FactoryInterface.php:
     template: KojoWorkerDecoratorComponent/Decorator/PrimaryActorName/FactoryInterface.php
+  <PrimaryActorName>/Factory/AwareTrait.php:
+    template: PrimaryActorName/Factory/AwareTrait.php
+  <PrimaryActorName>/Builder.php:
+    template: KojoWorkerDecoratorComponent/Decorator/PrimaryActorName/Builder.php
+  <PrimaryActorName>/Builder.service.yml:
+    template: KojoWorkerDecoratorComponent/Decorator/PrimaryActorName/Builder.service.yml
+  <PrimaryActorName>/BuilderInterface.php:
+    template: KojoWorkerDecoratorComponent/Decorator/PrimaryActorName/BuilderInterface.php
+  <PrimaryActorName>/Builder/AwareTrait.php:
+    template: PrimaryActorName/Builder/AwareTrait.php
+  <PrimaryActorName>/Builder/Factory.php:
+    template: KojoWorkerDecoratorComponent/Decorator/PrimaryActorName/Builder/Factory.php
+  <PrimaryActorName>/Builder/Factory.service.yml:
+    template: KojoWorkerDecoratorComponent/Decorator/PrimaryActorName/Builder/Factory.service.yml
+  <PrimaryActorName>/Builder/FactoryInterface.php:
+    template: KojoWorkerDecoratorComponent/Decorator/PrimaryActorName/Builder/FactoryInterface.php
+  <PrimaryActorName>/Builder/Factory/AwareTrait.php:
+    template: PrimaryActorName/Builder/Factory/AwareTrait.php
