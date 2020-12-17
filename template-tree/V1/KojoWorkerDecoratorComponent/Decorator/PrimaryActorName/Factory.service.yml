@@ -4,4 +4,4 @@ services:
     public: false
     shared: true
     calls:
-      - [setWorkerDecorator, ['@Neighborhoods\BuphaloTemplateTree\PrimaryActorNameInterface']]
+      - [setPrimaryActorName, ['@Neighborhoods\BuphaloTemplateTree\PrimaryActorNameInterface']]

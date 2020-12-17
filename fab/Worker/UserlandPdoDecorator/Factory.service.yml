@@ -4,4 +4,4 @@ services:
     public: false
     shared: true
     calls:
-      - [setWorkerDecorator, ['@Neighborhoods\KojoWorkerDecoratorComponent\Worker\UserlandPdoDecoratorInterface']]
+      - [setWorkerUserlandPdoDecorator, ['@Neighborhoods\KojoWorkerDecoratorComponent\Worker\UserlandPdoDecoratorInterface']]

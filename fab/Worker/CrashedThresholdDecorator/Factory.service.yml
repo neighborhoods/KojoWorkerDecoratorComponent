@@ -4,4 +4,4 @@ services:
     public: false
     shared: true
     calls:
-      - [setWorkerDecorator, ['@Neighborhoods\KojoWorkerDecoratorComponent\Worker\CrashedThresholdDecoratorInterface']]
+      - [setWorkerCrashedThresholdDecorator, ['@Neighborhoods\KojoWorkerDecoratorComponent\Worker\CrashedThresholdDecoratorInterface']]
