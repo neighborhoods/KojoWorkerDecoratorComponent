@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Neighborhoods\KojoWorkerDecoratorComponent\Tests\Worker;
 
+use Neighborhoods\Kojo\Api\V1;
 use Neighborhoods\Kojo\Doctrine\Connection\Decorator;
 use Neighborhoods\Kojo\Doctrine\Connection\Decorator\Repository\AwareTrait;
 use Neighborhoods\Kojo\Doctrine\Connection\DecoratorArray;
@@ -46,6 +47,8 @@ class UserlandPdoDecoratorTest extends \PHPUnit\Framework\TestCase
             $newPDO
         ) implements WorkerInterface {
             use AwareTrait;
+            use V1\Worker\Service\AwareTrait;
+            use V1\RDBMS\Connection\Service\AwareTrait;
             use \Neighborhoods\Pylon\Data\Property\Defensive\AwareTrait;
 
             /**

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Neighborhoods\KojoWorkerDecoratorComponent\Tests\Worker;
 
-use Neighborhoods\Kojo\Api\V1\Worker\ServiceInterface;
+use Neighborhoods\Kojo\Api\V1;
 use Neighborhoods\KojoWorkerDecoratorComponent\Worker\CrashedThresholdDecorator;
 use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
 
@@ -12,7 +12,7 @@ class CrashedThresholdDecoratorTest extends \PHPUnit\Framework\TestCase
 {
     public function testExceedsCrashes(): void
     {
-        $workerService = $this->createMock(ServiceInterface::class);
+        $workerService = $this->createMock(V1\Worker\ServiceInterface::class);
         $workerService->expects($this->once())->method('requestHold')->willReturnSelf();
         $workerService->expects($this->once())->method('applyRequest')->willReturnSelf();
         $workerService->method('getTimesCrashed')->willReturn(10);
@@ -21,6 +21,9 @@ class CrashedThresholdDecoratorTest extends \PHPUnit\Framework\TestCase
         $decorator->setApiV1WorkerService($workerService);
         $decorator->setWorker(
             new class implements WorkerInterface {
+                use V1\Worker\Service\AwareTrait;
+                use V1\RDBMS\Connection\Service\AwareTrait;
+
                 public function work(): WorkerInterface
                 {
                     // do something
@@ -35,7 +38,7 @@ class CrashedThresholdDecoratorTest extends \PHPUnit\Framework\TestCase
 
     public function testZeroLimit(): void
     {
-        $workerService = $this->createMock(ServiceInterface::class);
+        $workerService = $this->createMock(V1\Worker\ServiceInterface::class);
         $workerService->expects($this->never())->method('requestHold');
         $workerService->expects($this->never())->method('applyRequest');
         $workerService->method('getTimesCrashed')->willReturn(10);
@@ -44,6 +47,9 @@ class CrashedThresholdDecoratorTest extends \PHPUnit\Framework\TestCase
         $decorator->setApiV1WorkerService($workerService)
             ->setWorker(
                 new class implements WorkerInterface{
+                    use V1\Worker\Service\AwareTrait;
+                    use V1\RDBMS\Connection\Service\AwareTrait;
+
                     public function work(): WorkerInterface
                     {
                         return $this;

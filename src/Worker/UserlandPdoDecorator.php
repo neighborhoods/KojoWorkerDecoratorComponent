@@ -10,15 +10,14 @@ use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
 
 class UserlandPdoDecorator implements UserlandPdoDecoratorInterface
 {
-    use AwareTrait;
+    use DecoratorTrait;
     use ConnectionAwareTrait;
-    use V1\RDBMS\Connection\Service\AwareTrait;
 
     public function work(): WorkerInterface
     {
         $this->getApiV1RDBMSConnectionService()->usePDO($this->getConnection());
 
-        $this->getWorker()->work();
+        $this->runWorker();
 
         return $this;
     }
