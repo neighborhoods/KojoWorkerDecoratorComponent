@@ -6,7 +6,6 @@ namespace Neighborhoods\KojoWorkerDecoratorComponent\Worker;
 
 use LogicException;
 use Neighborhoods\Kojo\Api;
-use Neighborhoods\KojoWorkerDecoratorComponent\Worker\Decorator\FactoryInterface as DecoratorFactoryInterface;
 use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
 
 final class Builder implements BuilderInterface
@@ -15,7 +14,7 @@ final class Builder implements BuilderInterface
     use Api\V1\RDBMS\Connection\Service\AwareTrait;
     use Factory\AwareTrait;
 
-    protected /*array*/ $decoratorFactories = [];
+    protected /*array*/ $decoratorBuilderFactories = [];
 
     public function build(): WorkerInterface
     {
@@ -25,22 +24,28 @@ final class Builder implements BuilderInterface
         $worker = $this->getWorkerFactory()
             ->create();
 
-        foreach ($this->decoratorFactories as $decoratorFactory) {
-            $worker = $decoratorFactory
+        $worker->setApiV1RDBMSConnectionService($connectionService);
+        $worker->setApiV1WorkerService($workerService);
+
+        foreach ($this->decoratorBuilderFactories as $decoratorBuilderFactory) {
+            $worker = $decoratorBuilderFactory
                 ->create()
-                ->setWorker($worker);
+                ->setWorker($worker)
+                ->setApiV1RDBMSConnectionService($connectionService)
+                ->setApiV1WorkerService($workerService)
+                ->build();
         }
 
         return $worker;
     }
 
-    public function addFactory(DecoratorFactoryInterface $decoratorFactory): BuilderInterface
+    public function addDecoratorBuilderFactory(Decorator\Builder\FactoryInterface $decoratorBuilderFactory): BuilderInterface
     {
-        $factoryKey = str_replace('\\', '', get_class($decoratorFactory));
-        if (isset($this->decoratorFactories[$factoryKey])) {
+        $factoryKey = str_replace('\\', '', get_class($decoratorBuilderFactory));
+        if (isset($this->decoratorBuilderFactories[$factoryKey])) {
             throw new LogicException(sprintf('Factory with key, "%s", is already set.', $factoryKey));
         }
-        $this->decoratorFactories[$factoryKey] = $decoratorFactory;
+        $this->decoratorBuilderFactories[$factoryKey] = $decoratorBuilderFactory;
 
         return $this;
     }
