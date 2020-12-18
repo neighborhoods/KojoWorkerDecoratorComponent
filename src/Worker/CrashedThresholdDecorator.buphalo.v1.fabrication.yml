@@ -18,7 +18,7 @@ actors:
   <PrimaryActorName>/Builder.php:
     template: KojoWorkerDecoratorComponent/Decorator/PrimaryActorName/Builder.php
   <PrimaryActorName>/Builder.service.yml:
-    template: KojoWorkerDecoratorComponent/Decorator/PrimaryActorName/Builder.service.yml
+    template: PrimaryActorName/Builder.service.yml
   <PrimaryActorName>/BuilderInterface.php:
     template: KojoWorkerDecoratorComponent/Decorator/PrimaryActorName/BuilderInterface.php
   <PrimaryActorName>/Builder/AwareTrait.php:
