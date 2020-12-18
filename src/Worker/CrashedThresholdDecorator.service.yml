@@ -3,3 +3,5 @@ services:
     class: Neighborhoods\KojoWorkerDecoratorComponent\Worker\CrashedThresholdDecorator
     public: false
     shared: false
+    calls:
+      - [setThreshold, ['%Neighborhoods\KojoWorkerDecoratorComponent\Worker\CrashedThresholdDecoratorInterface.threshold%']]
