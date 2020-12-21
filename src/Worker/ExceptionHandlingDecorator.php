@@ -7,6 +7,8 @@ namespace Neighborhoods\KojoWorkerDecoratorComponent\Worker;
 use Neighborhoods\ExceptionComponent\TransientExceptionInterface;
 use Neighborhoods\Kojo\Api;
 use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
+use Neighborhoods\ThrowableDiagnosticComponent\DiagnosedInterface;
+use Throwable;
 
 class ExceptionHandlingDecorator implements ExceptionHandlingDecoratorInterface
 {
@@ -22,17 +24,32 @@ class ExceptionHandlingDecorator implements ExceptionHandlingDecoratorInterface
         try {
             $this->runWorker();
         } catch (TransientExceptionInterface $transientException) {
-            $this->getApiV1WorkerService()->requestRetry((new \DateTime())->add($this->getInterval()))->applyRequest();
+            $this->getApiV1WorkerService()
+                ->requestRetry((new \DateTime())->add($this->getInterval()))
+                ->applyRequest();
             $this->logThrowable($transientException);
-        } catch (\Throwable $throwable) {
-            $this->getApiV1WorkerService()->requestHold()->applyRequest();
+        } catch (DiagnosedInterface $diagnosed) {
+            if ($diagnosed->isTransient()) {
+                $this->getApiV1WorkerService()
+                    ->requestRetry((new \DateTime())->add($this->getInterval()))
+                    ->applyRequest();
+            } else {
+                $this->getApiV1WorkerService()
+                    ->requestHold()
+                    ->applyRequest();
+            }
+            $this->logThrowable($diagnosed);
+        } catch (Throwable $throwable) {
+            $this->getApiV1WorkerService()
+                ->requestHold()
+                ->applyRequest();
             $this->logThrowable($throwable);
         }
 
         return $this;
     }
 
-    private function logThrowable(\Throwable $throwable): void
+    private function logThrowable(Throwable $throwable): void
     {
         $context = [
             'job_id' => $this->getApiV1WorkerService()->getJobId(),
@@ -50,7 +67,7 @@ class ExceptionHandlingDecorator implements ExceptionHandlingDecoratorInterface
         }
         try {
             $this->interval = new \DateInterval($intervalDefinition);
-        } catch (\Throwable $exception) {
+        } catch (Throwable $exception) {
             throw new \InvalidArgumentException('Invalid interval definition provided', 0, $exception);
         }
 
