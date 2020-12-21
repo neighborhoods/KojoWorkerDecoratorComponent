@@ -1,4 +1,9 @@
+parameters:
+#  Neighborhoods\KojoWorkerDecoratorComponent\Worker\CrashedThresholdDecoratorInterface.threshold: 5
+#  Neighborhoods\KojoWorkerDecoratorComponent\Worker\ExceptionHandlingDecoratorInterface.retryIntervalDefinition: 'PT1M'
 services:
+#  Neighborhoods\KojoWorkerDecoratorComponent\Worker\UserlandPdoDecorator\BuilderInterface.prefabDoctrineDbalConnectionDecoratorRepository:
+#    alias: Neighborhoods\YourService\Prefab5\Doctrine\DBAL\Connection\Decorator\RepositoryInterface
   Neighborhoods\BuphaloTemplateTree\PrimaryActorName\BuilderInterface:
     class: Neighborhoods\BuphaloTemplateTree\PrimaryActorName\Builder
     public: false
@@ -7,3 +12,5 @@ services:
       - [setWorkerFactory, ['@Neighborhoods\BuphaloTemplateTree\PrimaryActorName\FactoryInterface']]
       # Add predefined decorator(s) as shown below
       #- [addDecoratorBuilderFactory, ['@Neighborhoods\KojoWorkerDecoratorComponent\Worker\<__TODO__>Decorator\Builder\FactoryInterface']]
+      #- [addDecoratorBuilderFactory, ['@Neighborhoods\KojoWorkerDecoratorComponent\Worker\UserlandPdoDecorator\Builder\FactoryInterface']]
+      #- [addDecoratorBuilderFactory, ['@Neighborhoods\KojoWorkerDecoratorComponent\Worker\ExceptionHandlingDecorator\Builder\FactoryInterface']]
