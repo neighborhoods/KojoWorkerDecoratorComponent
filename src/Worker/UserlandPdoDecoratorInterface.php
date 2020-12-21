@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Neighborhoods\KojoWorkerDecoratorComponent\Worker;
 
-use Neighborhoods\KojoWorkerDecoratorComponent\Worker\DecoratorInterface;
+use PDO;
 
 interface UserlandPdoDecoratorInterface extends DecoratorInterface
 {
+    public function setConnection(PDO $connection);
 }

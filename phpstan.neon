@@ -10,3 +10,5 @@ parameters:
 	ignoreErrors:
 	    - '#Property Neighborhoods\\KojoWorkerDecoratorComponent.* has no typehint specified.#'
 	    - '#Method Neighborhoods\\KojoWorkerDecoratorComponent.*Interface::set.*\(\) has no return typehint specified.#'
+	    - message: '#Method Neighborhoods\\KojoWorkerDecoratorComponent\\Worker\\UserlandPdoDecorator\\Builder::[gs]etPrefabDoctrineDbalConnectionDecoratorRepository\(\) has .* typehint specified.#'
+	      path: src/Worker/UserlandPdoDecorator/Builder.php
