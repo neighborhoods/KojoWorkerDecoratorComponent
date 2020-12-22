@@ -8,7 +8,7 @@ use LogicException;
 use Neighborhoods\Kojo\Api;
 use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
 
-final class Builder implements BuilderInterface
+class Builder implements BuilderInterface
 {
     use Api\V1\Worker\Service\AwareTrait;
     use Api\V1\RDBMS\Connection\Service\AwareTrait;
