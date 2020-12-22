@@ -39,8 +39,9 @@ final class Builder implements BuilderInterface
         return $worker;
     }
 
-    public function addDecoratorBuilderFactory(Decorator\Builder\FactoryInterface $decoratorBuilderFactory): BuilderInterface
-    {
+    public function addDecoratorBuilderFactory(
+        Decorator\Builder\FactoryInterface $decoratorBuilderFactory
+    ): BuilderInterface {
         $factoryKey = str_replace('\\', '', get_class($decoratorBuilderFactory));
         if (isset($this->decoratorBuilderFactories[$factoryKey])) {
             throw new LogicException(sprintf('Factory with key, "%s", is already set.', $factoryKey));

@@ -15,5 +15,7 @@ interface BuilderInterface
     public function setApiV1RDBMSConnectionService(V1\RDBMS\Connection\ServiceInterface $apiV1RDBMSConnectionService);
 
     public function setWorkerFactory(FactoryInterface $workerFactory);
-    public function addDecoratorBuilderFactory(Decorator\Builder\FactoryInterface $decoratorBuilderFactory): BuilderInterface;
+    public function addDecoratorBuilderFactory(
+        Decorator\Builder\FactoryInterface $decoratorBuilderFactory
+    ): BuilderInterface;
 }

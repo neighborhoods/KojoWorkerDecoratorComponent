@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Neighborhoods\KojoWorkerDecoratorComponent\Tests\Worker;
 
+use Closure;
 use Neighborhoods\Kojo\Api\V1;
 use Neighborhoods\Kojo\Doctrine\Connection\Decorator;
 use Neighborhoods\Kojo\Doctrine\Connection\Decorator\Repository\AwareTrait;
@@ -12,8 +13,11 @@ use Neighborhoods\Kojo\Doctrine\Connection\DecoratorArray\Factory;
 use Neighborhoods\Kojo\PDO\Builder\FactoryInterface;
 use Neighborhoods\KojoWorkerDecoratorComponent\Worker\UserlandPdoDecorator;
 use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
+use PDO;
+use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
-class UserlandPdoDecoratorTest extends \PHPUnit\Framework\TestCase
+class UserlandPdoDecoratorTest extends TestCase
 {
     public function testPDOChanged(): void
     {
@@ -29,17 +33,17 @@ class UserlandPdoDecoratorTest extends \PHPUnit\Framework\TestCase
         $mockedDecoratorArray['job'] = $connectionDecorator;
         $arrayFactory->setDoctrineConnectionDecoratorArray($mockedDecoratorArray);
         $connectionDecoratorRepo->setDoctrineConnectionDecoratorArrayFactory($arrayFactory);
-        $initialPDO = $this->createMock(\PDO::class);
+        $initialPDO = $this->createMock(PDO::class);
         $connectionDecorator->setPDO($initialPDO);
 
-        $workerService = new \Neighborhoods\Kojo\Api\V1\RDBMS\Connection\Service();
+        $workerService = new V1\RDBMS\Connection\Service();
         $workerService->setDoctrineConnectionDecoratorRepository($connectionDecoratorRepo);
         $workerService->setDoctrineConnectionDecoratorFactory(
             (new Decorator\Factory())->setDoctrineConnectionDecorator(new Decorator())
         );
         $workerService->usePDO($initialPDO);
 
-        $newPDO = $this->createMock(\PDO::class);
+        $newPDO = $this->createMock(PDO::class);
         $worker = new class (
             function (bool $condition) {
             $this->assertTrue($condition);
@@ -52,15 +56,15 @@ class UserlandPdoDecoratorTest extends \PHPUnit\Framework\TestCase
             use \Neighborhoods\Pylon\Data\Property\Defensive\AwareTrait;
 
             /**
-             * @var \Closure
+             * @var Closure
              */
             private $assert;
             /**
-             * @var \PDO
+             * @var PDO
              */
             private $newPdo;
 
-            public function __construct(\Closure $assert, \PDO $newPdo)
+            public function __construct(Closure $assert, PDO $newPdo)
             {
                 $this->assert = $assert;
                 $this->newPdo = $newPdo;
@@ -68,7 +72,7 @@ class UserlandPdoDecoratorTest extends \PHPUnit\Framework\TestCase
 
             public function work(): WorkerInterface
             {
-                $reflection = new \ReflectionClass(Decorator::class);
+                $reflection = new ReflectionClass(Decorator::class);
                 $refProp = $reflection->getProperty('_pdo');
                 $refProp->setAccessible(true);
                 $usedPDO = $refProp->getValue(

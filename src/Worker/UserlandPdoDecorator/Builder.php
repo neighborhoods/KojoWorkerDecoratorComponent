@@ -53,8 +53,9 @@ class Builder implements BuilderInterface
         return $this->connectionId;
     }
 
-    public function setPrefabDoctrineDbalConnectionDecoratorRepository($prefabDoctrineDbalConnectionDecoratorRepository): BuilderInterface
-    {
+    public function setPrefabDoctrineDbalConnectionDecoratorRepository(
+        $prefabDoctrineDbalConnectionDecoratorRepository
+    ): BuilderInterface {
         if (isset($this->prefabDoctrineDbalConnectionDecoratorRepository)) {
             throw new LogicException('Prefab Doctrine Dbal Connection Decorator Repository is already set.');
         }

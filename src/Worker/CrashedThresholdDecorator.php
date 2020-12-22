@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace Neighborhoods\KojoWorkerDecoratorComponent\Worker;
 
+use LogicException;
 use Neighborhoods\Kojo\Api;
 use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
+
+use function sprintf;
 
 class CrashedThresholdDecorator implements CrashedThresholdDecoratorInterface
 {
@@ -22,7 +25,7 @@ class CrashedThresholdDecorator implements CrashedThresholdDecoratorInterface
         if ($threshold > 0 && $this->getApiV1WorkerService()->getTimesCrashed() >= $threshold) {
             $this->getApiV1WorkerService()->requestHold()->applyRequest();
             $this->getApiV1WorkerService()->getLogger()
-                ->critical(\sprintf('Worker exceeded crash threshold %d', $threshold));
+                ->critical(sprintf('Worker exceeded crash threshold %d', $threshold));
         } else {
             $this->runWorker();
         }
@@ -32,7 +35,7 @@ class CrashedThresholdDecorator implements CrashedThresholdDecoratorInterface
     public function setThreshold(int $threshold): CrashedThresholdDecoratorInterface
     {
         if (isset($this->threshold)) {
-            throw new \LogicException('Threshold is already set');
+            throw new LogicException('Threshold is already set');
         }
         $this->threshold = $threshold;
 
@@ -42,7 +45,7 @@ class CrashedThresholdDecorator implements CrashedThresholdDecoratorInterface
     private function getThreshold(): int
     {
         if (!isset($this->threshold)) {
-            throw new \LogicException('Threshold is not set');
+            throw new LogicException('Threshold is not set');
         }
 
         return $this->threshold;

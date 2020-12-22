@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace Neighborhoods\KojoWorkerDecoratorComponent\Tests\Worker;
 
+use LogicException;
 use Neighborhoods\ExceptionComponent\TransientException;
 use Neighborhoods\Kojo\Api\V1;
 use Neighborhoods\KojoWorkerDecoratorComponent\Worker\ExceptionHandlingDecorator;
 use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
+use PHPUnit\Framework\TestCase;
 
-class ExceptionHandlingDecoratorTest extends \PHPUnit\Framework\TestCase
+use function json_encode;
+
+class ExceptionHandlingDecoratorTest extends TestCase
 {
     public function testWrappedNonTransient(): void
     {
@@ -19,7 +23,7 @@ class ExceptionHandlingDecoratorTest extends \PHPUnit\Framework\TestCase
 
             public function work(): WorkerInterface
             {
-                throw new \LogicException('oops I did a bad thing');
+                throw new LogicException('oops I did a bad thing');
             }
         };
 
@@ -28,11 +32,11 @@ class ExceptionHandlingDecoratorTest extends \PHPUnit\Framework\TestCase
 
         $workerService = $this->createMock(V1\Worker\ServiceInterface::class);
         $decorator->setApiV1WorkerService($workerService);
-        $workerService->expects($this->once())->method('requestHold')->willReturnSelf();
-        $workerService->expects($this->once())->method('applyRequest')->willReturnSelf();
+        $workerService->expects(self::once())->method('requestHold')->willReturnSelf();
+        $workerService->expects(self::once())->method('applyRequest')->willReturnSelf();
 
         $logger = $this->createMock(V1\LoggerInterface::class);
-        $logger->expects($this->once())->method('alert')->with('oops I did a bad thing');
+        $logger->expects(self::once())->method('alert')->with('oops I did a bad thing');
 
         $workerService->method('getLogger')->willReturn($logger);
 
@@ -58,11 +62,11 @@ class ExceptionHandlingDecoratorTest extends \PHPUnit\Framework\TestCase
         $workerService = $this->createMock(V1\Worker\ServiceInterface::class);
         $decorator->setApiV1WorkerService($workerService);
         $decorator->setRetryIntervalDefinition('PT1M');
-        $workerService->expects($this->once())->method('requestRetry')->willReturnSelf();
-        $workerService->expects($this->once())->method('applyRequest')->willReturnSelf();
+        $workerService->expects(self::once())->method('requestRetry')->willReturnSelf();
+        $workerService->expects(self::once())->method('applyRequest')->willReturnSelf();
 
         $logger = $this->createMock(V1\LoggerInterface::class);
-        $logger->expects($this->once())->method('alert')->with(\json_encode(['I didn\'t do that bad']));
+        $logger->expects(self::once())->method('alert')->with(json_encode(['I didn\'t do that bad']));
 
         $workerService->method('getLogger')->willReturn($logger);
 
