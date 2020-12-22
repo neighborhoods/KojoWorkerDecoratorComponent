@@ -31,30 +31,30 @@ class Proxy implements ProxyInterface
 
     protected function getContainer(): ContainerInterface
     {
-        $proteanContainerBuilder = new Builder();
-        $proteanContainerBuilder->setCanBuildZendExpressive(false);
-        $proteanContainerBuilder->setContainerName(str_replace('\\', '', Worker::class));
-        /** @neighborhoods-buphalo:annotation-processor Neighborhoods\BuphaloTemplateTree\KojoWorker\PrimaryActorName.work
-        throw new \LogicException('Discoverable directories path filters not updated.');
-         */
-        $proteanContainerBuilder->getDiscoverableDirectories()->addDirectoryPathFilter(/**
+        $containerBuilder = new Builder();
+        $containerBuilder->setCanBuildZendExpressive(false);
+        $containerBuilder->setContainerName(str_replace('\\', '', Worker::class));
+        // Discover KojoWorkerDecoratorComponent service definitions
+        $containerBuilder->getDiscoverableDirectories()->addDirectoryPathFilter(
+            '../vendor/neighborhoods/kojo-worker-decorator-component/fab'
+        );
+        $containerBuilder->getDiscoverableDirectories()->addDirectoryPathFilter(
+            '../vendor/neighborhoods/kojo-worker-decorator-component/src'
+        );
+        $containerBuilder->getDiscoverableDirectories()->addDirectoryPathFilter(/**
+         * @neighborhoods-buphalo:annotation-processor Neighborhoods\BuphaloTemplateTree\KojoWorker\PrimaryActorName\Proxy.getContainer
          *
-         *
-         *
-         * Discoverable directories path filters not updated.
+         * throw new \LogicException('Discoverable directory path filters not updated. ' .
+         *     'Add path to your component, possibly prefab or vendors.');
          */
         );
-        /** @neighborhoods-buphalo:annotation-processor Neighborhoods\BuphaloTemplateTree\KojoWorker\PrimaryActorName.work
-        throw new \LogicException('Discoverable directories path filters not updated.');
-         */
-        $proteanContainerBuilder->getDiscoverableDirectories()->addDirectoryPathFilter('Prefab5');
 
         $rootDirectory = realpath(dirname(__DIR__, 3));
         if (false === $rootDirectory) {
             throw new RuntimeException('Absolute path of the root directory not found.');
         }
-        $proteanContainerBuilder->getFilesystemProperties()->setRootDirectoryPath($rootDirectory);
-        $proteanContainerBuilder->registerServiceAsPublic(Worker\Builder\FactoryInterface::class);
-        return $proteanContainerBuilder->build();
+        $containerBuilder->getFilesystemProperties()->setRootDirectoryPath($rootDirectory);
+        $containerBuilder->registerServiceAsPublic(Worker\Builder\FactoryInterface::class);
+        return $containerBuilder->build();
     }
 }
