@@ -2,6 +2,10 @@
 
 A set of useful decorators for a typical [Kōjō](https://github.com/neighborhoods/kojo) Worker.
 
+##Technical Design Artifacts
+
+[Runtime Schematics](https://drive.google.com/file/d/1lLQck0XMuAYdVEGzQB01sgJUm8WNa1jg)
+
 ## Install
 
 Via Composer
