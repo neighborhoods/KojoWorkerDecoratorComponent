@@ -38,12 +38,22 @@
       "Neighborhoods\\KojoWorkerDecoratorComponent\\": [
         "src",
         "fab"
+      ],
+      "Neighborhoods\\InquiryService\\Prefab5\\": [
+        "../InquiryService/fab/Prefab5"
+      ],
+      "Neighborhoods\\InquiryService\\": [
+        "../InquiryService/fab",
+        "../InquiryService/src"
+      ],
+      "Zend\\ProblemDetails\\": [
+        "../InquiryService/vendor/mezzio/mezzio-problem-details/src/"
       ]
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Neighborhoods\\KojoWorkerDecoratorComponent\\Tests\\": "tests"
+      "Neighborhoods\\KojoWorkerDecoratorComponent\\Tests\\": ["tests", "tests-fab"]
     }
   }
 }
