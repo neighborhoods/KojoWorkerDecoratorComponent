@@ -1,3 +1,5 @@
+parameters:
+  Neighborhoods\KojoWorkerDecoratorComponent\Worker\CrashedThresholdDecoratorInterface.threshold: 5
 services:
   Neighborhoods\KojoWorkerDecoratorComponent\Worker\CrashedThresholdDecoratorInterface:
     class: Neighborhoods\KojoWorkerDecoratorComponent\Worker\CrashedThresholdDecorator

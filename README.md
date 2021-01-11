@@ -40,6 +40,8 @@ class MyWorker implements WorkerInterface
 }
 ```
 
+### Proxy
+
 The Worker will not be used by Kōjō directly. Kōjō will use a Proxy, which will build the Worker with the desired decorators.  
 Kōjō will provide the Proxy with its API services, which are forwarded to the worker.  
 The Proxy might use a Symfony DI container, as shown below, to obtain the builder for the worker and decorators. The decorators and worker can use dependency injection, while the Proxy cannot.
@@ -95,6 +97,8 @@ $containerBuilder->getDiscoverableDirectories()->addDirectoryPathFilter(
 );
 ```
 
+### Decorator stack
+
 Configure the builder using Symfony DI to build a decorator stack tailored to your needs. An example is shown below.
 
 ``` yaml
@@ -115,10 +119,35 @@ services:
     calls:
       - [setWorkerFactory, ['@Acme\MyWorker\FactoryInterface']]
       # Add predefined and custom decorators
-      - [addDecoratorBuilderFactory, ['@Neighborhoods\KojoWorkerDecoratorComponent\Worker\ExceptionHandlingDecorator\Builder\FactoryInterface']]
       - [addDecoratorBuilderFactory, ['@Neighborhoods\KojoWorkerDecoratorComponent\Worker\CrashedThresholdDecorator\Builder\FactoryInterface']]
       - [addDecoratorBuilderFactory, ['@Neighborhoods\KojoWorkerDecoratorComponent\Worker\UserlandPdoDecorator\Builder\FactoryInterface']]
+      - [addDecoratorBuilderFactory, ['@Neighborhoods\KojoWorkerDecoratorComponent\Worker\ExceptionHandlingDecorator\Builder\FactoryInterface']]
 
+```
+
+Configurable decorators should provide default configuration values when possible. Those values are defined using DI parameters.  
+The parameter values can be overridden by redefining them. Make sure that the file containing the value you want to be applied is loaded last, i.e. load the service definitions from you project after service definitions from your dependencies.  
+To avoid mixing builder and decorator definitions, provide them in a separate yaml file. Few examples are shown below.
+
+``` yaml
+# Acme\MyWorker\CrashedThresholdDecorator.service.yml
+# These parameter values override default values for CrashedThresholdDecorator
+parameters:
+  Neighborhoods\KojoWorkerDecoratorComponent\Worker\CrashedThresholdDecoratorInterface.threshold: 10
+```
+``` yaml
+# Acme\MyWorker\ExceptionHandlingDecorator.service.yml
+# These parameter values override default values for ExceptionHandlingDecorator
+parameters:
+  Neighborhoods\KojoWorkerDecoratorComponent\Worker\ExceptionHandlingDecoratorInterface.retryIntervalDefinition: 'PT5M'
+```
+``` yaml
+# Acme\MyWorker\UserlandPdoDecorator.service.yml
+# This service alias is needed by UserlandPdoDecorator
+services:
+  Neighborhoods\KojoWorkerDecoratorComponent\Worker\UserlandPdoDecorator\BuilderInterface.prefabDoctrineDbalConnectionDecoratorRepository:
+    alias: Acme\Prefab5\Doctrine\DBAL\Connection\Decorator\RepositoryInterface
+  Neighborhoods
 ```
 
 ## Custom decorator
