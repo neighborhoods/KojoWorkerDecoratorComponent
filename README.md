@@ -134,6 +134,7 @@ To avoid mixing builder and decorator definitions, provide them in a separate ya
 # These parameter values override default values for CrashedThresholdDecorator
 parameters:
   Neighborhoods\KojoWorkerDecoratorComponent\Worker\CrashedThresholdDecoratorInterface.threshold: 10
+  Neighborhoods\KojoWorkerDecoratorComponent\Worker\CrashedThresholdDecoratorInterface.delaySeconds: 5
 ```
 ``` yaml
 # Acme\MyWorker\ExceptionHandlingDecorator.service.yml

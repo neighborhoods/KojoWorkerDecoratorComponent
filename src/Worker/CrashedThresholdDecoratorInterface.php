@@ -7,4 +7,5 @@ namespace Neighborhoods\KojoWorkerDecoratorComponent\Worker;
 interface CrashedThresholdDecoratorInterface extends DecoratorInterface
 {
     public function setThreshold(int $threshold): CrashedThresholdDecoratorInterface;
+    public function setDelaySeconds(int $delaySeconds): CrashedThresholdDecoratorInterface;
 }

@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Neighborhoods\KojoWorkerDecoratorComponent\Tests\Worker;
 
-use LogicException;
+use DateTime;
+use Exception;
 use Neighborhoods\Kojo\Api\V1;
 use Neighborhoods\KojoWorkerDecoratorComponent\Worker\CrashedThresholdDecorator;
 use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
@@ -12,54 +13,82 @@ use PHPUnit\Framework\TestCase;
 
 class CrashedThresholdDecoratorTest extends TestCase
 {
-    public function testExceedsCrashes(): void
+    public function testWorkFirstTimeRunsWorkerWithoutDelay(): void
     {
         $workerService = $this->createMock(V1\Worker\ServiceInterface::class);
-        $workerService->expects(self::once())->method('requestHold')->willReturnSelf();
-        $workerService->expects(self::once())->method('applyRequest')->willReturnSelf();
-        $workerService->method('getTimesCrashed')->willReturn(10);
+        $workerService->method('getTimesCrashed')->willReturn(0);
+
+        $worker = $this->createMock(WorkerInterface::class);
+        $worker->expects(self::once())->method('work')->willReturnSelf();
 
         $decorator = new CrashedThresholdDecorator();
         $decorator->setApiV1WorkerService($workerService);
-        $decorator->setWorker(
-            new class implements WorkerInterface {
-                use V1\Worker\Service\AwareTrait;
-                use V1\RDBMS\Connection\Service\AwareTrait;
-
-                public function work(): WorkerInterface
-                {
-                    // do something
-                    throw new LogicException('Should have not get here.');
-                }
-            }
-        );
+        $decorator->setWorker($worker);
         $decorator->setThreshold(10);
+        $decorator->setDelaySeconds(2);
 
-        $decorator->work();
+        $start = new DateTime();
+        $result = $decorator->work();
+        $durationSeconds = ((new DateTime())->getTimestamp() - $start->getTimestamp());
+        self::assertSame($decorator, $result);
+        self::assertLessThanOrEqual(1, $durationSeconds);
     }
 
-    public function testZeroLimit(): void
+    public function testWorkAfterCrashRunsWorkerWithDelay(): void
     {
         $workerService = $this->createMock(V1\Worker\ServiceInterface::class);
-        $workerService->expects(self::never())->method('requestHold');
-        $workerService->expects(self::never())->method('applyRequest');
-        $workerService->method('getTimesCrashed')->willReturn(10);
+        $workerService->method('getTimesCrashed')->willReturn(1);
+
+        $worker = $this->createMock(WorkerInterface::class);
+        $worker->expects(self::once())->method('work')->willReturnSelf();
 
         $decorator = new CrashedThresholdDecorator();
-        $decorator->setApiV1WorkerService($workerService)
-            ->setWorker(
-                new class implements WorkerInterface{
-                    use V1\Worker\Service\AwareTrait;
-                    use V1\RDBMS\Connection\Service\AwareTrait;
+        $decorator->setApiV1WorkerService($workerService);
+        $decorator->setWorker($worker);
+        $decorator->setThreshold(10);
+        $decorator->setDelaySeconds(2);
 
-                    public function work(): WorkerInterface
-                    {
-                        return $this;
-                    }
-                }
-            )
+        $start = new DateTime();
+        $result = $decorator->work();
+        $durationSeconds = ((new DateTime())->getTimestamp() - $start->getTimestamp());
+        self::assertSame($decorator, $result);
+        self::assertGreaterThanOrEqual(2, $durationSeconds);
+    }
+
+    public function testWorkWhenCrashThresholdExceededHoldsWithoutDelay(): void
+    {
+        $workerService = $this->createMock(V1\Worker\ServiceInterface::class);
+        $workerService->method('getTimesCrashed')->willReturn(10);
+        $workerService->expects(self::once())->method('requestHold')->willReturnSelf();
+        $workerService->expects(self::once())->method('applyRequest')->willReturnSelf();
+
+        $worker = $this->createMock(WorkerInterface::class);
+        $worker->expects(self::never())->method('work');
+
+        $decorator = new CrashedThresholdDecorator();
+        $decorator->setApiV1WorkerService($workerService);
+        $decorator->setWorker($worker);
+        $decorator->setThreshold(10);
+        $decorator->setDelaySeconds(2);
+
+        $start = new DateTime();
+        $result = $decorator->work();
+        $durationSeconds = ((new DateTime())->getTimestamp() - $start->getTimestamp());
+        self::assertSame($decorator, $result);
+        self::assertLessThanOrEqual(1, $durationSeconds);
+    }
+
+    public function testSetZeroThresholdThrowsException(): void
+    {
+        self::expectException(Exception::class);
+        (new CrashedThresholdDecorator())
             ->setThreshold(0);
+    }
 
-        $decorator->work();
+    public function testSetZeroDelayThrowsException(): void
+    {
+        self::expectException(Exception::class);
+        (new CrashedThresholdDecorator())
+            ->setDelaySeconds(0);
     }
 }
