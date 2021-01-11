@@ -6,7 +6,6 @@ parameters:
 	paths:
 		- src
 		- tests
-		- template-tree
 	ignoreErrors:
 	    - '#Property Neighborhoods\\KojoWorkerDecoratorComponent.* has no typehint specified.#'
 	    - '#Method Neighborhoods\\KojoWorkerDecoratorComponent.*Interface::set.*\(\) has no return typehint specified.#'

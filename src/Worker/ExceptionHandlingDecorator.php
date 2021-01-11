@@ -8,6 +8,7 @@ use DateInterval;
 use DateTime;
 use InvalidArgumentException;
 use LogicException;
+use Neighborhoods\ExceptionComponent\Exception;
 use Neighborhoods\ExceptionComponent\TransientExceptionInterface;
 use Neighborhoods\Kojo\Api;
 use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
@@ -55,13 +56,18 @@ class ExceptionHandlingDecorator implements ExceptionHandlingDecoratorInterface
 
     private function logThrowable(Throwable $throwable): void
     {
+        $message = $throwable->getMessage();
+        if ($throwable instanceof Exception) {
+            $message = json_encode($throwable->getMessages());
+            if (false === $message) {
+                $message = '';
+            }
+        }
         $context = [
             'job_id' => $this->getApiV1WorkerService()->getJobId(),
-            'worker' => $this->getWorker(),
-            'message' => $throwable->getMessage(),
             'exception' => $throwable,
         ];
-        $this->getApiV1WorkerService()->getLogger()->alert($throwable->getMessage(), $context);
+        $this->getApiV1WorkerService()->getLogger()->alert($message, $context);
     }
 
     public function setRetryIntervalDefinition(string $intervalDefinition): self

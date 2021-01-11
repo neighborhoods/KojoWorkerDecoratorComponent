@@ -99,7 +99,7 @@ $containerBuilder->getDiscoverableDirectories()->addDirectoryPathFilter(
 
 ### Decorator stack
 
-Configure the builder using Symfony DI to build a decorator stack tailored to your needs. An example is shown below.
+Configure the builder using Symfony DI to build a decorator stack tailored to your needs. The `ExceptionHandlingDecorator` should be the last in the list. An example is shown below.
 
 ``` yaml
 # Acme\MyWorker\Builder.service.yml

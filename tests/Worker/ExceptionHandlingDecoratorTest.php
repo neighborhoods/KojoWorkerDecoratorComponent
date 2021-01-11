@@ -15,61 +15,46 @@ use function json_encode;
 
 class ExceptionHandlingDecoratorTest extends TestCase
 {
-    public function testWrappedNonTransient(): void
+    public function testWorkHoldsAndLogsJobThrowingNonTransientException(): void
     {
-        $worker = new class () implements WorkerInterface {
-            use V1\Worker\Service\AwareTrait;
-            use V1\RDBMS\Connection\Service\AwareTrait;
-
-            public function work(): WorkerInterface
-            {
-                throw new LogicException('oops I did a bad thing');
-            }
-        };
-
-        $decorator = new ExceptionHandlingDecorator();
-        $decorator->setWorker($worker);
-
-        $workerService = $this->createMock(V1\Worker\ServiceInterface::class);
-        $decorator->setApiV1WorkerService($workerService);
-        $workerService->expects(self::once())->method('requestHold')->willReturnSelf();
-        $workerService->expects(self::once())->method('applyRequest')->willReturnSelf();
+        $worker = $this->createMock(WorkerInterface::class);
+        $worker->expects(self::once())->method('work')->willThrowException(
+            new LogicException('oops I did a bad thing')
+        );
 
         $logger = $this->createMock(V1\LoggerInterface::class);
         $logger->expects(self::once())->method('alert')->with('oops I did a bad thing');
 
+        $workerService = $this->createMock(V1\Worker\ServiceInterface::class);
+        $workerService->expects(self::once())->method('requestHold')->willReturnSelf();
+        $workerService->expects(self::once())->method('applyRequest')->willReturnSelf();
         $workerService->method('getLogger')->willReturn($logger);
 
+        $decorator = new ExceptionHandlingDecorator();
+        $decorator->setWorker($worker);
+        $decorator->setApiV1WorkerService($workerService);
         $decorator->work();
     }
 
     public function testWrappedTransient(): void
     {
-        $worker = new class () implements WorkerInterface {
-            use V1\Worker\Service\AwareTrait;
-            use V1\RDBMS\Connection\Service\AwareTrait;
+        $worker = $this->createMock(WorkerInterface::class);
+        $worker->expects(self::once())->method('work')->willThrowException(
+            (new TransientException())->addMessage('I didn\'t do that bad')
+        );
 
-            public function work(): WorkerInterface
-            {
-                throw (new class () extends TransientException {
-                })->addMessage('I didn\'t do that bad');
-            }
-        };
+        $logger = $this->createMock(V1\LoggerInterface::class);
+        $logger->expects(self::once())->method('alert')->with('["I didn\'t do that bad"]');
+
+        $workerService = $this->createMock(V1\Worker\ServiceInterface::class);
+        $workerService->expects(self::once())->method('requestRetry')->willReturnSelf();
+        $workerService->expects(self::once())->method('applyRequest')->willReturnSelf();
+        $workerService->method('getLogger')->willReturn($logger);
 
         $decorator = new ExceptionHandlingDecorator();
         $decorator->setWorker($worker);
-
-        $workerService = $this->createMock(V1\Worker\ServiceInterface::class);
         $decorator->setApiV1WorkerService($workerService);
         $decorator->setRetryIntervalDefinition('PT1M');
-        $workerService->expects(self::once())->method('requestRetry')->willReturnSelf();
-        $workerService->expects(self::once())->method('applyRequest')->willReturnSelf();
-
-        $logger = $this->createMock(V1\LoggerInterface::class);
-        $logger->expects(self::once())->method('alert')->with(json_encode(['I didn\'t do that bad']));
-
-        $workerService->method('getLogger')->willReturn($logger);
-
         $decorator->work();
     }
 }

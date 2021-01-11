@@ -11,15 +11,15 @@
   ],
   "authors": [
     {
-      "name": "Oleg Kulyk",
-      "email": "olegkulik1985@gmail.com"
+      "name": "Hrvoje Jukic",
+      "email": "hrcajuka@gmail.com"
     }
   ],
   "require": {
     "php": "^7.3",
     "ext-pdo": "*",
     "neighborhoods/kojo": "^5",
-    "neighborhoods/exception-component": "^1",
+    "neighborhoods/exception-component": "^1.0.5",
     "neighborhoods/throwable-diagnostic-component": "^3.0",
     "neighborhoods/container-builder": "^1.0"
   },
@@ -38,22 +38,12 @@
       "Neighborhoods\\KojoWorkerDecoratorComponent\\": [
         "src",
         "fab"
-      ],
-      "Neighborhoods\\InquiryService\\Prefab5\\": [
-        "../InquiryService/fab/Prefab5"
-      ],
-      "Neighborhoods\\InquiryService\\": [
-        "../InquiryService/fab",
-        "../InquiryService/src"
-      ],
-      "Zend\\ProblemDetails\\": [
-        "../InquiryService/vendor/mezzio/mezzio-problem-details/src/"
       ]
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Neighborhoods\\KojoWorkerDecoratorComponent\\Tests\\": ["tests", "tests-fab"]
+      "Neighborhoods\\KojoWorkerDecoratorComponent\\Tests\\": ["tests"]
     }
   }
 }
