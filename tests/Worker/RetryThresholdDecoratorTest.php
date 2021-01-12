@@ -6,11 +6,11 @@ namespace Neighborhoods\KojoWorkerDecoratorComponent\Tests\Worker;
 
 use Exception;
 use Neighborhoods\Kojo\Api\V1;
-use Neighborhoods\KojoWorkerDecoratorComponent\Worker\RetriedThresholdDecorator;
+use Neighborhoods\KojoWorkerDecoratorComponent\Worker\RetryThresholdDecorator;
 use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
 use PHPUnit\Framework\TestCase;
 
-class RetriedThresholdDecoratorTest extends TestCase
+class RetryThresholdDecoratorTest extends TestCase
 {
     public function testWorkWithinThresholdRunsWorkerWithout(): void
     {
@@ -20,7 +20,7 @@ class RetriedThresholdDecoratorTest extends TestCase
         $worker = $this->createMock(WorkerInterface::class);
         $worker->expects(self::once())->method('work')->willReturnSelf();
 
-        $decorator = new RetriedThresholdDecorator();
+        $decorator = new RetryThresholdDecorator();
         $decorator->setApiV1WorkerService($workerService);
         $decorator->setWorker($worker);
         $decorator->setThreshold(10);
@@ -39,7 +39,7 @@ class RetriedThresholdDecoratorTest extends TestCase
         $worker = $this->createMock(WorkerInterface::class);
         $worker->expects(self::never())->method('work');
 
-        $decorator = new RetriedThresholdDecorator();
+        $decorator = new RetryThresholdDecorator();
         $decorator->setApiV1WorkerService($workerService);
         $decorator->setWorker($worker);
         $decorator->setThreshold(10);
@@ -51,7 +51,7 @@ class RetriedThresholdDecoratorTest extends TestCase
     public function testSetZeroThresholdThrowsException(): void
     {
         self::expectException(Exception::class);
-        (new RetriedThresholdDecorator())
+        (new RetryThresholdDecorator())
             ->setThreshold(0);
     }
 }

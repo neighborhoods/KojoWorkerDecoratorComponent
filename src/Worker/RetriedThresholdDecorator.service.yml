@@ -1,9 +1,0 @@
-parameters:
-  Neighborhoods\KojoWorkerDecoratorComponent\Worker\RetriedThresholdDecoratorInterface.threshold: 100
-services:
-  Neighborhoods\KojoWorkerDecoratorComponent\Worker\RetriedThresholdDecoratorInterface:
-    class: Neighborhoods\KojoWorkerDecoratorComponent\Worker\RetriedThresholdDecorator
-    public: false
-    shared: false
-    calls:
-      - [setThreshold, ['%Neighborhoods\KojoWorkerDecoratorComponent\Worker\RetriedThresholdDecoratorInterface.threshold%']]

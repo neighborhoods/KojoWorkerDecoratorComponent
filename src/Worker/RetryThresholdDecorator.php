@@ -8,7 +8,7 @@ use LogicException;
 use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
 use UnexpectedValueException;
 
-final class RetriedThresholdDecorator implements RetriedThresholdDecoratorInterface
+final class RetryThresholdDecorator implements RetryThresholdDecoratorInterface
 {
     use DecoratorTrait;
 
@@ -30,7 +30,7 @@ final class RetriedThresholdDecorator implements RetriedThresholdDecoratorInterf
         return $this;
     }
 
-    public function setThreshold(int $threshold): RetriedThresholdDecoratorInterface
+    public function setThreshold(int $threshold): RetryThresholdDecoratorInterface
     {
         if (isset($this->threshold)) {
             throw new LogicException('Threshold is already set');
