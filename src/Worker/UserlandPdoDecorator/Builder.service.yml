@@ -7,5 +7,5 @@ services:
     shared: false
     calls:
       - [setWorkerUserlandPdoDecoratorFactory, ['@Neighborhoods\KojoWorkerDecoratorComponent\Worker\UserlandPdoDecorator\FactoryInterface']]
-      - [setPrefabDoctrineDbalConnectionDecoratorRepository, ['@Neighborhoods\KojoWorkerDecoratorComponent\Worker\UserlandPdoDecorator\BuilderInterface.prefabDoctrineDbalConnectionDecoratorRepository']]
+      - [setPrefabDoctrineDbalConnectionDecoratorRepository, ['@Vendor\Product\Prefab5\Doctrine\DBAL\Connection\Decorator\RepositoryInterface']]
       - [setConnectionId, ['%Neighborhoods\KojoWorkerDecoratorComponent\Worker\UserlandPdoDecorator\BuilderInterface.connectionId%']]

@@ -138,7 +138,7 @@ parameters:
 # Acme\MyWorker\UserlandPdoDecorator.service.yml
 # This service alias is needed by UserlandPdoDecorator
 services:
-  Neighborhoods\KojoWorkerDecoratorComponent\Worker\UserlandPdoDecorator\BuilderInterface.prefabDoctrineDbalConnectionDecoratorRepository:
+  Vendor\Product\Prefab5\Doctrine\DBAL\Connection\Decorator\RepositoryInterface:
     alias: Acme\Prefab5\Doctrine\DBAL\Connection\Decorator\RepositoryInterface
   Neighborhoods
 ```
