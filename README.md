@@ -286,3 +286,7 @@ actors:
 ```
 
 Move the `MyWorker/CustomDecorator.php` file from your fabrication folder to the source folder and write the decoration logic.
+
+## Examples
+
+Application examples are available in the [Fitness](https://github.com/neighborhoods/KojoWorkerDecoratorComponentFitness) project.
