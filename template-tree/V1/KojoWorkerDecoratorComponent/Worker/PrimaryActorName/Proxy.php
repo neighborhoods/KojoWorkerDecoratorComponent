@@ -41,7 +41,7 @@ class Proxy implements ProxyInterface
         $cacheHandler = (new SymfonyConfigCacheHandler\Builder())
             ->setName(str_replace('\\', '', Worker::class))
             ->setCacheDirPath($rootDirectory . '/data/cache')
-            ->setDebug(true)
+            ->setDebug(false)
             ->build();
 
         return (new TinyContainerBuilder())
