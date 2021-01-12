@@ -44,14 +44,14 @@ class MyWorker implements WorkerInterface
 
 The Worker will not be used by Kōjō directly. Kōjō will use a Proxy, which will build the Worker with the desired decorators.  
 Kōjō will provide the Proxy with its API services, which are forwarded to the worker.  
-The Proxy might use a Symfony DI container, as shown below, to obtain the builder for the worker and decorators. The decorators and worker can use dependency injection, while the Proxy cannot.
+The Proxy might use the [Neighborhoods Container Builder](https://github.com/neighborhoods/DependencyInjectionContainerBuilderComponent), as shown below, to obtain the builder for the worker and decorators. The decorators and worker can use dependency injection, while the Proxy cannot.
 
 ``` php
 <?php
 namespace Acme\MyWorker;
 
 use Acme\MyWorker;
-use Neighborhoods\ContainerBuilder\Builder;
+use Neighborhoods\DependencyInjectionContainerBuilderComponent\TinyContainerBuilder;
 use Neighborhoods\Kojo\Api;
 use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
 use Psr\Container\ContainerInterface;
@@ -76,9 +76,9 @@ class Proxy implements WorkerInterface
 
     protected function getContainer(): ContainerInterface
     {
-        $containerBuilder = new Builder();
+        $containerBuilder = new TinyContainerBuilder();
         // Container configuration
-        $containerBuilder->registerServiceAsPublic(MyWorker\Builder\FactoryInterface::class);
+        $containerBuilder->makePublic(MyWorker\Builder\FactoryInterface::class);
         return $containerBuilder->build();
     }
 }
@@ -103,15 +103,7 @@ Configure the builder using Symfony DI to build a decorator stack tailored to yo
 
 ``` yaml
 # Acme\MyWorker\Builder.service.yml
-parameters:
-  # This parameter is needed by CrashedThresholdDecorator
-  Neighborhoods\KojoWorkerDecoratorComponent\Worker\CrashedThresholdDecoratorInterface.threshold: 5
-  # This parameter is needed by ExceptionHandlingDecorator
-  Neighborhoods\KojoWorkerDecoratorComponent\Worker\ExceptionHandlingDecoratorInterface.retryIntervalDefinition: 'PT5M'
 services:
-  # This service alias is needed by UserlandPdoDecorator
-  Neighborhoods\KojoWorkerDecoratorComponent\Worker\UserlandPdoDecorator\BuilderInterface.prefabDoctrineDbalConnectionDecoratorRepository:
-    alias: Acme\Prefab5\Doctrine\DBAL\Connection\Decorator\RepositoryInterface
   Neighborhoods\KojoWorkerDecoratorComponent\Worker\BuilderInterface:
     class: Neighborhoods\KojoWorkerDecoratorComponent\Worker\Builder
     public: false
@@ -244,7 +236,13 @@ actors:
 ```
 
 Modify the `MyWorker/Builder.service.yml` to composes a decorator stack tailored to `MyWorker`. Before doing so move the file from your fabrication folder to the source folder.  
-You must also move and implement the `MyWorker.php` and `MyWorker/Proxy.php`.
+You must also move and implement the `MyWorker.php`, `MyWorkerInterface.php` and `MyWorker/Proxy.php`.
+
+The Proxy template is using [Neighborhoods Container Builder](https://github.com/neighborhoods/DependencyInjectionContainerBuilderComponent). In case you want to use the Proxy template, you need to require the Neighborhoods Container Builder in your project.
+
+``` bash
+$ composer require neighborhoods/dependency-injection-container-builder
+```
 
 ### Custom decorator fabrication
 
