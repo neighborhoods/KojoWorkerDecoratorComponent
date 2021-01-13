@@ -21,7 +21,7 @@ $ composer require neighborhoods/kojo-worker-decorator-component
 * [Retry Threshold Decorator](#retry-threshold-decorator)
 * [Userland PDO Decorator](#userland-pdo-decorator)
 
-All decorators use Buphalo buphalo decorator templates.
+All decorators use Buphalo decorator templates.
 
 ### Exception Handling Decorator
 
@@ -199,32 +199,9 @@ services:
 
 ```
 
-Decorator parameters have default values when possible. Those values are defined using DI parameters.  
-The parameter values can be overridden by redefining them. Make sure that the file containing the value you want to be applied is loaded last, i.e. load the service definitions from you project after service definitions from your dependencies.  
-To avoid mixing builder and decorator definitions, provide them in a separate yaml file. Few examples are shown below.
-
-``` yaml
-# Acme\MyWorker\CrashedThresholdDecorator.service.yml
-# These parameter values override default values for CrashedThresholdDecorator
-parameters:
-  Neighborhoods\KojoWorkerDecoratorComponent\Worker\CrashedThresholdDecoratorInterface.threshold: 10
-  Neighborhoods\KojoWorkerDecoratorComponent\Worker\CrashedThresholdDecoratorInterface.delaySeconds: 5
-```
-``` yaml
-# Acme\MyWorker\ExceptionHandlingDecorator.service.yml
-# These parameter values override default values for ExceptionHandlingDecorator
-parameters:
-  Neighborhoods\KojoWorkerDecoratorComponent\Worker\ExceptionHandlingDecoratorInterface.retryIntervalDefinition: 'PT5M'
-```
-``` yaml
-# Acme\MyWorker\UserlandPdoDecorator\Builder.service.yml
-parameters:
-  Neighborhoods\KojoWorkerDecoratorComponent\Worker\UserlandPdoDecorator\BuilderInterface.connectionId: 'core'
-# This service alias is needed by UserlandPdoDecorator builder
-services:
-  Vendor\Product\Prefab5\Doctrine\DBAL\Connection\Decorator\RepositoryInterface:
-    alias: Acme\Prefab5\Doctrine\DBAL\Connection\Decorator\RepositoryInterface
-```
+Decorator parameters have default values when possible. The [Userland PDO Decorator](#userland-pdo-decorator) builder requires the `Vendor\Product\Prefab5\Doctrine\DBAL\Connection\Decorator\RepositoryInterface` service, which doesn't have a default value. How to define it is shown in an [example](https://github.com/neighborhoods/KojoWorkerDecoratorComponentFitness/blob/main/src/SuccessWorker/Worker/UserlandPdoDecorator/Builder.service.yml).  
+Other decorator parameters are defined using DI parameters. The default parameter values can be overridden by redefining them. Make sure that the file containing the value you want to be applied is loaded last, i.e. load the service definitions from you project after service definitions from your dependencies.  
+To avoid mixing worker builder and decorator definitions, provide them in separate yaml files. An [example](https://github.com/neighborhoods/KojoWorkerDecoratorComponentFitness/tree/main/src/DecoratorParameters/Worker) is available.
 
 ## Custom decorator
 
@@ -254,6 +231,8 @@ final class CustomDecorator implements Worker\DecoratorInterface
 The custom decorator may have additional dependencies, which can be injected using Symfony service definitions.
 
 Create a builder and builder factory for the custom decorator by implementing the `Neighborhoods\KojoWorkerDecoratorComponent\Worker\Decorator\BuilderInterface` and `Neighborhoods\KojoWorkerDecoratorComponent\Worker\Decorator\Builder\FactoryInterface` interfaces respectively. After defining corresponding Symfony DI services, the builder factory for the custom decorator can be added to the worker builder (`Acme\MyWorker\Builder.service.yml` in given examples).
+
+A full implementation of a custom decorator is provided in [this example](https://github.com/neighborhoods/KojoWorkerDecoratorComponentFitness/blob/main/src/CustomDecorator/Worker/CustomDecorator.php).
 
 ## Buphalo integration
 
