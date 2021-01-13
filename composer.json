@@ -3,17 +3,39 @@
   "description": "A set of Kojo Worker Decorators that fulfill often repeated code.",
   "minimum-stability": "stable",
   "license": "proprietary",
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://satis.neighborhoods.com"
+    },
+    {
+      "type": "vcs",
+      "url": "git@github.com:neighborhoods/DependencyInjectionContainerBuilderComponent.git"
+    }
+  ],
   "authors": [
     {
-      "name": "Oleg Kulyk",
-      "email": "olegkulik1985@gmail.com"
+      "name": "Hrvoje Jukic",
+      "email": "hrcajuka@gmail.com"
     }
   ],
   "require": {
-    "php": "^7.3"
+    "php": "^7.3",
+    "ext-pdo": "*",
+    "neighborhoods/kojo": "^5",
+    "neighborhoods/exception-component": "^1.0.5",
+    "neighborhoods/throwable-diagnostic-component": "^3.0",
+    "neighborhoods/dependency-injection-container-builder": "^1.0"
   },
   "require-dev": {
-    "roave/security-advisories": "dev-master"
+    "ext-json": "*",
+    "roave/security-advisories": "dev-master",
+    "phpunit/phpunit": "^9.2",
+    "phpstan/phpstan": "^0.12.62",
+    "phpstan/phpstan-phpunit": "^0.12.17",
+    "phpstan/extension-installer": "^1.1",
+    "squizlabs/php_codesniffer": "^3.5",
+    "neighborhoods/buphalo": "^1.1"
   },
   "autoload": {
     "psr-4": {
@@ -21,6 +43,11 @@
         "src",
         "fab"
       ]
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Neighborhoods\\KojoWorkerDecoratorComponent\\Tests\\": ["tests"]
     }
   }
 }

@@ -1,0 +1,6 @@
+/.idea
+/data/cache
+/vendor
+/tests-fab
+.phpunit.result.cache
+composer.lock

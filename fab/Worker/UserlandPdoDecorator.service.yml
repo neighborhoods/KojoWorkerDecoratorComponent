@@ -1,0 +1,5 @@
+services:
+  Neighborhoods\KojoWorkerDecoratorComponent\Worker\UserlandPdoDecoratorInterface:
+    class: Neighborhoods\KojoWorkerDecoratorComponent\Worker\UserlandPdoDecorator
+    public: false
+    shared: false

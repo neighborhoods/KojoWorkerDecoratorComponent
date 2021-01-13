@@ -1,0 +1,9 @@
+parameters:
+  Neighborhoods\KojoWorkerDecoratorComponent\Worker\ExceptionHandlingDecoratorInterface.retryIntervalDefinition: 'PT1M'
+services:
+  Neighborhoods\KojoWorkerDecoratorComponent\Worker\ExceptionHandlingDecoratorInterface:
+    class: Neighborhoods\KojoWorkerDecoratorComponent\Worker\ExceptionHandlingDecorator
+    public: false
+    shared: false
+    calls:
+      - [setRetryIntervalDefinition, ['%Neighborhoods\KojoWorkerDecoratorComponent\Worker\ExceptionHandlingDecoratorInterface.retryIntervalDefinition%']]
