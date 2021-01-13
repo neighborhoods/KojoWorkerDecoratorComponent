@@ -2,7 +2,7 @@
 
 A set of useful decorators for a typical [Kōjō](https://github.com/neighborhoods/kojo) Worker.
 
-##Technical Design Artifacts
+## Technical Design Artifacts
 
 [Runtime Schematics](https://drive.google.com/file/d/1lLQck0XMuAYdVEGzQB01sgJUm8WNa1jg)
 
@@ -13,6 +13,85 @@ Via Composer
 ``` bash
 $ composer require neighborhoods/kojo-worker-decorator-component
 ```
+
+## Predefined decorators
+
+* [Exception Handling Decorator](#exception-handling-decorator)
+* [Crashed Threshold Decorator](#crashed-threshold-decorator)
+* [Retry Threshold Decorator](#retry-threshold-decorator)
+* [Userland PDO Decorator](#userland-pdo-decorator)
+
+All decorators use Buphalo buphalo decorator templates.
+
+### Exception Handling Decorator
+
+This decorator handles exceptions thrown by the decorated worker.  
+It prevents jobs from panicking. In case of a transient fault, the job is retried after a predefined interval. In case of a non-transient fault the job is held. Either way the exception is logged.
+
+When defining the decorator stack (in the worker builder's service definition/YAML file), make sure the exception handling decorator is listed last.
+
+This decorator is compatible with [Exception Component](https://github.com/neighborhoods/ExceptionComponent) and [Throwable Diagnostic Component](https://github.com/neighborhoods/ThrowableDiagnosticComponent) when it comes to determining the transiency of an exception.
+
+#### Parameters
+
+ * **retryIntervalDefinition**  
+   Type: string  
+   Default value: 1 minute  
+   String representation of `DateInterval` by which retry is delayed after catching a transient exception.
+
+### Crashed Threshold Decorator
+
+This decorator prevents jobs from repeatedly crashing and defends against hysteresis.
+
+A crash occurs when the worker doesn't gracefully exit, for example runs out of memory, segmentation fault, gets terminated due to a signal...
+
+Kōjō attempts to rerun the job after the crash. This decorator detects that the job previously crashed and sleeps to prevent hysteresis.
+
+The decorator holds the job when the number of crashes exceeds the threshold.
+
+#### Parameters
+
+ * **threshold**  
+   Type: integer  
+   Default value: 5
+   Minimal allowed value: 1  
+   Maximal number of crashes before holding the job.
+
+ * **delaySeconds**  
+   Type: integer  
+   Default value: 1  
+   Minimal allowed value: 1  
+   Number of seconds by which execution is delayed after a crash.
+
+### Retry Threshold Decorator
+
+This decorator prevents jobs from repeatedly retrying.
+
+The decorator holds the job when the number of retries exceeds the threshold.
+
+#### Parameters
+
+* **threshold**  
+  Type: integer  
+  Default value: 100  
+  Minimal allowed value: 1  
+  Maximal number of crashes before holding the job.
+
+### Userland PDO Decorator
+
+Configures Kōjō API Worker Service to use a specific connection, core by default.  
+Knowing the connection enables worker logic to isolate job state changes into transactions.
+
+#### Parameters
+
+The decorator itself expects a connection. In practice the connection is obtained from a Prefab5 connection repository, which is done by the Userland PDO Decorator Builder.  
+So the builder requires the connection id, which is injected using a Symfony DI parameter, and the Prefab5 connection repository, which is injected using a Symfony DI service.  
+* **connectionId**  
+  Type: string  
+  Default value: core  
+  ID of Prefab5 Doctrine DBAL connection to be used by the Kōjō API Worker Service.
+
+The Prefab5 connection repository doesn't have a default value. The Symfony DI service `Vendor\Product\Prefab5\Doctrine\DBAL\Connection\Decorator\RepositoryInterface` has to be defined. The easiest way to do so is by defining it as an alias of the corresponding Prefab5 generated class.
 
 ## Usage
 
@@ -117,7 +196,7 @@ services:
 
 ```
 
-Configurable decorators should provide default configuration values when possible. Those values are defined using DI parameters.  
+Decorator parameters have default values when possible. Those values are defined using DI parameters.  
 The parameter values can be overridden by redefining them. Make sure that the file containing the value you want to be applied is loaded last, i.e. load the service definitions from you project after service definitions from your dependencies.  
 To avoid mixing builder and decorator definitions, provide them in a separate yaml file. Few examples are shown below.
 
@@ -135,12 +214,13 @@ parameters:
   Neighborhoods\KojoWorkerDecoratorComponent\Worker\ExceptionHandlingDecoratorInterface.retryIntervalDefinition: 'PT5M'
 ```
 ``` yaml
-# Acme\MyWorker\UserlandPdoDecorator.service.yml
-# This service alias is needed by UserlandPdoDecorator
+# Acme\MyWorker\UserlandPdoDecorator\Builder.service.yml
+parameters:
+  Neighborhoods\KojoWorkerDecoratorComponent\Worker\UserlandPdoDecorator\BuilderInterface.connectionId: 'core'
+# This service alias is needed by UserlandPdoDecorator builder
 services:
   Vendor\Product\Prefab5\Doctrine\DBAL\Connection\Decorator\RepositoryInterface:
     alias: Acme\Prefab5\Doctrine\DBAL\Connection\Decorator\RepositoryInterface
-  Neighborhoods
 ```
 
 ## Custom decorator
