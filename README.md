@@ -297,8 +297,9 @@ actors:
 
 ```
 
-Modify the `MyWorker/Builder.service.yml` to composes a decorator stack tailored to `MyWorker`. Before doing so move the file from your fabrication folder to the source folder.  
-You must also move and implement the `MyWorker.php`, `MyWorkerInterface.php` and `MyWorker/Proxy.php`.
+Implement `MyWorker.php`, `MyWorkerInterface.php` and `MyWorker/Proxy.php` after moving them from your fabrication folder to the source folder.  
+Don't forget to define decorator parameters without default values mentioned [earlier](#decorator-stack).  
+To modify the decorator stack move `MyWorker/Builder.service.yml` as well and adapt it.
 
 The Proxy template is using [Neighborhoods Container Builder](https://github.com/neighborhoods/DependencyInjectionContainerBuilderComponent). For your convenience it is already added as a dependency, although it's not used in the source code.
 
