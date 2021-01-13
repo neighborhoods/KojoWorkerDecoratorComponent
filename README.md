@@ -32,6 +32,9 @@ When defining the decorator stack (in the worker builder's service definition/YA
 
 This decorator is compatible with [Exception Component](https://github.com/neighborhoods/ExceptionComponent) and [Throwable Diagnostic Component](https://github.com/neighborhoods/ThrowableDiagnosticComponent) when it comes to determining the transiency of an exception.
 
+If a job panics, although the worker is decorated with the exception handling decorator, it means that an exception occurred before the decorator is invoked. If the Proxy template is used with the exception handling decorator being the last in the decorator stack, a job can only panic if there's a problem with building the container.  
+This is most likely cause by a missing environment variable or invalid value.
+
 #### Parameters
 
  * **retryIntervalDefinition**  
