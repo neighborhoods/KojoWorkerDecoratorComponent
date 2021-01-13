@@ -23,7 +23,7 @@ class ExceptionHandlingDecoratorTest extends TestCase
         );
 
         $logger = $this->createMock(V1\LoggerInterface::class);
-        $logger->expects(self::once())->method('alert')->with('oops I did a bad thing');
+        $logger->expects(self::once())->method('log')->with('critical', 'oops I did a bad thing');
 
         $workerService = $this->createMock(V1\Worker\ServiceInterface::class);
         $workerService->expects(self::once())->method('requestHold')->willReturnSelf();
@@ -36,7 +36,7 @@ class ExceptionHandlingDecoratorTest extends TestCase
         $decorator->work();
     }
 
-    public function testWrappedTransient(): void
+    public function testWorkRetriesAndLogsJobThrowingTransientException(): void
     {
         $worker = $this->createMock(WorkerInterface::class);
         $worker->expects(self::once())->method('work')->willThrowException(
@@ -44,7 +44,7 @@ class ExceptionHandlingDecoratorTest extends TestCase
         );
 
         $logger = $this->createMock(V1\LoggerInterface::class);
-        $logger->expects(self::once())->method('alert')->with('["I didn\'t do that bad"]');
+        $logger->expects(self::once())->method('log')->with('warning', '["I didn\'t do that bad"]');
 
         $workerService = $this->createMock(V1\Worker\ServiceInterface::class);
         $workerService->expects(self::once())->method('requestRetry')->willReturnSelf();

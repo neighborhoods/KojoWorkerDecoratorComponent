@@ -13,6 +13,7 @@ use Neighborhoods\ExceptionComponent\TransientExceptionInterface;
 use Neighborhoods\Kojo\Api;
 use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
 use Neighborhoods\ThrowableDiagnosticComponent\DiagnosedInterface;
+use Psr\Log\LogLevel;
 use Throwable;
 
 class ExceptionHandlingDecorator implements ExceptionHandlingDecoratorInterface
@@ -32,29 +33,31 @@ class ExceptionHandlingDecorator implements ExceptionHandlingDecoratorInterface
             $this->getApiV1WorkerService()
                 ->requestRetry((new DateTime())->add($this->getInterval()))
                 ->applyRequest();
-            $this->logThrowable($transientException);
+            $this->logThrowable($transientException, LogLevel::WARNING);
         } catch (DiagnosedInterface $diagnosed) {
+            $logLevel = LogLevel::CRITICAL;
             if ($diagnosed->isTransient()) {
                 $this->getApiV1WorkerService()
                     ->requestRetry((new DateTime())->add($this->getInterval()))
                     ->applyRequest();
+                $logLevel = LogLevel::WARNING;
             } else {
                 $this->getApiV1WorkerService()
                     ->requestHold()
                     ->applyRequest();
             }
-            $this->logThrowable($diagnosed);
+            $this->logThrowable($diagnosed, $logLevel);
         } catch (Throwable $throwable) {
             $this->getApiV1WorkerService()
                 ->requestHold()
                 ->applyRequest();
-            $this->logThrowable($throwable);
+            $this->logThrowable($throwable, LogLevel::CRITICAL);
         }
 
         return $this;
     }
 
-    private function logThrowable(Throwable $throwable): void
+    private function logThrowable(Throwable $throwable, string $logLevel): void
     {
         $message = $throwable->getMessage();
         if ($throwable instanceof Exception) {
@@ -67,7 +70,7 @@ class ExceptionHandlingDecorator implements ExceptionHandlingDecoratorInterface
             'job_id' => $this->getApiV1WorkerService()->getJobId(),
             'exception' => $throwable,
         ];
-        $this->getApiV1WorkerService()->getLogger()->alert($message, $context);
+        $this->getApiV1WorkerService()->getLogger()->log($logLevel, $message, $context);
     }
 
     public function setRetryIntervalDefinition(string $intervalDefinition): self
