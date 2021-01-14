@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Neighborhoods\KojoWorkerDecoratorComponent\Worker\RetriedThresholdDecorator;
+namespace Neighborhoods\KojoWorkerDecoratorComponent\Worker\RetryThresholdDecorator;
 
 use Neighborhoods\Kojo\Api;
 use Neighborhoods\KojoWorkerDecoratorComponent\Worker\DecoratorInterface;

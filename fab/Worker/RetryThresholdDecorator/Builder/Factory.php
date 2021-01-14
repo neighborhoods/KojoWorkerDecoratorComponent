@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Neighborhoods\KojoWorkerDecoratorComponent\Worker\RetriedThresholdDecorator\Builder;
+namespace Neighborhoods\KojoWorkerDecoratorComponent\Worker\RetryThresholdDecorator\Builder;
 
 use Neighborhoods\KojoWorkerDecoratorComponent\Worker\Decorator\BuilderInterface;
 
@@ -12,6 +12,6 @@ class Factory implements FactoryInterface
 
     public function create(): BuilderInterface
     {
-        return clone $this->getWorkerRetriedThresholdDecoratorBuilder();
+        return clone $this->getWorkerRetryThresholdDecoratorBuilder();
     }
 }

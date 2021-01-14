@@ -1,7 +1,0 @@
-services:
-  Neighborhoods\KojoWorkerDecoratorComponent\Worker\RetriedThresholdDecorator\BuilderInterface:
-    class: Neighborhoods\KojoWorkerDecoratorComponent\Worker\RetriedThresholdDecorator\Builder
-    public: false
-    shared: false
-    calls:
-      - [setWorkerRetriedThresholdDecoratorFactory, ['@Neighborhoods\KojoWorkerDecoratorComponent\Worker\RetriedThresholdDecorator\FactoryInterface']]
