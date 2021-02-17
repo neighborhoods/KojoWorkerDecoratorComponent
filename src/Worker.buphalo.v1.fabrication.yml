@@ -9,8 +9,6 @@ actors:
     template: PrimaryActorName/Factory/AwareTrait.php
   <PrimaryActorName>/Builder.php:
     template: PrimaryActorName/Builder.php
-  <PrimaryActorName>/Builder.service.yml:
-    template: PrimaryActorName/Builder.service.yml
   <PrimaryActorName>/BuilderInterface.php:
     template: PrimaryActorName/BuilderInterface.php
   <PrimaryActorName>/Builder/FactoryInterface.php:
