@@ -11,3 +11,5 @@ parameters:
 	    - '#Method Neighborhoods\\KojoWorkerDecoratorComponent.*Interface::set.*\(\) has no return typehint specified.#'
 	    - message: '#Method Neighborhoods\\KojoWorkerDecoratorComponent\\Worker\\UserlandPdoDecorator\\Builder::[gs]etPrefabDoctrineDbalConnectionDecoratorRepository\(\) has .* typehint specified.#'
 	      path: src/Worker/UserlandPdoDecorator/Builder.php
+	    - message: '#Method Neighborhoods\\KojoWorkerDecoratorComponent\\Worker\\ReschedulingDecorator\\Builder::[gs]etPrefabDoctrineDbalConnectionDecoratorRepository\(\) has .* typehint specified.#'
+	      path: src/Worker/ReschedulingDecorator/Builder.php

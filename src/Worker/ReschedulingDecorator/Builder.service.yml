@@ -1,0 +1,13 @@
+parameters:
+  Neighborhoods\KojoWorkerDecoratorComponent\Worker\ReschedulingDecorator\BuilderInterface.connectionId: 'core'
+services:
+  Neighborhoods\KojoWorkerDecoratorComponent\Worker\ReschedulingDecorator\BuilderInterface:
+    class: Neighborhoods\KojoWorkerDecoratorComponent\Worker\ReschedulingDecorator\Builder
+    public: false
+    shared: false
+    calls:
+      - [setWorkerReschedulingDecoratorFactory, ['@Neighborhoods\KojoWorkerDecoratorComponent\Worker\ReschedulingDecorator\FactoryInterface']]
+      - [setPrefabDoctrineDbalConnectionDecoratorRepository, ['@Vendor\Product\Prefab5\Doctrine\DBAL\Connection\Decorator\RepositoryInterface']]
+      - [setConnectionId, ['%Neighborhoods\KojoWorkerDecoratorComponent\Worker\ReschedulingDecorator\BuilderInterface.connectionId%']]
+      - [setJobTypeCode, ['%Neighborhoods\KojoWorkerDecoratorComponent\Worker\ReschedulingDecorator\BuilderInterface.jobTypeCode%']]
+      - [setRescheduleDelaySeconds, ['%Neighborhoods\KojoWorkerDecoratorComponent\Worker\ReschedulingDecorator\BuilderInterface.rescheduleDelaySeconds%']]
