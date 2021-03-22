@@ -32,30 +32,35 @@ final class ReschedulingDecorator implements ReschedulingDecoratorInterface
                 ->getLogger()
                 ->warning('Kojo worker state request already applied, not rescheduling.');
         } else {
-            sleep($this->getRescheduleDelaySeconds());
+            $this->reschedule();
+        }
 
-            $this->getConnection()->beginTransaction();
-            try {
-                $this->getApiV1WorkerService()
-                    ->getNewJobScheduler()
-                    ->setJobTypeCode($this->getJobTypeCode())
-                    ->setWorkAtDateTime(new DateTime())
-                    ->save();
+        return $this;
+    }
 
-                $this->getApiV1WorkerService()
-                    ->requestCompleteSuccess()
-                    ->applyRequest();
+    private function reschedule(): ReschedulingDecoratorInterface
+    {
+        $this->getConnection()->beginTransaction();
+        try {
+            $this->getApiV1WorkerService()
+                ->getNewJobScheduler()
+                ->setJobTypeCode($this->getJobTypeCode())
+                ->setWorkAtDateTime((new DateTime())->add(
+                    new \DateInterval('PT' . $this->getRescheduleDelaySeconds() . 'S')
+                ))
+                ->save();
 
-                $this->getConnection()->commit();
-            } catch (Throwable $throwable) {
-                $this->getConnection()->rollBack();
-                $this->getThrowableDiagnosticBuilderFactory()
-                    ->create()
-                    ->build()
-                    ->diagnose($throwable);
-            }
+            $this->getApiV1WorkerService()
+                ->requestCompleteSuccess()
+                ->applyRequest();
 
-            return $this;
+            $this->getConnection()->commit();
+        } catch (Throwable $throwable) {
+            $this->getConnection()->rollBack();
+            $this->getThrowableDiagnosticBuilderFactory()
+                ->create()
+                ->build()
+                ->diagnose($throwable);
         }
 
         return $this;
