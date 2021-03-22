@@ -121,7 +121,8 @@ So the builder requires the Kōjō connection id, which is injected using a Symf
   Default value: core  
   ID of Prefab5 Doctrine DBAL connection used by the Kōjō API Worker Service. If the [Userland PDO Decorator](#userland-pdo-decorator) is used, the value has to match its connectionId parameter value.
 
-The Prefab5 connection repository doesn't have a default value. The Symfony DI service `Vendor\Product\Prefab5\Doctrine\DBAL\Connection\Decorator\RepositoryInterface` has to be defined. The easiest way to do so is by defining it as an alias of the corresponding Prefab5 generated class.
+The Prefab5 connection repository doesn't have a default value. The Symfony DI service `Vendor\Product\Prefab5\Doctrine\DBAL\Connection\Decorator\RepositoryInterface` has to be defined. The easiest way to do so is by defining it as an alias of the corresponding Prefab5 generated class.  
+The same has to be done for [Userland PDO Decorator](#userland-pdo-decorator). There is no need to define the same alias twice, so it is enough to define it in one place.
 
 ## Usage
 
@@ -228,7 +229,7 @@ services:
 
 Decorator parameters have default values when possible.  
 The [Userland PDO Decorator](#userland-pdo-decorator) builder requires the `Vendor\Product\Prefab5\Doctrine\DBAL\Connection\Decorator\RepositoryInterface` service, which doesn't have a default value. How to define it is shown in an [example](https://github.com/neighborhoods/KojoWorkerDecoratorComponentFitness/blob/main/src/SuccessWorker/Worker/UserlandPdoDecorator/Builder.service.yml).  
-The [Rescheduling Decorator](#rescheduling-decorator) is missing default values for jobTypeCode, rescheduleDelaySeconds and `Vendor\Product\Prefab5\Doctrine\DBAL\Connection\Decorator\RepositoryInterface` service. How to define them is shown in an [example](https://github.com/neighborhoods/KojoWorkerDecoratorComponentFitness/blob/main/src/ReschedulingDecorator/Worker/ReschedulingDecorator/Builder.service.yml).
+The [Rescheduling Decorator](#rescheduling-decorator) is missing default values for jobTypeCode, rescheduleDelaySeconds and `Vendor\Product\Prefab5\Doctrine\DBAL\Connection\Decorator\RepositoryInterface` service. How to define them is shown in an [example](https://github.com/neighborhoods/KojoWorkerDecoratorComponentFitness/blob/main/src/ReschedulingDecorator/Worker/ReschedulingDecorator.service.yml).
 
 Other decorator parameters are defined using DI parameters. The default parameter values can be overridden by redefining them. Make sure that the file containing the value you want to be applied is loaded last, i.e. load the service definitions from you project after service definitions from your dependencies.  
 To avoid mixing worker builder and decorator definitions, provide them in separate yaml files. An [example](https://github.com/neighborhoods/KojoWorkerDecoratorComponentFitness/tree/main/src/DecoratorParameters/Worker) is available.

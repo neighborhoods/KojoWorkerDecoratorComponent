@@ -5,3 +5,5 @@ services:
     shared: false
     calls:
       - [setThrowableDiagnosticBuilderFactory, ['@Neighborhoods\KojoWorkerDecoratorComponent\Worker\ReschedulingDecorator\ThrowableDiagnostic\Builder\FactoryInterface']]
+      - [setJobTypeCode, ['%Neighborhoods\KojoWorkerDecoratorComponent\Worker\ReschedulingDecoratorInterface.jobTypeCode%']]
+      - [setRescheduleDelaySeconds, ['%Neighborhoods\KojoWorkerDecoratorComponent\Worker\ReschedulingDecoratorInterface.rescheduleDelaySeconds%']]

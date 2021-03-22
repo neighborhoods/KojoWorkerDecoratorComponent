@@ -9,5 +9,3 @@ services:
       - [setWorkerReschedulingDecoratorFactory, ['@Neighborhoods\KojoWorkerDecoratorComponent\Worker\ReschedulingDecorator\FactoryInterface']]
       - [setPrefabDoctrineDbalConnectionDecoratorRepository, ['@Vendor\Product\Prefab5\Doctrine\DBAL\Connection\Decorator\RepositoryInterface']]
       - [setConnectionId, ['%Neighborhoods\KojoWorkerDecoratorComponent\Worker\ReschedulingDecorator\BuilderInterface.connectionId%']]
-      - [setJobTypeCode, ['%Neighborhoods\KojoWorkerDecoratorComponent\Worker\ReschedulingDecorator\BuilderInterface.jobTypeCode%']]
-      - [setRescheduleDelaySeconds, ['%Neighborhoods\KojoWorkerDecoratorComponent\Worker\ReschedulingDecorator\BuilderInterface.rescheduleDelaySeconds%']]
