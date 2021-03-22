@@ -17,7 +17,7 @@ class Builder implements BuilderInterface
 
     public function build(): DecoratorInterface
     {
-        $decorator = $this->getWorkerRetriedThresholdDecoratorFactory()
+        $decorator = $this->getWorkerRetryThresholdDecoratorFactory()
             ->create();
 
         $decorator->setApiV1RDBMSConnectionService($this->getApiV1RDBMSConnectionService());
