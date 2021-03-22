@@ -89,7 +89,7 @@ Knowing the connection enables worker logic to isolate job state changes into tr
 #### Parameters
 
 The decorator itself expects a connection. In practice the connection is obtained from a Prefab5 connection repository, which is done by the Userland PDO Decorator Builder.  
-So the builder requires the connection id, which is injected using a Symfony DI parameter, and the Prefab5 connection repository, which is injected using a Symfony DI service.  
+So the builder requires the connection id, which is injected using a Symfony DI parameter, and the Prefab5 connection repository, which is injected using a Symfony DI service.
 * **connectionId**  
   Type: string  
   Default value: core  
@@ -126,7 +126,7 @@ The same has to be done for [Userland PDO Decorator](#userland-pdo-decorator). T
 
 ## Usage
 
-Kōjō doesn't enforce any interface to workers, but this component does. To decorate your worker it must implement the 
+Kōjō doesn't enforce any interface to workers, but this component does. To decorate your worker it must implement the
 `Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface`. This can be easily done by using the `AwareTrait` for Kojo API Worker Service and Kojo API RDBMS Connection Service as shown below.
 
 ``` php
@@ -206,6 +206,7 @@ $containerBuilder->getDiscoverableDirectories()->addDirectoryPathFilter(
     '../vendor/neighborhoods/kojo-worker-decorator-component/src'
 );
 ```
+The container building and caching be extracted from the Proxy into a dedicated class in order to test it.
 
 ### Decorator stack
 
@@ -301,6 +302,10 @@ actors:
     template: KojoWorkerDecoratorComponent/Worker/PrimaryActorName/ProxyInterface.php
   <PrimaryActorName>/Proxy/AwareTrait.php:
     template: KojoWorkerDecoratorComponent/Worker/PrimaryActorName/Proxy/AwareTrait.php
+  <PrimaryActorName>/Container.php:
+    template: KojoWorkerDecoratorComponent/Worker/PrimaryActorName/Container.php
+  <PrimaryActorName>/ContainerInterface.php:
+    template: KojoWorkerDecoratorComponent/Worker/PrimaryActorName/ContainerInterface.php
   <PrimaryActorName>/Factory.php:
     template: KojoWorkerDecoratorComponent/Worker/PrimaryActorName/Factory.php
   <PrimaryActorName>/Factory.service.yml:
@@ -328,11 +333,11 @@ actors:
 
 ```
 
-Implement `MyWorker.php`, `MyWorkerInterface.php` and `MyWorker/Proxy.php` after moving them from your fabrication folder to the source folder.  
+Implement `MyWorker.php`, `MyWorkerInterface.php` and `MyWorker/Container.php` after moving them from your fabrication folder to the source folder.  
 Don't forget to define decorator parameters without default values mentioned [earlier](#decorator-stack).  
 To modify the decorator stack move `MyWorker/Builder.service.yml` as well and adapt it.
 
-The Proxy template is using [Neighborhoods Container Builder](https://github.com/neighborhoods/DependencyInjectionContainerBuilderComponent). For your convenience it is already added as a dependency, although it's not used in the source code.
+The Container template is using [Neighborhoods Container Builder](https://github.com/neighborhoods/DependencyInjectionContainerBuilderComponent). For your convenience it is already added as a dependency, although it's not used in the source code.
 
 ### Custom decorator fabrication
 
