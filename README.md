@@ -196,14 +196,18 @@ class Proxy implements WorkerInterface
 
 The `MyWorker\Builder\FactoryInterface` should extend the `Neighborhoods\KojoWorkerDecoratorComponent\Worker\Builder\FactoryInterface`. That way the `create()` method will provide a builder which implements `Neighborhoods\KojoWorkerDecoratorComponent\Worker\BuilderInterface`, for example `Neighborhoods\KojoWorkerDecoratorComponent\Worker\Builder`.
 
-If predefined decorators are used, make sure the container builder's discoverable directories include path filters to this component's source and fabrication folders.
+If predefined decorators are used, add the source and fabrication folders of this component to the container builder's source paths.  
+Some predefined decorators use [Throwable Diagnostic Component](https://github.com/neighborhoods/ThrowableDiagnosticComponent) services, therefore add its source path as well.
 ``` php
-// Discover KojoWorkerDecoratorComponent service definitions
-$containerBuilder->getDiscoverableDirectories()->addDirectoryPathFilter(
+// Discover KojoWorkerDecoratorComponent and ThrowableDiagnosticComponent service definitions
+$containerBuilder->addSourcePath(
     '../vendor/neighborhoods/kojo-worker-decorator-component/fab'
 );
-$containerBuilder->getDiscoverableDirectories()->addDirectoryPathFilter(
+$containerBuilder->addSourcePath(
     '../vendor/neighborhoods/kojo-worker-decorator-component/src'
+);
+$containerBuilder->addSourcePath(
+    '../vendor/neighborhoods/throwable-diagnostic-component/src'
 );
 ```
 
