@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Neighborhoods\KojoWorkerDecoratorComponent\Worker;
 
-use Neighborhoods\KojoWorkerDecoratorComponent\Connection\ConnectionAwareTrait;
+use Neighborhoods\KojoWorkerDecoratorComponent\Connection;
 use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
 
 class UserlandPdoDecorator implements UserlandPdoDecoratorInterface
 {
     use DecoratorTrait;
-    use ConnectionAwareTrait;
+    use Connection\AwareTrait;
 
     public function work(): WorkerInterface
     {

@@ -6,7 +6,7 @@ namespace Neighborhoods\KojoWorkerDecoratorComponent\Worker;
 
 use DateTime;
 use LogicException;
-use Neighborhoods\KojoWorkerDecoratorComponent\Connection\ConnectionAwareTrait;
+use Neighborhoods\KojoWorkerDecoratorComponent\Connection;
 use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
 use Neighborhoods\ThrowableDiagnosticComponent\ThrowableDiagnostic;
 use OutOfBoundsException;
@@ -15,7 +15,7 @@ use Throwable;
 final class ReschedulingDecorator implements ReschedulingDecoratorInterface
 {
     use DecoratorTrait;
-    use ConnectionAwareTrait;
+    use Connection\AwareTrait;
     use ThrowableDiagnostic\Builder\Factory\AwareTrait;
 
     public const MAX_RESCHEDULE_DELAY_SECONDS = 86400;// (24 hours)

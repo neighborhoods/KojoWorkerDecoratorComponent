@@ -7,7 +7,7 @@ namespace Neighborhoods\KojoWorkerDecoratorComponent\Connection;
 use Doctrine\DBAL\Connection;
 use LogicException;
 
-trait ConnectionAwareTrait
+trait AwareTrait
 {
     /**
      * @var Connection
