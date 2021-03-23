@@ -65,7 +65,7 @@ final class Container implements ContainerInterface
         return $this->wrappedContainer;
     }
 
-    public function getWorkerBuilderFactory(): Builder\FactoryInterface
+    public function getPrimaryActorNameBuilderFactory(): Builder\FactoryInterface
     {
         return $this->getWrappedContainer()->get(Builder\FactoryInterface::class);
     }

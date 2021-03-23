@@ -16,7 +16,7 @@ class Proxy implements ProxyInterface
 
     public function work(): WorkerInterface
     {
-        $worker = $this->getContainer()->getWorkerBuilderFactory()
+        $worker = $this->getContainer()->getPrimaryActorNameBuilderFactory()
             ->create()
             ->setApiV1RDBMSConnectionService($this->getApiV1RDBMSConnectionService())
             ->setApiV1WorkerService($this->getApiV1WorkerService())
