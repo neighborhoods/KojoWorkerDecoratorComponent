@@ -201,13 +201,13 @@ Some predefined decorators use [Throwable Diagnostic Component](https://github.c
 ``` php
 // Discover KojoWorkerDecoratorComponent and ThrowableDiagnosticComponent service definitions
 $containerBuilder->addSourcePath(
-    '../vendor/neighborhoods/kojo-worker-decorator-component/fab'
+    'vendor/neighborhoods/kojo-worker-decorator-component/fab'
 );
 $containerBuilder->addSourcePath(
-    '../vendor/neighborhoods/kojo-worker-decorator-component/src'
+    'vendor/neighborhoods/kojo-worker-decorator-component/src'
 );
 $containerBuilder->addSourcePath(
-    '../vendor/neighborhoods/throwable-diagnostic-component/src'
+    'vendor/neighborhoods/throwable-diagnostic-component/src'
 );
 ```
 
