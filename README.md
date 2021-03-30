@@ -206,7 +206,7 @@ $containerBuilder->getDiscoverableDirectories()->addDirectoryPathFilter(
     '../vendor/neighborhoods/kojo-worker-decorator-component/src'
 );
 ```
-The container building and caching be extracted from the Proxy into a dedicated class in order to test it.
+The container building and caching can be extracted from the Proxy into a dedicated class in order to test it.
 
 ### Decorator stack
 
