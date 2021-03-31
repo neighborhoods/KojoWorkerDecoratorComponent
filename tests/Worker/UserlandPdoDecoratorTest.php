@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Neighborhoods\KojoWorkerDecoratorComponent\Tests\Worker;
 
 use Closure;
-use Doctrine\DBAL\Connection;
 use Neighborhoods\Kojo\Api\V1;
 use Neighborhoods\Kojo\Doctrine\Connection\Decorator;
 use Neighborhoods\Kojo\Doctrine\Connection\Decorator\Repository\AwareTrait;
@@ -45,9 +44,6 @@ class UserlandPdoDecoratorTest extends TestCase
         $workerService->usePDO($initialPDO);
 
         $newPDO = $this->createMock(PDO::class);
-        $desiredConnection = $this->createMock(Connection::class);
-        $desiredConnection->method('getWrappedConnection')
-            ->willReturn($newPDO);
         $worker = new class (
             function (bool $condition) {
             $this->assertTrue($condition);
@@ -93,7 +89,7 @@ class UserlandPdoDecoratorTest extends TestCase
         $worker->setDoctrineConnectionDecoratorRepository($connectionDecoratorRepo);
 
         $decorator = new UserlandPdoDecorator();
-        $decorator->setConnection($desiredConnection);
+        $decorator->setPdo($newPDO);
         $decorator->setWorker($worker);
         $decorator->setApiV1RDBMSConnectionService($workerService);
 
