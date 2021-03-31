@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Neighborhoods\KojoWorkerDecoratorComponent\Worker;
 
-use Doctrine\DBAL\Connection;
+use PDO;
 
 interface UserlandPdoDecoratorInterface extends DecoratorInterface
 {
-    public function setConnection(Connection $connection);
+    public function setPdo(PDO $pdo);
 }

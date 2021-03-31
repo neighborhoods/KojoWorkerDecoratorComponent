@@ -29,7 +29,7 @@ class Builder implements BuilderInterface
 
         $decorator->setApiV1RDBMSConnectionService($this->getApiV1RDBMSConnectionService());
         $decorator->setApiV1WorkerService($this->getApiV1WorkerService());
-        $decorator->setConnection($connection);
+        $decorator->setPdo($connection->getWrappedConnection());
         $decorator->setWorker($this->getWorker());
 
         return $decorator;

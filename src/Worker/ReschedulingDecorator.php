@@ -15,7 +15,7 @@ use Throwable;
 final class ReschedulingDecorator implements ReschedulingDecoratorInterface
 {
     use DecoratorTrait;
-    use Connection\AwareTrait;
+    use Connection\PdoAwareTrait;
     use ThrowableDiagnostic\Builder\Factory\AwareTrait;
 
     public const MAX_RESCHEDULE_DELAY_SECONDS = 86400;// (24 hours)
@@ -40,7 +40,7 @@ final class ReschedulingDecorator implements ReschedulingDecoratorInterface
 
     private function reschedule(): ReschedulingDecoratorInterface
     {
-        $this->getConnection()->beginTransaction();
+        $this->getPdo()->beginTransaction();
         try {
             $this->getApiV1WorkerService()
                 ->getNewJobScheduler()
@@ -54,9 +54,9 @@ final class ReschedulingDecorator implements ReschedulingDecoratorInterface
                 ->requestCompleteSuccess()
                 ->applyRequest();
 
-            $this->getConnection()->commit();
+            $this->getPdo()->commit();
         } catch (Throwable $throwable) {
-            $this->getConnection()->rollBack();
+            $this->getPdo()->rollBack();
             $this->getThrowableDiagnosticBuilderFactory()
                 ->create()
                 ->build()
