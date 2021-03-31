@@ -18,8 +18,6 @@ final class ReschedulingDecorator implements ReschedulingDecoratorInterface
     use Connection\PdoAwareTrait;
     use ThrowableDiagnostic\Builder\Factory\AwareTrait;
 
-    public const MAX_RESCHEDULE_DELAY_SECONDS = 86400;// (24 hours)
-
     private /*int*/ $rescheduleDelaySeconds;
     private /*string*/ $jobTypeCode;
 
@@ -71,9 +69,8 @@ final class ReschedulingDecorator implements ReschedulingDecoratorInterface
         if (isset($this->rescheduleDelaySeconds)) {
             throw new LogicException('Reschedule Delay Seconds is already set.');
         }
-        if ($rescheduleDelaySeconds < 0 || $rescheduleDelaySeconds > self::MAX_RESCHEDULE_DELAY_SECONDS) {
-            throw new OutOfBoundsException('Reschedule Delay Seconds must be positive and at most ' .
-                self::MAX_RESCHEDULE_DELAY_SECONDS);
+        if ($rescheduleDelaySeconds < 0) {
+            throw new OutOfBoundsException('Reschedule Delay Seconds must be positive');
         }
         $this->rescheduleDelaySeconds = $rescheduleDelaySeconds;
         return $this;

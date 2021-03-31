@@ -111,7 +111,6 @@ The decorator doesn't reschedule if the decorated worker has already applied a s
 * **rescheduleDelaySeconds**  
   Type: integer  
   Minimal allowed value: 0  
-  Maximal allowed value: 86400 (24 hours)  
   Number of seconds between completing the current and starting the next job.
 
 The decorator itself expects a connection. In practice the connection is obtained from a Prefab5 connection repository, which is done by the Rescheduling Decorator Builder.  
