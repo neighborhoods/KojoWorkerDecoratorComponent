@@ -43,8 +43,11 @@ final class ReschedulingDecorator implements ReschedulingDecoratorInterface
             $this->getApiV1WorkerService()
                 ->getNewJobScheduler()
                 ->setJobTypeCode($this->getJobTypeCode())
-                ->setWorkAtDateTime((new DateTime())->add(
-                    new \DateInterval('PT' . $this->getRescheduleDelaySeconds() . 'S')
+                ->setWorkAtDateTime(new DateTime(
+                    sprintf(
+                        '+%d seconds',
+                        $this->getRescheduleDelaySeconds()
+                    )
                 ))
                 ->save();
 
