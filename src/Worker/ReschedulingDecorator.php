@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Neighborhoods\KojoWorkerDecoratorComponent\Worker;
 
 use DateTime;
-use Doctrine\DBAL\Connection;
 use LogicException;
+use Neighborhoods\KojoWorkerDecoratorComponent\Connection;
 use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
 use Neighborhoods\ThrowableDiagnosticComponent\ThrowableDiagnostic;
 use OutOfBoundsException;
@@ -15,13 +15,13 @@ use Throwable;
 final class ReschedulingDecorator implements ReschedulingDecoratorInterface
 {
     use DecoratorTrait;
+    use Connection\PdoAwareTrait;
     use ThrowableDiagnostic\Builder\Factory\AwareTrait;
 
     public const MAX_RESCHEDULE_DELAY_SECONDS = 86400;// (24 hours)
 
     private /*int*/ $rescheduleDelaySeconds;
     private /*string*/ $jobTypeCode;
-    private /*Connection*/ $connection;
 
     public function work(): WorkerInterface
     {
@@ -40,7 +40,7 @@ final class ReschedulingDecorator implements ReschedulingDecoratorInterface
 
     private function reschedule(): ReschedulingDecoratorInterface
     {
-        $this->getConnection()->beginTransaction();
+        $this->getPdo()->beginTransaction();
         try {
             $this->getApiV1WorkerService()
                 ->getNewJobScheduler()
@@ -54,9 +54,9 @@ final class ReschedulingDecorator implements ReschedulingDecoratorInterface
                 ->requestCompleteSuccess()
                 ->applyRequest();
 
-            $this->getConnection()->commit();
+            $this->getPdo()->commit();
         } catch (Throwable $throwable) {
-            $this->getConnection()->rollBack();
+            $this->getPdo()->rollBack();
             $this->getThrowableDiagnosticBuilderFactory()
                 ->create()
                 ->build()
@@ -85,23 +85,6 @@ final class ReschedulingDecorator implements ReschedulingDecoratorInterface
             throw new LogicException('Reschedule Delay Seconds has not been set.');
         }
         return $this->rescheduleDelaySeconds;
-    }
-
-    private function getConnection(): Connection
-    {
-        if (!isset($this->connection)) {
-            throw new LogicException('Connection has not been set.');
-        }
-        return $this->connection;
-    }
-
-    public function setConnection(Connection $connection): ReschedulingDecoratorInterface
-    {
-        if (isset($this->connection)) {
-            throw new LogicException('Connection is already set.');
-        }
-        $this->connection = $connection;
-        return $this;
     }
 
     public function setJobTypeCode(string $jobTypeCode): ReschedulingDecoratorInterface

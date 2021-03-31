@@ -8,5 +8,5 @@ use PDO;
 
 interface UserlandPdoDecoratorInterface extends DecoratorInterface
 {
-    public function setConnection(PDO $connection);
+    public function setPdo(PDO $pdo);
 }

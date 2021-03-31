@@ -25,13 +25,12 @@ class Builder implements BuilderInterface
             ->create();
 
         $connection = $this->getPrefabDoctrineDbalConnectionDecoratorRepository()
-            ->getConnection($this->getConnectionId())
-            ->getWrappedConnection();
+            ->getConnection($this->getConnectionId());
 
         $decorator->setApiV1RDBMSConnectionService($this->getApiV1RDBMSConnectionService());
         $decorator->setApiV1WorkerService($this->getApiV1WorkerService());
         $decorator->setWorker($this->getWorker());
-        $decorator->setConnection($connection);
+        $decorator->setPdo($connection->getWrappedConnection());
 
         return $decorator;
     }

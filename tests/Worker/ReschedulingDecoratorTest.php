@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Neighborhoods\KojoWorkerDecoratorComponent\Tests\Worker;
 
 use DateTime;
-use Doctrine\DBAL\Connection;
+use PDO;
 use Exception;
 use Neighborhoods\Kojo\Api\V1;
 use Neighborhoods\KojoWorkerDecoratorComponent\Worker\ReschedulingDecorator;
@@ -18,9 +18,9 @@ class ReschedulingDecoratorTest extends TestCase
 {
     private $decorator;
     /**
-     * @var Connection&MockObject
+     * @var PDO&MockObject
      */
-    private $connectionMock;
+    private $pdoMock;
     /**
      * @var V1\Worker\ServiceInterface&MockObject
      */
@@ -37,19 +37,19 @@ class ReschedulingDecoratorTest extends TestCase
         $this->throwableDiagnosticBuilderFactoryMock =
             $this->createMock(ThrowableDiagnostic\Builder\FactoryInterface::class);
         $this->kojoWorkerServiceMock = $this->createMock(V1\Worker\ServiceInterface::class);
-        $this->connectionMock = $this->createMock(Connection::class);
+        $this->pdoMock = $this->createMock(PDO::class);
 
         $this->decorator->setJobTypeCode('jobTypeCode');
         $this->decorator->setRescheduleDelaySeconds(1);
         $this->decorator->setThrowableDiagnosticBuilderFactory($this->throwableDiagnosticBuilderFactoryMock);
         $this->decorator->setApiV1WorkerService($this->kojoWorkerServiceMock);
-        $this->decorator->setConnection($this->connectionMock);
+        $this->decorator->setPdo($this->pdoMock);
     }
 
     public function tearDown(): void
     {
         unset(
-            $this->connectionMock,
+            $this->pdoMock,
             $this->decorator,
             $this->kojoWorkerServiceMock,
             $this->throwableDiagnosticBuilderFactoryMock
@@ -69,7 +69,7 @@ class ReschedulingDecoratorTest extends TestCase
             ->method('isRequestApplied')
             ->willReturn(false);
 
-        $this->connectionMock->expects(self::once())
+        $this->pdoMock->expects(self::once())
             ->method('beginTransaction');
 
         $this->kojoWorkerServiceMock->expects(self::once())
@@ -95,9 +95,9 @@ class ReschedulingDecoratorTest extends TestCase
         $schedulerMock->expects(self::once())
             ->method('save')
             ->willReturnSelf();
-        $this->connectionMock->expects(self::once())
+        $this->pdoMock->expects(self::once())
             ->method('commit');
-        $this->connectionMock->expects(self::never())
+        $this->pdoMock->expects(self::never())
             ->method('rollBack');
         $this->throwableDiagnosticBuilderFactoryMock
             ->expects(self::never())
@@ -134,16 +134,16 @@ class ReschedulingDecoratorTest extends TestCase
             ->method('isRequestApplied')
             ->willReturn(true);
 
-        $this->connectionMock->expects(self::never())
+        $this->pdoMock->expects(self::never())
             ->method('beginTransaction');
         $this->kojoWorkerServiceMock->expects(self::never())
             ->method('applyRequest');
         $this->kojoWorkerServiceMock
             ->expects(self::never())
             ->method('getNewJobScheduler');
-        $this->connectionMock->expects(self::never())
+        $this->pdoMock->expects(self::never())
             ->method('commit');
-        $this->connectionMock->expects(self::never())
+        $this->pdoMock->expects(self::never())
             ->method('rollBack');
         $this->throwableDiagnosticBuilderFactoryMock
             ->expects(self::never())
