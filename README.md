@@ -29,7 +29,7 @@ All decorators use Buphalo decorator templates.
 This decorator handles exceptions thrown by the decorated worker.  
 It prevents jobs from panicking. In case of a transient fault, the job is retried after a predefined interval. In case of a non-transient fault the job is held. Either way the exception is logged.
 
-When defining the decorator stack (in the worker builder's service definition/YAML file), make sure the exception handling decorator is listed last.
+When defining the decorator stack make sure the exception handling decorator is the outermost, i.e. listed last in the worker builder's service definition/YAML file.
 
 This decorator is compatible with [Exception Component](https://github.com/neighborhoods/ExceptionComponent) and [Throwable Diagnostic Component](https://github.com/neighborhoods/ThrowableDiagnosticComponent) when it comes to determining the transiency of an exception.
 
@@ -99,21 +99,26 @@ The Prefab5 connection repository doesn't have a default value. The Symfony DI s
 
 ### Rescheduling Decorator
 
-This decorator is intended for jobs rescheduling themselves (observers). It completes the running job with success and schedules the next, possibly delayed. The completion and scheduling is atomic, since it's done in a transaction, which is why the decorator needs to know what connection is used by Kōjō.  
-The decorator doesn't reschedule if the decorated worker has already applied a state change request, e.g. has held or has completed with success. If that is the case, the decorator logs a warning, which is why it's recommended to have this decorator at the top of the decorator stack (in the worker builder's service definition/YAML file).
+This decorator is intended for jobs rescheduling themselves (observers). It completes the running job with success and schedules the next, possibly delayed.
+
+The completion and scheduling is atomic, since it's done in a transaction, which is why this decorator needs to know what connection is used by Kōjō. Use the [Userland PDO Decorator](#userland-pdo-decorator) to set the Kōjō connection. The values of the connection related DI parameters for the Rescheduling Decorator should match the values of the corresponding DI parameters for the Userland PDO Decorator.
+
+The decorated worker shouldn't complete with success since the Rescheduling Decorator does.  
+The decorator doesn't reschedule if the decorated worker has already applied a state change request, e.g. has held or has completed with success. If that is the case, the decorator logs a warning.  
+The warning will be logged if another decorator between the Rescheduling Decorator and Worker applies a state change request, for example the [Retry Threshold Decorator](#retry-threshold-decorator) due to too many retries. Therefore, it's recommended to have the Rescheduling Decorator as innermost, i.e. at the top of the decorator stack in the worker builder's service definition/YAML file, like it's done in the [example](https://github.com/neighborhoods/KojoWorkerDecoratorComponentFitness/blob/main/src/ReschedulingDecorator/Worker/Builder.service.yml#L9).
 
 #### Parameters
 
 * **jobTypeCode**  
   Type: string  
-  Job type code of the scheduled job. Doesn't have a default value and has to be provided.
+  Job type code of the scheduled job. Doesn't have a default value. This should be the worker's job type code if the job reschedules itself.
   
 * **rescheduleDelaySeconds**  
   Type: integer  
   Minimal allowed value: 0  
   Number of seconds between completing the current and starting the next job.
 
-The decorator itself expects a connection. In practice the connection is obtained from a Prefab5 connection repository, which is done by the Rescheduling Decorator Builder.  
+The decorator itself expects the Kōjō connection. In practice the connection is obtained from a Prefab5 connection repository, which is done by the Rescheduling Decorator Builder.  
 So the builder requires the Kōjō connection id, which is injected using a Symfony DI parameter, and the Prefab5 connection repository, which is injected using a Symfony DI service.
 * **connectionId**  
   Type: string  
