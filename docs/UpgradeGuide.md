@@ -46,7 +46,8 @@ actors:
  * Run [buphalo](https://github.com/neighborhoods/Buphalo) to fabricate the two new actors.
  * Move the fabricated `Container.php` file from the fabrication into the source folder.
  * Extract the builder configuration, building and caching from the `Proxy`'s `getContainer()` class into the `Container`'s `buildWrappedContainer()` method.
+ * (Optional) delete the `Proxy.php` file and generate it in the fab folder by running buphalo once more.
 
 ## ConnectionAwareTrait
 
-The `Neighborhoods\KojoWorkerDecoratorComponent\Connection\ConnectionAwareTrait` from version 1 has been replaced by `Neighborhoods\KojoWorkerDecoratorComponent\Connection\AwareTrait` in version 2. Instead of being aware of `PDO` it's aware of `Doctrine\DBAL\Connection`.
+The `Neighborhoods\KojoWorkerDecoratorComponent\Connection\ConnectionAwareTrait` from version 1 has been replaced by `Neighborhoods\KojoWorkerDecoratorComponent\Connection\PdoAwareTrait` in version 2.

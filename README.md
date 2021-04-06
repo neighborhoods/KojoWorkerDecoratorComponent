@@ -14,6 +14,10 @@ Via Composer
 $ composer require neighborhoods/kojo-worker-decorator-component
 ```
 
+### Upgrade
+
+For upgrading from version 1 to version 2 follow the [Upgrade Guide](docs/UpgradeGuide.md).
+
 ## Predefined decorators
 
 * [Exception Handling Decorator](#exception-handling-decorator)
