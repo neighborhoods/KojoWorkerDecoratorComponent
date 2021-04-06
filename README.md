@@ -20,6 +20,7 @@ $ composer require neighborhoods/kojo-worker-decorator-component
 * [Crashed Threshold Decorator](#crashed-threshold-decorator)
 * [Retry Threshold Decorator](#retry-threshold-decorator)
 * [Userland PDO Decorator](#userland-pdo-decorator)
+* [Rescheduling Decorator](#rescheduling-decorator)
 
 All decorators use Buphalo decorator templates.
 
@@ -28,7 +29,7 @@ All decorators use Buphalo decorator templates.
 This decorator handles exceptions thrown by the decorated worker.  
 It prevents jobs from panicking. In case of a transient fault, the job is retried after a predefined interval. In case of a non-transient fault the job is held. Either way the exception is logged.
 
-When defining the decorator stack (in the worker builder's service definition/YAML file), make sure the exception handling decorator is listed last.
+When defining the decorator stack make sure the exception handling decorator is the outermost, i.e. listed last in the worker builder's service definition/YAML file.
 
 This decorator is compatible with [Exception Component](https://github.com/neighborhoods/ExceptionComponent) and [Throwable Diagnostic Component](https://github.com/neighborhoods/ThrowableDiagnosticComponent) when it comes to determining the transiency of an exception.
 
@@ -95,6 +96,37 @@ So the builder requires the connection id, which is injected using a Symfony DI 
   ID of Prefab5 Doctrine DBAL connection to be used by the Kōjō API Worker Service.
 
 The Prefab5 connection repository doesn't have a default value. The Symfony DI service `Vendor\Product\Prefab5\Doctrine\DBAL\Connection\Decorator\RepositoryInterface` has to be defined. The easiest way to do so is by defining it as an alias of the corresponding Prefab5 generated class.
+
+### Rescheduling Decorator
+
+This decorator is intended for jobs rescheduling themselves (observers). It completes the running job with success and schedules the next, possibly delayed.
+
+The completion and scheduling is atomic, since it's done in a transaction, which is why this decorator needs to know what connection is used by Kōjō. Use the [Userland PDO Decorator](#userland-pdo-decorator) to set the Kōjō connection. The values of the connection related DI parameters for the Rescheduling Decorator should match the values of the corresponding DI parameters for the Userland PDO Decorator.
+
+The decorated worker shouldn't complete with success since the Rescheduling Decorator does.  
+The decorator doesn't reschedule if the decorated worker has already applied a state change request, e.g. has held or has completed with success. If that is the case, the decorator logs a warning.  
+The warning will be logged if another decorator between the Rescheduling Decorator and Worker applies a state change request, for example the [Retry Threshold Decorator](#retry-threshold-decorator) due to too many retries. Therefore, it's recommended to have the Rescheduling Decorator as innermost, i.e. at the top of the decorator stack in the worker builder's service definition/YAML file, like it's done in the [example](https://github.com/neighborhoods/KojoWorkerDecoratorComponentFitness/blob/main/src/ReschedulingDecorator/Worker/Builder.service.yml#L9).
+
+#### Parameters
+
+* **jobTypeCode**  
+  Type: string  
+  Job type code of the scheduled job. Doesn't have a default value. This should be the worker's job type code if the job reschedules itself.
+  
+* **rescheduleDelaySeconds**  
+  Type: integer  
+  Minimal allowed value: 0  
+  Number of seconds between completing the current and starting the next job.
+
+The decorator itself expects the Kōjō connection. In practice the connection is obtained from a Prefab5 connection repository, which is done by the Rescheduling Decorator Builder.  
+So the builder requires the Kōjō connection id, which is injected using a Symfony DI parameter, and the Prefab5 connection repository, which is injected using a Symfony DI service.
+* **connectionId**  
+  Type: string  
+  Default value: core  
+  ID of Prefab5 Doctrine DBAL connection used by the Kōjō API Worker Service. If the [Userland PDO Decorator](#userland-pdo-decorator) is used, the value has to match its connectionId parameter value.
+
+The Prefab5 connection repository doesn't have a default value. The Symfony DI service `Vendor\Product\Prefab5\Doctrine\DBAL\Connection\Decorator\RepositoryInterface` has to be defined. The easiest way to do so is by defining it as an alias of the corresponding Prefab5 generated class.  
+The same has to be done for [Userland PDO Decorator](#userland-pdo-decorator). There is no need to define the same alias twice, so it is enough to define it in one place.
 
 ## Usage
 
@@ -168,14 +200,18 @@ class Proxy implements WorkerInterface
 
 The `MyWorker\Builder\FactoryInterface` should extend the `Neighborhoods\KojoWorkerDecoratorComponent\Worker\Builder\FactoryInterface`. That way the `create()` method will provide a builder which implements `Neighborhoods\KojoWorkerDecoratorComponent\Worker\BuilderInterface`, for example `Neighborhoods\KojoWorkerDecoratorComponent\Worker\Builder`.
 
-If predefined decorators are used, make sure the container builder's discoverable directories include path filters to this component's source and fabrication folders.
+If predefined decorators are used, add the source and fabrication folders of this component to the container builder's source paths.  
+Some predefined decorators use [Throwable Diagnostic Component](https://github.com/neighborhoods/ThrowableDiagnosticComponent) services, therefore add its source path as well.
 ``` php
-// Discover KojoWorkerDecoratorComponent service definitions
-$containerBuilder->getDiscoverableDirectories()->addDirectoryPathFilter(
-    '../vendor/neighborhoods/kojo-worker-decorator-component/fab'
+// Discover KojoWorkerDecoratorComponent and ThrowableDiagnosticComponent service definitions
+$containerBuilder->addSourcePath(
+    'vendor/neighborhoods/kojo-worker-decorator-component/fab'
 );
-$containerBuilder->getDiscoverableDirectories()->addDirectoryPathFilter(
-    '../vendor/neighborhoods/kojo-worker-decorator-component/src'
+$containerBuilder->addSourcePath(
+    'vendor/neighborhoods/kojo-worker-decorator-component/src'
+);
+$containerBuilder->addSourcePath(
+    'vendor/neighborhoods/throwable-diagnostic-component/src'
 );
 ```
 
@@ -199,7 +235,10 @@ services:
 
 ```
 
-Decorator parameters have default values when possible. The [Userland PDO Decorator](#userland-pdo-decorator) builder requires the `Vendor\Product\Prefab5\Doctrine\DBAL\Connection\Decorator\RepositoryInterface` service, which doesn't have a default value. How to define it is shown in an [example](https://github.com/neighborhoods/KojoWorkerDecoratorComponentFitness/blob/main/src/SuccessWorker/Worker/UserlandPdoDecorator/Builder.service.yml).  
+Decorator parameters have default values when possible.  
+The [Userland PDO Decorator](#userland-pdo-decorator) builder requires the `Vendor\Product\Prefab5\Doctrine\DBAL\Connection\Decorator\RepositoryInterface` service, which doesn't have a default value. How to define it is shown in an [example](https://github.com/neighborhoods/KojoWorkerDecoratorComponentFitness/blob/main/src/SuccessWorker/Worker/UserlandPdoDecorator/Builder.service.yml).  
+The [Rescheduling Decorator](#rescheduling-decorator) is missing default values for jobTypeCode, rescheduleDelaySeconds and `Vendor\Product\Prefab5\Doctrine\DBAL\Connection\Decorator\RepositoryInterface` service. How to define them is shown in an [example](https://github.com/neighborhoods/KojoWorkerDecoratorComponentFitness/blob/main/src/ReschedulingDecorator/Worker/ReschedulingDecorator.service.yml).
+
 Other decorator parameters are defined using DI parameters. The default parameter values can be overridden by redefining them. Make sure that the file containing the value you want to be applied is loaded last, i.e. load the service definitions from you project after service definitions from your dependencies.  
 To avoid mixing worker builder and decorator definitions, provide them in separate yaml files. An [example](https://github.com/neighborhoods/KojoWorkerDecoratorComponentFitness/tree/main/src/DecoratorParameters/Worker) is available.
 
