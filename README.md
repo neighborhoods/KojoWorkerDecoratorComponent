@@ -14,6 +14,10 @@ Via Composer
 $ composer require neighborhoods/kojo-worker-decorator-component
 ```
 
+### Upgrade
+
+For upgrading from version 1 to version 2 follow the [Upgrade Guide](docs/UpgradeGuide.md).
+
 ## Predefined decorators
 
 * [Exception Handling Decorator](#exception-handling-decorator)
@@ -89,7 +93,7 @@ Knowing the connection enables worker logic to isolate job state changes into tr
 #### Parameters
 
 The decorator itself expects a connection. In practice the connection is obtained from a Prefab5 connection repository, which is done by the Userland PDO Decorator Builder.  
-So the builder requires the connection id, which is injected using a Symfony DI parameter, and the Prefab5 connection repository, which is injected using a Symfony DI service.  
+So the builder requires the connection id, which is injected using a Symfony DI parameter, and the Prefab5 connection repository, which is injected using a Symfony DI service.
 * **connectionId**  
   Type: string  
   Default value: core  
@@ -130,7 +134,7 @@ The same has to be done for [Userland PDO Decorator](#userland-pdo-decorator). T
 
 ## Usage
 
-Kōjō doesn't enforce any interface to workers, but this component does. To decorate your worker it must implement the 
+Kōjō doesn't enforce any interface to workers, but this component does. To decorate your worker it must implement the
 `Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface`. This can be easily done by using the `AwareTrait` for Kojo API Worker Service and Kojo API RDBMS Connection Service as shown below.
 
 ``` php
@@ -214,6 +218,7 @@ $containerBuilder->addSourcePath(
     'vendor/neighborhoods/throwable-diagnostic-component/src'
 );
 ```
+The container building and caching can be extracted from the Proxy into a dedicated class in order to test it.
 
 ### Decorator stack
 
@@ -280,9 +285,9 @@ A full implementation of a custom decorator is provided in [this example](https:
 ### Prerequisites
 
 The Buphalo templates are provided in a custom template tree. Support for multiple template trees has been added to Buphalo in version 1.1. Ensure you have Buphalo version 1.1 or above installed.  
-When you run Buphalo you need to add the template tree contained in this package to the template tree directory paths. To do so make an export as shown below.
+You probably have a script in your project's `bin` folder running `vendor/bin/buphalo` with all the needed environment variables. Edit the environment variable for template tree directory paths to include the template tree contained in this package. The environment variable definition might be as below.
 ``` bash
-Neighborhoods_Buphalo_V1_TemplateTree_Map_Builder_FactoryInterface__TemplateTreeDirectoryPaths=default:$PWD/vendor/neighborhoods/buphalo/template-tree/V1,diagnostic:$PWD/vendor/neighborhoods/kojo-worker-decorator-component/template-tree/V1
+Neighborhoods_Buphalo_V1_TemplateTree_Map_Builder_FactoryInterface__TemplateTreeDirectoryPaths=default:$PWD/vendor/neighborhoods/buphalo/template-tree/V1,kwdc:$PWD/vendor/neighborhoods/kojo-worker-decorator-component/template-tree/V1
 ```
 
 The export above assumes that you have no other custom template trees.
@@ -309,6 +314,10 @@ actors:
     template: KojoWorkerDecoratorComponent/Worker/PrimaryActorName/ProxyInterface.php
   <PrimaryActorName>/Proxy/AwareTrait.php:
     template: KojoWorkerDecoratorComponent/Worker/PrimaryActorName/Proxy/AwareTrait.php
+  <PrimaryActorName>/Container.php:
+    template: KojoWorkerDecoratorComponent/Worker/PrimaryActorName/Container.php
+  <PrimaryActorName>/ContainerInterface.php:
+    template: KojoWorkerDecoratorComponent/Worker/PrimaryActorName/ContainerInterface.php
   <PrimaryActorName>/Factory.php:
     template: KojoWorkerDecoratorComponent/Worker/PrimaryActorName/Factory.php
   <PrimaryActorName>/Factory.service.yml:
@@ -336,11 +345,11 @@ actors:
 
 ```
 
-Implement `MyWorker.php`, `MyWorkerInterface.php` and `MyWorker/Proxy.php` after moving them from your fabrication folder to the source folder.  
+Implement `MyWorker.php`, `MyWorkerInterface.php` and `MyWorker/Container.php` after moving them from your fabrication folder to the source folder.  
 Don't forget to define decorator parameters without default values mentioned [earlier](#decorator-stack).  
 To modify the decorator stack move `MyWorker/Builder.service.yml` as well and adapt it.
 
-The Proxy template is using [Neighborhoods Container Builder](https://github.com/neighborhoods/DependencyInjectionContainerBuilderComponent). For your convenience it is already added as a dependency, although it's not used in the source code.
+The Container template is using [Neighborhoods Container Builder](https://github.com/neighborhoods/DependencyInjectionContainerBuilderComponent). For your convenience it is already added as a dependency, although it's not used in the source code.
 
 ### Custom decorator fabrication
 
