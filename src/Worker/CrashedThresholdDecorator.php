@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Neighborhoods\KojoWorkerDecoratorComponent\Worker;
 
 use LogicException;
-use Neighborhoods\Kojo\Api;
+use Neighborhoods\Kojo\Api\V1;
 use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
 use UnexpectedValueException;
 
 class CrashedThresholdDecorator implements CrashedThresholdDecoratorInterface
 {
     use DecoratorTrait;
+    use V1\Worker\Service\AwareTrait;
 
     /**
      * @var int

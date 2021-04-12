@@ -16,10 +16,12 @@ class Proxy implements ProxyInterface
 
     public function work(): WorkerInterface
     {
-        $worker = $this->getContainer()->getPrimaryActorNameBuilderFactory()
+        $workerBuilderFactory = $this->getContainer()->getPrimaryActorNameBuilderFactory(
+            $this->getApiV1WorkerService(),
+            $this->getApiV1RDBMSConnectionService()
+        );
+        $worker = $workerBuilderFactory
             ->create()
-            ->setApiV1RDBMSConnectionService($this->getApiV1RDBMSConnectionService())
-            ->setApiV1WorkerService($this->getApiV1WorkerService())
             ->build();
 
         $worker->work();

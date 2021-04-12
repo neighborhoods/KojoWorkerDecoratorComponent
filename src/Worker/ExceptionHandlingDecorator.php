@@ -10,7 +10,7 @@ use InvalidArgumentException;
 use LogicException;
 use Neighborhoods\ExceptionComponent\Exception;
 use Neighborhoods\ExceptionComponent\TransientExceptionInterface;
-use Neighborhoods\Kojo\Api;
+use Neighborhoods\Kojo\Api\V1;
 use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
 use Neighborhoods\ThrowableDiagnosticComponent\DiagnosedInterface;
 use Psr\Log\LogLevel;
@@ -18,6 +18,7 @@ use Throwable;
 
 class ExceptionHandlingDecorator implements ExceptionHandlingDecoratorInterface
 {
+    use V1\Worker\Service\AwareTrait;
     use DecoratorTrait;
 
     /**

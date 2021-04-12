@@ -3,3 +3,5 @@ services:
     class: Neighborhoods\KojoWorkerDecoratorComponent\Worker\UserlandPdoDecorator
     public: false
     shared: false
+    calls:
+      - [setApiV1RDBMSConnectionService, ['@Neighborhoods\Kojo\Api\V1\RDBMS\Connection\ServiceInterface']]
