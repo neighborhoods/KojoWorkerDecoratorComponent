@@ -1,0 +1,9 @@
+services:
+  Neighborhoods\Kojo\Api\V1\Worker\ServiceInterface.synthetic:
+    synthetic: true
+  Neighborhoods\Kojo\Api\V1\Worker\ServiceInterface:
+    class: Neighborhoods\KojoWorkerDecoratorComponent\KojoApiV1\WorkerServiceDelegator
+    public: false
+    shared: false
+    calls:
+      - [setApiV1WorkerService, ['@Neighborhoods\Kojo\Api\V1\Worker\ServiceInterface.synthetic']]

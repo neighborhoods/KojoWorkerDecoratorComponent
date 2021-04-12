@@ -1,0 +1,5 @@
+services:
+  Neighborhoods\Kojo\Api\V1\LoggerInterface:
+    factory: ['@Neighborhoods\Kojo\Api\V1\Worker\ServiceInterface', getLogger]
+    public: false
+    shared: false

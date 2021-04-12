@@ -1,0 +1,9 @@
+services:
+  Neighborhoods\Kojo\Api\V1\RDBMS\Connection\ServiceInterface.synthetic:
+    synthetic: true
+  Neighborhoods\Kojo\Api\V1\RDBMS\Connection\ServiceInterface:
+    class: Neighborhoods\KojoWorkerDecoratorComponent\KojoApiV1\RDBMSConnectionServiceDelegator
+    public: false
+    shared: false
+    calls:
+      - [setApiV1RDBMSConnectionService, ['@Neighborhoods\Kojo\Api\V1\RDBMS\Connection\ServiceInterface.synthetic']]
