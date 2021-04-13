@@ -135,20 +135,16 @@ The same has to be done for [Userland PDO Decorator](#userland-pdo-decorator). T
 ## Usage
 
 Kōjō doesn't enforce any interface to workers, but this component does. To decorate your worker it must implement the
-`Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface`. This can be easily done by using the `AwareTrait` for Kojo API Worker Service and Kojo API RDBMS Connection Service as shown below.
+`Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface` as shown below.
 
 ``` php
 <?php
 namespace Acme;
 
-use Neighborhoods\Kojo\Api\V1;
 use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
 
 class MyWorker implements WorkerInterface
 {
-    use V1\Worker\Service\AwareTrait;
-    use V1\RDBMS\Connection\Service\AwareTrait;
-
     public function work(): WorkerInterface
     {
         // Do something
@@ -161,7 +157,7 @@ class MyWorker implements WorkerInterface
 ### Proxy
 
 The Worker will not be used by Kōjō directly. Kōjō will use a Proxy, which will build the Worker with the desired decorators.  
-Kōjō will provide the Proxy with its API services, which are forwarded to the worker.  
+Kōjō will provide the Proxy with its API services, which are made available for dependency injection using [synthetic services](https://symfony.com/doc/current/service_container/synthetic_services.html). If you're interested you can read more about Kōjō API service injection [here](docs/KojoApiServiceInjection.md).
 The Proxy might use the [Neighborhoods Container Builder](https://github.com/neighborhoods/DependencyInjectionContainerBuilderComponent), as shown below, to obtain the builder for the worker and decorators. The decorators and worker can use dependency injection, while the Proxy cannot.
 
 ``` php
@@ -183,8 +179,6 @@ class Proxy implements WorkerInterface
     {
         $worker = $this->getContainer()->get(MyWorker\Builder\FactoryInterface::class)
             ->create()
-            ->setApiV1RDBMSConnectionService($this->getApiV1RDBMSConnectionService())
-            ->setApiV1WorkerService($this->getApiV1WorkerService())
             ->build();
 
         $worker->work();
@@ -196,6 +190,7 @@ class Proxy implements WorkerInterface
     {
         $containerBuilder = new TinyContainerBuilder();
         // Container configuration
+        // Kojo API service injection
         $containerBuilder->makePublic(MyWorker\Builder\FactoryInterface::class);
         return $containerBuilder->build();
     }
@@ -222,7 +217,7 @@ The container building and caching can be extracted from the Proxy into a dedica
 
 ### Decorator stack
 
-Configure the builder using Symfony DI to build a decorator stack tailored to your needs. The `ExceptionHandlingDecorator` should be the last in the list. An example is shown below.
+Configure the builder using Symfony DI to build a decorator stack tailored to your needs. The `ExceptionHandlingDecorator` should be the outermost, i.e. last in the list. An example is shown below.
 
 ``` yaml
 # Acme\MyWorker\Builder.service.yml
@@ -250,7 +245,7 @@ To avoid mixing worker builder and decorator definitions, provide them in separa
 ## Custom decorator
 
 In addition to the decorators provided in this component, you may implement your own decorator(s).  
-It has to extend the `Neighborhoods\KojoWorkerDecoratorComponent\Worker\DecoratorInterface` interface, which will be mostly implemented using the `Neighborhoods\KojoWorkerDecoratorComponent\Worker\DecoratorTrait` trait. The only method left to implement is the `work()` method, which at some point might run the decorated worker as shown below.
+It has to extend the `Neighborhoods\KojoWorkerDecoratorComponent\Worker\DecoratorInterface` interface, which will be mostly implemented using the `Neighborhoods\KojoWorkerDecoratorComponent\Worker\AwareTrait` trait. The only method left to implement is the `work()` method, which at some point might run the decorated worker as shown below.
 ``` php
 <?php
 
@@ -261,12 +256,12 @@ use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
 
 final class CustomDecorator implements Worker\DecoratorInterface
 {
-    use Worker\DecoratorTrait;
+    use Worker\AwareTrait;
 
     public function work(): WorkerInterface
     {
         // Custom work method, possibly running decorated worker.
-        $this->runWorker();
+        $this->getWorker()->work();
 
         return $this;
     }
@@ -301,7 +296,7 @@ actors:
   <PrimaryActorName>.php:
     template: KojoWorkerDecoratorComponent/Worker/PrimaryActorName.php
   <PrimaryActorName>.service.yml:
-    template: PrimaryActorName.service.yml
+    template: KojoWorkerDecoratorComponent/Worker/PrimaryActorName.service.yml
   <PrimaryActorName>Interface.php:
     template: KojoWorkerDecoratorComponent/Worker/PrimaryActorNameInterface.php
   <PrimaryActorName>/AwareTrait.php:
