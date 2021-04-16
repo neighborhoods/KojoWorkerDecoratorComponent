@@ -4,7 +4,7 @@ parameters:
 	level: 8  # From 0 to 8
 	checkMissingIterableValueType: false
 	paths:
-	    - CrashedThresholdWorkerDecoratorV1/src
+		- CrashedThresholdWorkerDecoratorV1/src
 		- src
 		- tests
 	ignoreErrors:
