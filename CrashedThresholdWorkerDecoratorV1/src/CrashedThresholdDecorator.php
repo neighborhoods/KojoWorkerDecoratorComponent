@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Neighborhoods\KojoWorkerDecoratorComponent\Worker;
+namespace Neighborhoods\KojoWorkerDecoratorComponent\CrashedThresholdWorkerDecoratorV1;
 
 use LogicException;
 use Neighborhoods\Kojo\Api;
 use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
+use Neighborhoods\KojoWorkerDecoratorComponent\Worker\DecoratorTrait;
 use UnexpectedValueException;
 
 class CrashedThresholdDecorator implements CrashedThresholdDecoratorInterface

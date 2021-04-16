@@ -10,3 +10,13 @@ Neighborhoods_Buphalo_V1_TargetApplication_BuilderInterface__NamespacePrefix=Nei
 Neighborhoods_Buphalo_V1_TemplateTree_Map_Builder_FactoryInterface__TemplateTreeDirectoryPaths=default:$PWD/vendor/neighborhoods/buphalo/template-tree/V1,diagnostic:$PWD/vendor/neighborhoods/throwable-diagnostic-component/template-tree/V1,worker:$PWD/template-tree/V1 \
 Neighborhoods_Buphalo_V1_FabricationFile_Map_BuilderInterface__FinderFileNames="*.buphalo.v1.fabrication.yml" \
 vendor/bin/buphalo
+
+# shellcheck disable=SC2034
+Neighborhoods_Buphalo_V1_TargetApplication_BuilderInterface__SourceDirectoryPath=$PWD/CrashedThresholdWorkerDecoratorV1/src \
+Neighborhoods_Buphalo_V1_TargetApplication_BuilderInterface__FabricationDirectoryPath=$PWD/CrashedThresholdWorkerDecoratorV1/fab \
+Neighborhoods_Buphalo_V1_TargetApplication_BuilderInterface__NamespacePrefix=Neighborhoods\\KojoWorkerDecoratorComponent\\CrashedThresholdWorkerDecoratorV1\\ \
+Neighborhoods_Buphalo_V1_TemplateTree_Map_Builder_FactoryInterface__TemplateTreeDirectoryPaths=default:$PWD/vendor/neighborhoods/buphalo/template-tree/V1,diagnostic:$PWD/vendor/neighborhoods/throwable-diagnostic-component/template-tree/V1,worker:$PWD/template-tree/V1 \
+Neighborhoods_Buphalo_V1_FabricationFile_Map_BuilderInterface__FinderFileNames="*.buphalo.v1.fabrication.yml" \
+vendor/bin/buphalo
+
+composer dump-autoload

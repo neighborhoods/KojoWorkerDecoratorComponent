@@ -42,6 +42,10 @@
       "Neighborhoods\\KojoWorkerDecoratorComponent\\": [
         "src",
         "fab"
+      ],
+      "Neighborhoods\\KojoWorkerDecoratorComponent\\CrashedThresholdWorkerDecoratorV1\\": [
+        "CrashedThresholdWorkerDecoratorV1\\src",
+        "CrashedThresholdWorkerDecoratorV1\\fab"
       ]
     }
   },

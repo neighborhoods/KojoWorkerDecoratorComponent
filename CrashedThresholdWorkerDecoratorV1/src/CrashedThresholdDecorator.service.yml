@@ -1,0 +1,11 @@
+parameters:
+  Neighborhoods\KojoWorkerDecoratorComponent\CrashedThresholdWorkerDecoratorV1\CrashedThresholdDecoratorInterface.threshold: 5
+  Neighborhoods\KojoWorkerDecoratorComponent\CrashedThresholdWorkerDecoratorV1\CrashedThresholdDecoratorInterface.delaySeconds: 1
+services:
+  Neighborhoods\KojoWorkerDecoratorComponent\CrashedThresholdWorkerDecoratorV1\CrashedThresholdDecoratorInterface:
+    class: Neighborhoods\KojoWorkerDecoratorComponent\CrashedThresholdWorkerDecoratorV1\CrashedThresholdDecorator
+    public: false
+    shared: false
+    calls:
+      - [setThreshold, ['%Neighborhoods\KojoWorkerDecoratorComponent\CrashedThresholdWorkerDecoratorV1\CrashedThresholdDecoratorInterface.threshold%']]
+      - [setDelaySeconds, ['%Neighborhoods\KojoWorkerDecoratorComponent\CrashedThresholdWorkerDecoratorV1\CrashedThresholdDecoratorInterface.delaySeconds%']]

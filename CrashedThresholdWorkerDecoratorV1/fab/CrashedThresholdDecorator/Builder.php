@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Neighborhoods\KojoWorkerDecoratorComponent\Worker\CrashedThresholdDecorator;
+namespace Neighborhoods\KojoWorkerDecoratorComponent\CrashedThresholdWorkerDecoratorV1\CrashedThresholdDecorator;
 
 use Neighborhoods\Kojo\Api;
 use Neighborhoods\KojoWorkerDecoratorComponent\Worker\DecoratorInterface;
@@ -17,7 +17,7 @@ class Builder implements BuilderInterface
 
     public function build(): DecoratorInterface
     {
-        $decorator = $this->getWorkerCrashedThresholdDecoratorFactory()
+        $decorator = $this->getCrashedThresholdDecoratorFactory()
             ->create();
 
         $decorator->setApiV1RDBMSConnectionService($this->getApiV1RDBMSConnectionService());

@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Neighborhoods\KojoWorkerDecoratorComponent\Worker;
+namespace Neighborhoods\KojoWorkerDecoratorComponent\CrashedThresholdWorkerDecoratorV1;
+
+use Neighborhoods\KojoWorkerDecoratorComponent\Worker\DecoratorInterface;
 
 interface CrashedThresholdDecoratorInterface extends DecoratorInterface
 {

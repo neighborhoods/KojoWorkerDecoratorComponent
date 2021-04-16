@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Neighborhoods\KojoWorkerDecoratorComponent\Worker\CrashedThresholdDecorator;
+namespace Neighborhoods\KojoWorkerDecoratorComponent\CrashedThresholdWorkerDecoratorV1\CrashedThresholdDecorator;
 
 use Neighborhoods\KojoWorkerDecoratorComponent\Worker\Decorator;
 
