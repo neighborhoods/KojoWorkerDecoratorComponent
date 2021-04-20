@@ -7,7 +7,7 @@ namespace Neighborhoods\KojoWorkerDecoratorComponent\Tests\Worker;
 use DateTime;
 use Exception;
 use Neighborhoods\Kojo\Api\V1;
-use Neighborhoods\KojoWorkerDecoratorComponent\CrashedThresholdWorkerDecoratorV1\CrashedThresholdDecorator;
+use Neighborhoods\KojoWorkerDecoratorComponent\WorkerDecorators\CrashedThresholdV1\CrashedThresholdDecorator;
 use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
 use PHPUnit\Framework\TestCase;
 
