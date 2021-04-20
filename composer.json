@@ -43,6 +43,10 @@
         "src",
         "fab"
       ],
+      "Neighborhoods\\KojoWorkerDecoratorComponent\\WorkerV1\\": [
+        "WorkerV1\\src",
+        "WorkerV1\\fab"
+      ],
       "Neighborhoods\\KojoWorkerDecoratorComponent\\WorkerDecorators\\CrashedThresholdV1\\": [
         "WorkerDecorators\\CrashedThresholdV1\\src",
         "WorkerDecorators\\CrashedThresholdV1\\fab"

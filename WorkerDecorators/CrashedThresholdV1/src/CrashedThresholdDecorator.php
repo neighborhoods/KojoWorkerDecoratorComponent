@@ -6,8 +6,8 @@ namespace Neighborhoods\KojoWorkerDecoratorComponent\WorkerDecorators\CrashedThr
 
 use LogicException;
 use Neighborhoods\Kojo\Api;
-use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
-use Neighborhoods\KojoWorkerDecoratorComponent\Worker\DecoratorTrait;
+use Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1\WorkerInterface;
+use Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1\Worker\DecoratorTrait;
 use UnexpectedValueException;
 
 class CrashedThresholdDecorator implements CrashedThresholdDecoratorInterface

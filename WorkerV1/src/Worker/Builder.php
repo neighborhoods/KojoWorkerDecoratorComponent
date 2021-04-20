@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Neighborhoods\KojoWorkerDecoratorComponent\Worker;
+namespace Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1\Worker;
 
 use LogicException;
 use Neighborhoods\Kojo\Api;
-use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
+use Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1\WorkerInterface;
 
 class Builder implements BuilderInterface
 {

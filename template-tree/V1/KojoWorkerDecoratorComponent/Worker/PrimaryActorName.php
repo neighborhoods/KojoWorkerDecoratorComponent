@@ -11,7 +11,7 @@ class PrimaryActorName implements PrimaryActorNameInterface
     use V1\Worker\Service\AwareTrait;
     use V1\RDBMS\Connection\Service\AwareTrait;
 
-    public function work(): \Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface
+    public function work(): \Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1\WorkerInterface
     {
         /** @neighborhoods-buphalo:annotation-processor Neighborhoods\BuphaloTemplateTree\KojoWorker\PrimaryActorName.work
         // TODO: Implement work() method.

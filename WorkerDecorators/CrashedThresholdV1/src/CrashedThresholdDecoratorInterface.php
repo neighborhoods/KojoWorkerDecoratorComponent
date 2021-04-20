@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Neighborhoods\KojoWorkerDecoratorComponent\WorkerDecorators\CrashedThresholdV1;
 
-use Neighborhoods\KojoWorkerDecoratorComponent\Worker\DecoratorInterface;
+use Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1\Worker\DecoratorInterface;
 
 interface CrashedThresholdDecoratorInterface extends DecoratorInterface
 {

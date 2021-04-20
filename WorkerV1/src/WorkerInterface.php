@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Neighborhoods\KojoWorkerDecoratorComponent;
+namespace Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1;
 
 use Neighborhoods\Kojo\Api\V1;
 

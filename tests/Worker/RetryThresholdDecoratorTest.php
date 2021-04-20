@@ -7,7 +7,7 @@ namespace Neighborhoods\KojoWorkerDecoratorComponent\Tests\Worker;
 use Exception;
 use Neighborhoods\Kojo\Api\V1;
 use Neighborhoods\KojoWorkerDecoratorComponent\Worker\RetryThresholdDecorator;
-use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
+use Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1\WorkerInterface;
 use PHPUnit\Framework\TestCase;
 
 class RetryThresholdDecoratorTest extends TestCase

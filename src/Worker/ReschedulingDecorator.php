@@ -7,14 +7,15 @@ namespace Neighborhoods\KojoWorkerDecoratorComponent\Worker;
 use DateTime;
 use LogicException;
 use Neighborhoods\KojoWorkerDecoratorComponent\Connection;
-use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
+use Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1\Worker;
+use Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1\WorkerInterface;
 use Neighborhoods\ThrowableDiagnosticComponent\ThrowableDiagnostic;
 use OutOfBoundsException;
 use Throwable;
 
 final class ReschedulingDecorator implements ReschedulingDecoratorInterface
 {
-    use DecoratorTrait;
+    use Worker\DecoratorTrait;
     use Connection\PdoAwareTrait;
     use ThrowableDiagnostic\Builder\Factory\AwareTrait;
 

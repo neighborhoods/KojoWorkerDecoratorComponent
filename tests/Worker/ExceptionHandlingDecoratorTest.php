@@ -8,7 +8,7 @@ use LogicException;
 use Neighborhoods\ExceptionComponent\TransientException;
 use Neighborhoods\Kojo\Api\V1;
 use Neighborhoods\KojoWorkerDecoratorComponent\Worker\ExceptionHandlingDecorator;
-use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
+use Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1\WorkerInterface;
 use PHPUnit\Framework\TestCase;
 
 use function json_encode;

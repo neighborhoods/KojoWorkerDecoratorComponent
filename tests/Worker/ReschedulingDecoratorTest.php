@@ -9,7 +9,7 @@ use PDO;
 use Exception;
 use Neighborhoods\Kojo\Api\V1;
 use Neighborhoods\KojoWorkerDecoratorComponent\Worker\ReschedulingDecorator;
-use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
+use Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1\WorkerInterface;
 use Neighborhoods\ThrowableDiagnosticComponent\ThrowableDiagnostic;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;

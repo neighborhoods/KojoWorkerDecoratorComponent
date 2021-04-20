@@ -8,7 +8,7 @@ use DateTime;
 use Exception;
 use Neighborhoods\Kojo\Api\V1;
 use Neighborhoods\KojoWorkerDecoratorComponent\WorkerDecorators\CrashedThresholdV1\CrashedThresholdDecorator;
-use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
+use Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1\WorkerInterface;
 use PHPUnit\Framework\TestCase;
 
 class CrashedThresholdDecoratorTest extends TestCase

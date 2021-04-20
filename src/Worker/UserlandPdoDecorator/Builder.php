@@ -6,8 +6,8 @@ namespace Neighborhoods\KojoWorkerDecoratorComponent\Worker\UserlandPdoDecorator
 
 use LogicException;
 use Neighborhoods\Kojo\Api;
-use Neighborhoods\KojoWorkerDecoratorComponent\Worker\DecoratorInterface;
-use Neighborhoods\KojoWorkerDecoratorComponent\Worker;
+use Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1\Worker\DecoratorInterface;
+use Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1\Worker;
 
 class Builder implements BuilderInterface
 {

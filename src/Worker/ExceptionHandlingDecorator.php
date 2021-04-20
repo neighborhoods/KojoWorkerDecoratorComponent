@@ -11,14 +11,15 @@ use LogicException;
 use Neighborhoods\ExceptionComponent\Exception;
 use Neighborhoods\ExceptionComponent\TransientExceptionInterface;
 use Neighborhoods\Kojo\Api;
-use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
+use Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1\Worker;
+use Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1\WorkerInterface;
 use Neighborhoods\ThrowableDiagnosticComponent\DiagnosedInterface;
 use Psr\Log\LogLevel;
 use Throwable;
 
 class ExceptionHandlingDecorator implements ExceptionHandlingDecoratorInterface
 {
-    use DecoratorTrait;
+    use Worker\DecoratorTrait;
 
     /**
      * @var DateInterval|null

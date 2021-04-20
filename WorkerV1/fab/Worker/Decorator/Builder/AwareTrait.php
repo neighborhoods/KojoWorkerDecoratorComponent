@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Neighborhoods\KojoWorkerDecoratorComponent\Worker\Decorator\Builder;
+namespace Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1\Worker\Decorator\Builder;
 
 use LogicException;
-use Neighborhoods\KojoWorkerDecoratorComponent\Worker\Decorator\BuilderInterface;
+use Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1\Worker\Decorator\BuilderInterface;
 
 trait AwareTrait
 {

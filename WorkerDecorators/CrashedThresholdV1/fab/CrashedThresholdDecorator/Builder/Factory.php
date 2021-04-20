@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Neighborhoods\KojoWorkerDecoratorComponent\WorkerDecorators\CrashedThresholdV1\CrashedThresholdDecorator\Builder;
 
-use Neighborhoods\KojoWorkerDecoratorComponent\Worker\Decorator\BuilderInterface;
+use Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1\Worker\Decorator\BuilderInterface;
 
 class Factory implements FactoryInterface
 {

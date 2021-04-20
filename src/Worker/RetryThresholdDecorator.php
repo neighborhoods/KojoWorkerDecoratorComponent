@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace Neighborhoods\KojoWorkerDecoratorComponent\Worker;
 
 use LogicException;
-use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
+use Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1\Worker;
+use Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1\WorkerInterface;
 use UnexpectedValueException;
 
 final class RetryThresholdDecorator implements RetryThresholdDecoratorInterface
 {
-    use DecoratorTrait;
+    use Worker\DecoratorTrait;
 
     /**
      * @var int

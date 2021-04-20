@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Neighborhoods\BuphaloTemplateTree\PrimaryActorName;
 
 use Neighborhoods\Kojo\Api;
-use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
+use Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1\WorkerInterface;
 
 class Proxy implements ProxyInterface
 {

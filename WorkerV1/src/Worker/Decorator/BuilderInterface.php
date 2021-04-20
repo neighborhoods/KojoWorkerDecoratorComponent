@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Neighborhoods\KojoWorkerDecoratorComponent\Worker\Decorator;
+namespace Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1\Worker\Decorator;
 
 use Neighborhoods\Kojo\Api\V1;
-use Neighborhoods\KojoWorkerDecoratorComponent\Worker\DecoratorInterface;
-use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
+use Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1\Worker\DecoratorInterface;
+use Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1\WorkerInterface;
 
 interface BuilderInterface
 {
