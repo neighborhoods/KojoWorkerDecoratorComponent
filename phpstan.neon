@@ -4,10 +4,12 @@ parameters:
 	level: 8  # From 0 to 8
 	checkMissingIterableValueType: false
 	paths:
-		- WorkerV1/src
-		- WorkerDecoratorsV1/CrashedThresholdV1/src
+		- WorkerV1
+		- WorkerDecoratorsV1
 		- src
 		- tests
+	excludePaths:
+		- */fab/*
 	ignoreErrors:
 	    - '#Property Neighborhoods\\KojoWorkerDecoratorComponent.* has no typehint specified.#'
 	    - '#Method Neighborhoods\\KojoWorkerDecoratorComponent.*Interface::set.*\(\) has no return typehint specified.#'

@@ -2,11 +2,13 @@
 <ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="PHP_CodeSniffer" xsi:noNamespaceSchemaLocation="phpcs.xsd">
     <description>The coding standard for PHP_CodeSniffer itself.</description>
 
-    <file>WorkerV1/src</file>
-    <file>WorkerDecoratorsV1/CrashedThresholdV1/src</file>
+    <file>WorkerV1</file>
+    <file>WorkerDecoratorsV1</file>
     <file>src</file>
     <file>tests</file>
     <file>template-tree</file>
+
+    <exclude-pattern>*/fab/*</exclude-pattern>
 
     <rule ref="PSR12"/>
 </ruleset>
