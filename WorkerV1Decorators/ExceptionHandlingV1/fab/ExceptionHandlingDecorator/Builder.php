@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Neighborhoods\KojoWorkerDecoratorComponent\Worker\ExceptionHandlingDecorator;
+namespace Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1Decorators\ExceptionHandlingV1\ExceptionHandlingDecorator;
 
 use Neighborhoods\Kojo\Api;
 use Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1\Worker\DecoratorInterface;
@@ -17,7 +17,7 @@ class Builder implements BuilderInterface
 
     public function build(): DecoratorInterface
     {
-        $decorator = $this->getWorkerExceptionHandlingDecoratorFactory()
+        $decorator = $this->getExceptionHandlingDecoratorFactory()
             ->create();
 
         $decorator->setApiV1RDBMSConnectionService($this->getApiV1RDBMSConnectionService());

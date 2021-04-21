@@ -7,7 +7,7 @@ namespace Neighborhoods\KojoWorkerDecoratorComponent\Tests\Worker;
 use LogicException;
 use Neighborhoods\ExceptionComponent\TransientException;
 use Neighborhoods\Kojo\Api\V1;
-use Neighborhoods\KojoWorkerDecoratorComponent\Worker\ExceptionHandlingDecorator;
+use Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1Decorators\ExceptionHandlingV1\ExceptionHandlingDecorator;
 use Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1\WorkerInterface;
 use PHPUnit\Framework\TestCase;
 
