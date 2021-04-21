@@ -39,10 +39,6 @@
   },
   "autoload": {
     "psr-4": {
-      "Neighborhoods\\KojoWorkerDecoratorComponent\\": [
-        "src",
-        "fab"
-      ],
       "Neighborhoods\\KojoWorkerDecoratorComponent\\WorkerV1\\": [
         "WorkerV1\\src",
         "WorkerV1\\fab"

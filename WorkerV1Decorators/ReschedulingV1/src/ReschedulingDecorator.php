@@ -6,7 +6,7 @@ namespace Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1Decorators\Reschedu
 
 use DateTime;
 use LogicException;
-use Neighborhoods\KojoWorkerDecoratorComponent\Connection;
+use Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1\Connection;
 use Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1\Worker;
 use Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1\WorkerInterface;
 use Neighborhoods\ThrowableDiagnosticComponent\ThrowableDiagnostic;

@@ -6,7 +6,6 @@ parameters:
 	paths:
 		- WorkerV1
 		- WorkerV1Decorators
-		- src
 		- tests
 	excludePaths:
 		- */fab/*

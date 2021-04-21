@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Neighborhoods\KojoWorkerDecoratorComponent\Connection;
+namespace Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1\Connection;
 
 use LogicException;
 use PDO;

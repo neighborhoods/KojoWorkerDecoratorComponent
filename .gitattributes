@@ -1,5 +1,3 @@
-fab/* linguist-generated=true
-
 bin/buphalo export-ignore
 *.buphalo.v1.fabrication.yml export-ignore
 

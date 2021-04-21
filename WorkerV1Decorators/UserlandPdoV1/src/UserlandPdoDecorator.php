@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1Decorators\UserlandPdoV1;
 
-use Neighborhoods\KojoWorkerDecoratorComponent\Connection;
+use Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1\Connection;
 use Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1\Worker;
 use Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1\WorkerInterface;
 
