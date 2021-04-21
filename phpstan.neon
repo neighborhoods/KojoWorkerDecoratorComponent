@@ -5,7 +5,7 @@ parameters:
 	checkMissingIterableValueType: false
 	paths:
 		- WorkerV1
-		- WorkerDecoratorsV1
+		- WorkerV1Decorators
 		- src
 		- tests
 	excludePaths:

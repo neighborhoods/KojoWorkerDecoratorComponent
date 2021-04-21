@@ -20,12 +20,12 @@ Neighborhoods_Buphalo_V1_TargetApplication_BuilderInterface__NamespacePrefix=Nei
 vendor/bin/buphalo
 
 # Loop over all decorators and fabricate each
-for DECORATOR_FOLDER in $PWD/WorkerDecoratorsV1/*/ ; do
+for DECORATOR_FOLDER in $PWD/WorkerV1Decorators/*/ ; do
   DECORATOR_NAME=$(basename $DECORATOR_FOLDER)
   # shellcheck disable=SC2034
   Neighborhoods_Buphalo_V1_TargetApplication_BuilderInterface__SourceDirectoryPath=$DECORATOR_FOLDER/src \
   Neighborhoods_Buphalo_V1_TargetApplication_BuilderInterface__FabricationDirectoryPath=$DECORATOR_FOLDER/fab \
-  Neighborhoods_Buphalo_V1_TargetApplication_BuilderInterface__NamespacePrefix=Neighborhoods\\KojoWorkerDecoratorComponent\\WorkerDecoratorsV1\\$DECORATOR_NAME\\ \
+  Neighborhoods_Buphalo_V1_TargetApplication_BuilderInterface__NamespacePrefix=Neighborhoods\\KojoWorkerDecoratorComponent\\WorkerV1Decorators\\$DECORATOR_NAME\\ \
   vendor/bin/buphalo
 done;
 

@@ -47,9 +47,9 @@
         "WorkerV1\\src",
         "WorkerV1\\fab"
       ],
-      "Neighborhoods\\KojoWorkerDecoratorComponent\\WorkerDecoratorsV1\\CrashedThresholdV1\\": [
-        "WorkerDecoratorsV1\\CrashedThresholdV1\\src",
-        "WorkerDecoratorsV1\\CrashedThresholdV1\\fab"
+      "Neighborhoods\\KojoWorkerDecoratorComponent\\WorkerV1Decorators\\CrashedThresholdV1\\": [
+        "WorkerV1Decorators\\CrashedThresholdV1\\src",
+        "WorkerV1Decorators\\CrashedThresholdV1\\fab"
       ]
     }
   },

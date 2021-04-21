@@ -3,7 +3,7 @@
     <description>The coding standard for PHP_CodeSniffer itself.</description>
 
     <file>WorkerV1</file>
-    <file>WorkerDecoratorsV1</file>
+    <file>WorkerV1Decorators</file>
     <file>src</file>
     <file>tests</file>
     <file>template-tree</file>
