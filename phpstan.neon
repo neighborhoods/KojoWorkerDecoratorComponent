@@ -5,7 +5,7 @@ parameters:
 	checkMissingIterableValueType: false
 	paths:
 		- WorkerV1/src
-		- WorkerDecorators/CrashedThresholdV1/src
+		- WorkerDecoratorsV1/CrashedThresholdV1/src
 		- src
 		- tests
 	ignoreErrors:
