@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Neighborhoods\KojoWorkerDecoratorComponent\Worker\ReschedulingDecorator;
+namespace Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1Decorators\ReschedulingV1\ReschedulingDecorator;
 
 use Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1\Worker\Decorator;
 

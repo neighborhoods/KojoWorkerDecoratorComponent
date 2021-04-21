@@ -1,7 +1,0 @@
-services:
-  Neighborhoods\KojoWorkerDecoratorComponent\Worker\ReschedulingDecorator\Builder\FactoryInterface:
-    class: Neighborhoods\KojoWorkerDecoratorComponent\Worker\ReschedulingDecorator\Builder\Factory
-    public: false
-    shared: true
-    calls:
-      - [setWorkerReschedulingDecoratorBuilder, ['@Neighborhoods\KojoWorkerDecoratorComponent\Worker\ReschedulingDecorator\BuilderInterface']]
