@@ -19,10 +19,14 @@ Neighborhoods_Buphalo_V1_TargetApplication_BuilderInterface__FabricationDirector
 Neighborhoods_Buphalo_V1_TargetApplication_BuilderInterface__NamespacePrefix=Neighborhoods\\KojoWorkerDecoratorComponent\\WorkerV1\\ \
 vendor/bin/buphalo
 
-# shellcheck disable=SC2034
-Neighborhoods_Buphalo_V1_TargetApplication_BuilderInterface__SourceDirectoryPath=$PWD/WorkerDecoratorsV1/CrashedThresholdV1/src \
-Neighborhoods_Buphalo_V1_TargetApplication_BuilderInterface__FabricationDirectoryPath=$PWD/WorkerDecoratorsV1/CrashedThresholdV1/fab \
-Neighborhoods_Buphalo_V1_TargetApplication_BuilderInterface__NamespacePrefix=Neighborhoods\\KojoWorkerDecoratorComponent\\WorkerDecoratorsV1\\CrashedThresholdV1\\ \
-vendor/bin/buphalo
+# Loop over all decorators and fabricate each
+for DECORATOR_FOLDER in $PWD/WorkerDecoratorsV1/*/ ; do
+  DECORATOR_NAME=$(basename $DECORATOR_FOLDER)
+  # shellcheck disable=SC2034
+  Neighborhoods_Buphalo_V1_TargetApplication_BuilderInterface__SourceDirectoryPath=$DECORATOR_FOLDER/src \
+  Neighborhoods_Buphalo_V1_TargetApplication_BuilderInterface__FabricationDirectoryPath=$DECORATOR_FOLDER/fab \
+  Neighborhoods_Buphalo_V1_TargetApplication_BuilderInterface__NamespacePrefix=Neighborhoods\\KojoWorkerDecoratorComponent\\WorkerDecoratorsV1\\$DECORATOR_NAME\\ \
+  vendor/bin/buphalo
+done;
 
 composer dump-autoload
