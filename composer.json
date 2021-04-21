@@ -58,6 +58,10 @@
       "Neighborhoods\\KojoWorkerDecoratorComponent\\WorkerV1Decorators\\RetryThresholdV1\\": [
         "WorkerV1Decorators\\RetryThresholdV1\\src",
         "WorkerV1Decorators\\RetryThresholdV1\\fab"
+      ],
+      "Neighborhoods\\KojoWorkerDecoratorComponent\\WorkerV1Decorators\\UserlandPdoV1\\": [
+        "WorkerV1Decorators\\UserlandPdoV1\\src",
+        "WorkerV1Decorators\\UserlandPdoV1\\fab"
       ]
     }
   },

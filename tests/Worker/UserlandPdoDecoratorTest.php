@@ -11,7 +11,7 @@ use Neighborhoods\Kojo\Doctrine\Connection\Decorator\Repository\AwareTrait;
 use Neighborhoods\Kojo\Doctrine\Connection\DecoratorArray;
 use Neighborhoods\Kojo\Doctrine\Connection\DecoratorArray\Factory;
 use Neighborhoods\Kojo\PDO\Builder\FactoryInterface;
-use Neighborhoods\KojoWorkerDecoratorComponent\Worker\UserlandPdoDecorator;
+use Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1Decorators\UserlandPdoV1\UserlandPdoDecorator;
 use Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1\WorkerInterface;
 use PDO;
 use PHPUnit\Framework\TestCase;

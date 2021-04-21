@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Neighborhoods\KojoWorkerDecoratorComponent\Worker\ReschedulingDecorator;
+namespace Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1Decorators\UserlandPdoV1\UserlandPdoDecorator;
 
 use LogicException;
 use Neighborhoods\Kojo\Api;
@@ -21,7 +21,7 @@ class Builder implements BuilderInterface
 
     public function build(): DecoratorInterface
     {
-        $decorator = $this->getWorkerReschedulingDecoratorFactory()
+        $decorator = $this->getUserlandPdoDecoratorFactory()
             ->create();
 
         $connection = $this->getPrefabDoctrineDbalConnectionDecoratorRepository()
@@ -29,8 +29,8 @@ class Builder implements BuilderInterface
 
         $decorator->setApiV1RDBMSConnectionService($this->getApiV1RDBMSConnectionService());
         $decorator->setApiV1WorkerService($this->getApiV1WorkerService());
-        $decorator->setPdo($connection->getWrappedConnection());
         $decorator->setWorker($this->getWorker());
+        $decorator->setPdo($connection->getWrappedConnection());
 
         return $decorator;
     }
