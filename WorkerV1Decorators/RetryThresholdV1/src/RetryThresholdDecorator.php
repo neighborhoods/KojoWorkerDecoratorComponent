@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Neighborhoods\KojoWorkerDecoratorComponent\Worker;
+namespace Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1Decorators\RetryThresholdV1;
 
 use LogicException;
 use Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1\Worker;

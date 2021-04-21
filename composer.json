@@ -50,6 +50,10 @@
       "Neighborhoods\\KojoWorkerDecoratorComponent\\WorkerV1Decorators\\CrashedThresholdV1\\": [
         "WorkerV1Decorators\\CrashedThresholdV1\\src",
         "WorkerV1Decorators\\CrashedThresholdV1\\fab"
+      ],
+      "Neighborhoods\\KojoWorkerDecoratorComponent\\WorkerV1Decorators\\RetryThresholdV1\\": [
+        "WorkerV1Decorators\\RetryThresholdV1\\src",
+        "WorkerV1Decorators\\RetryThresholdV1\\fab"
       ]
     }
   },
