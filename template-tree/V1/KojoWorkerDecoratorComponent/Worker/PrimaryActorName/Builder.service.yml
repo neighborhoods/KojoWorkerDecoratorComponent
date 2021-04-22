@@ -4,7 +4,7 @@ services:
     public: false
     shared: false
     calls:
-      - [setWorkerFactory, ['@Neighborhoods\BuphaloTemplateTree\PrimaryActorName\FactoryInterface']]
+      - [setWorkerV1WorkerFactory, ['@Neighborhoods\BuphaloTemplateTree\PrimaryActorName\FactoryInterface']]
       # Add predefined decorator(s) as shown below
       - [addDecoratorBuilderFactory, ['@Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1Decorators\RetryThresholdV1\RetryThresholdDecorator\Builder\FactoryInterface']]
       - [addDecoratorBuilderFactory, ['@Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1Decorators\CrashedThresholdV1\CrashedThresholdDecorator\Builder\FactoryInterface']]
