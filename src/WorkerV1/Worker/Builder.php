@@ -30,7 +30,7 @@ class Builder implements BuilderInterface
         foreach ($this->decoratorBuilderFactories as $decoratorBuilderFactory) {
             $worker = $decoratorBuilderFactory
                 ->create()
-                ->setWorker($worker)
+                ->setWorkerV1Worker($worker)
                 ->setApiV1RDBMSConnectionService($connectionService)
                 ->setApiV1WorkerService($workerService)
                 ->build();
