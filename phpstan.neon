@@ -4,13 +4,10 @@ parameters:
 	level: 8  # From 0 to 8
 	checkMissingIterableValueType: false
 	paths:
-		- WorkerV1
-		- WorkerV1Decorators
+		- src
 		- tests
-	excludePaths:
-		- */fab/*
 	ignoreErrors:
 	    - '#Property Neighborhoods\\KojoWorkerDecoratorComponent.* has no typehint specified.#'
 	    - '#Method Neighborhoods\\KojoWorkerDecoratorComponent.*Interface::set.*\(\) has no return typehint specified.#'
 	    - message: '#Method Neighborhoods\\KojoWorkerDecoratorComponent\\WorkerV1Decorators\\.*Decorator\\Builder::[gs]etPrefabDoctrineDbalConnectionDecoratorRepository\(\) has .* typehint specified.#'
-	      path: WorkerV1Decorators/*/src/*/Builder.php
+	      path: src/WorkerV1Decorators/*/Builder.php

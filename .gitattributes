@@ -1,5 +1,4 @@
-WorkerV1/fab/* linguist-generated=true
-WorkerV1Decorators/*/fab/* linguist-generated=true
+fab/* linguist-generated=true
 
 bin/buphalo export-ignore
 *.buphalo.v1.fabrication.yml export-ignore

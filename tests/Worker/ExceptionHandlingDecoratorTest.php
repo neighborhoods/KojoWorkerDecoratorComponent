@@ -11,8 +11,6 @@ use Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1Decorators\ExceptionHandl
 use Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1\WorkerInterface;
 use PHPUnit\Framework\TestCase;
 
-use function json_encode;
-
 class ExceptionHandlingDecoratorTest extends TestCase
 {
     public function testWorkHoldsAndLogsJobThrowingNonTransientException(): void
@@ -31,7 +29,7 @@ class ExceptionHandlingDecoratorTest extends TestCase
         $workerService->method('getLogger')->willReturn($logger);
 
         $decorator = new ExceptionHandlingDecorator();
-        $decorator->setWorker($worker);
+        $decorator->setWorkerV1Worker($worker);
         $decorator->setApiV1WorkerService($workerService);
         $decorator->work();
     }
@@ -52,7 +50,7 @@ class ExceptionHandlingDecoratorTest extends TestCase
         $workerService->method('getLogger')->willReturn($logger);
 
         $decorator = new ExceptionHandlingDecorator();
-        $decorator->setWorker($worker);
+        $decorator->setWorkerV1Worker($worker);
         $decorator->setApiV1WorkerService($workerService);
         $decorator->setRetryIntervalDefinition('PT1M');
         $decorator->work();

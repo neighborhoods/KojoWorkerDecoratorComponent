@@ -1,7 +1,0 @@
-services:
-  Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1Decorators\UserlandPdoV1\UserlandPdoDecorator\Builder\FactoryInterface:
-    class: Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1Decorators\UserlandPdoV1\UserlandPdoDecorator\Builder\Factory
-    public: false
-    shared: true
-    calls:
-      - [setUserlandPdoDecoratorBuilder, ['@Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1Decorators\UserlandPdoV1\UserlandPdoDecorator\BuilderInterface']]

@@ -63,7 +63,7 @@ class ReschedulingDecoratorTest extends TestCase
         $workerMock->expects(self::once())
             ->method('work')
             ->willReturnSelf();
-        $this->decorator->setWorker($workerMock);
+        $this->decorator->setWorkerV1Worker($workerMock);
         $this->kojoWorkerServiceMock
             ->expects(self::once())
             ->method('isRequestApplied')
@@ -113,7 +113,7 @@ class ReschedulingDecoratorTest extends TestCase
         $workerMock->expects(self::once())
             ->method('work')
             ->willThrowException($throwable);
-        $this->decorator->setWorker($workerMock);
+        $this->decorator->setWorkerV1Worker($workerMock);
 
         $this->expectExceptionObject($throwable);
         $this->throwableDiagnosticBuilderFactoryMock
@@ -128,7 +128,7 @@ class ReschedulingDecoratorTest extends TestCase
         $workerMock->expects(self::once())
             ->method('work')
             ->willReturnSelf();
-        $this->decorator->setWorker($workerMock);
+        $this->decorator->setWorkerV1Worker($workerMock);
         $this->kojoWorkerServiceMock
             ->expects(self::once())
             ->method('isRequestApplied')

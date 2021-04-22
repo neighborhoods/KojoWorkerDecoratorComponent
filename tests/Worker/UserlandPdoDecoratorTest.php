@@ -90,7 +90,7 @@ class UserlandPdoDecoratorTest extends TestCase
 
         $decorator = new UserlandPdoDecorator();
         $decorator->setPdo($newPDO);
-        $decorator->setWorker($worker);
+        $decorator->setWorkerV1Worker($worker);
         $decorator->setApiV1RDBMSConnectionService($workerService);
 
         $decorator->work();

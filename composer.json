@@ -39,29 +39,9 @@
   },
   "autoload": {
     "psr-4": {
-      "Neighborhoods\\KojoWorkerDecoratorComponent\\WorkerV1\\": [
-        "WorkerV1\\src",
-        "WorkerV1\\fab"
-      ],
-      "Neighborhoods\\KojoWorkerDecoratorComponent\\WorkerV1Decorators\\CrashedThresholdV1\\": [
-        "WorkerV1Decorators\\CrashedThresholdV1\\src",
-        "WorkerV1Decorators\\CrashedThresholdV1\\fab"
-      ],
-      "Neighborhoods\\KojoWorkerDecoratorComponent\\WorkerV1Decorators\\ExceptionHandlingV1\\": [
-        "WorkerV1Decorators\\ExceptionHandlingV1\\src",
-        "WorkerV1Decorators\\ExceptionHandlingV1\\fab"
-      ],
-      "Neighborhoods\\KojoWorkerDecoratorComponent\\WorkerV1Decorators\\ReschedulingV1\\": [
-        "WorkerV1Decorators\\ReschedulingV1\\src",
-        "WorkerV1Decorators\\ReschedulingV1\\fab"
-      ],
-      "Neighborhoods\\KojoWorkerDecoratorComponent\\WorkerV1Decorators\\RetryThresholdV1\\": [
-        "WorkerV1Decorators\\RetryThresholdV1\\src",
-        "WorkerV1Decorators\\RetryThresholdV1\\fab"
-      ],
-      "Neighborhoods\\KojoWorkerDecoratorComponent\\WorkerV1Decorators\\UserlandPdoV1\\": [
-        "WorkerV1Decorators\\UserlandPdoV1\\src",
-        "WorkerV1Decorators\\UserlandPdoV1\\fab"
+      "Neighborhoods\\KojoWorkerDecoratorComponent\\": [
+        "src",
+        "fab"
       ]
     }
   },

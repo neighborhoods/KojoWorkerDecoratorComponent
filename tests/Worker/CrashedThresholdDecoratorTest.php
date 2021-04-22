@@ -23,7 +23,7 @@ class CrashedThresholdDecoratorTest extends TestCase
 
         $decorator = new CrashedThresholdDecorator();
         $decorator->setApiV1WorkerService($workerService);
-        $decorator->setWorker($worker);
+        $decorator->setWorkerV1Worker($worker);
         $decorator->setThreshold(10);
         $decorator->setDelaySeconds(2);
 
@@ -44,7 +44,7 @@ class CrashedThresholdDecoratorTest extends TestCase
 
         $decorator = new CrashedThresholdDecorator();
         $decorator->setApiV1WorkerService($workerService);
-        $decorator->setWorker($worker);
+        $decorator->setWorkerV1Worker($worker);
         $decorator->setThreshold(10);
         $decorator->setDelaySeconds(2);
 
@@ -67,7 +67,7 @@ class CrashedThresholdDecoratorTest extends TestCase
 
         $decorator = new CrashedThresholdDecorator();
         $decorator->setApiV1WorkerService($workerService);
-        $decorator->setWorker($worker);
+        $decorator->setWorkerV1Worker($worker);
         $decorator->setThreshold(10);
         $decorator->setDelaySeconds(2);
 
@@ -80,14 +80,14 @@ class CrashedThresholdDecoratorTest extends TestCase
 
     public function testSetZeroThresholdThrowsException(): void
     {
-        self::expectException(Exception::class);
+        $this->expectException(Exception::class);
         (new CrashedThresholdDecorator())
             ->setThreshold(0);
     }
 
     public function testSetZeroDelayThrowsException(): void
     {
-        self::expectException(Exception::class);
+        $this->expectException(Exception::class);
         (new CrashedThresholdDecorator())
             ->setDelaySeconds(0);
     }

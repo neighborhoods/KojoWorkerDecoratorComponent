@@ -22,7 +22,7 @@ class RetryThresholdDecoratorTest extends TestCase
 
         $decorator = new RetryThresholdDecorator();
         $decorator->setApiV1WorkerService($workerService);
-        $decorator->setWorker($worker);
+        $decorator->setWorkerV1Worker($worker);
         $decorator->setThreshold(10);
 
         $result = $decorator->work();
@@ -41,7 +41,7 @@ class RetryThresholdDecoratorTest extends TestCase
 
         $decorator = new RetryThresholdDecorator();
         $decorator->setApiV1WorkerService($workerService);
-        $decorator->setWorker($worker);
+        $decorator->setWorkerV1Worker($worker);
         $decorator->setThreshold(10);
 
         $result = $decorator->work();
@@ -50,7 +50,7 @@ class RetryThresholdDecoratorTest extends TestCase
 
     public function testSetZeroThresholdThrowsException(): void
     {
-        self::expectException(Exception::class);
+        $this->expectException(Exception::class);
         (new RetryThresholdDecorator())
             ->setThreshold(0);
     }
