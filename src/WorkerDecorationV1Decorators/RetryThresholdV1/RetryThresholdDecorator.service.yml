@@ -1,0 +1,9 @@
+parameters:
+  Neighborhoods\KojoWorkerDecoratorComponent\WorkerDecorationV1Decorators\RetryThresholdV1\RetryThresholdDecoratorInterface.threshold: 100
+services:
+  Neighborhoods\KojoWorkerDecoratorComponent\WorkerDecorationV1Decorators\RetryThresholdV1\RetryThresholdDecoratorInterface:
+    class: Neighborhoods\KojoWorkerDecoratorComponent\WorkerDecorationV1Decorators\RetryThresholdV1\RetryThresholdDecorator
+    public: false
+    shared: false
+    calls:
+      - [setThreshold, ['%Neighborhoods\KojoWorkerDecoratorComponent\WorkerDecorationV1Decorators\RetryThresholdV1\RetryThresholdDecoratorInterface.threshold%']]

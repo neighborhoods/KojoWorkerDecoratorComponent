@@ -1,0 +1,11 @@
+parameters:
+  Neighborhoods\KojoWorkerDecoratorComponent\WorkerDecorationV1Decorators\UserlandPdoV1\UserlandPdoDecorator\BuilderInterface.connectionId: 'core'
+services:
+  Neighborhoods\KojoWorkerDecoratorComponent\WorkerDecorationV1Decorators\UserlandPdoV1\UserlandPdoDecorator\BuilderInterface:
+    class: Neighborhoods\KojoWorkerDecoratorComponent\WorkerDecorationV1Decorators\UserlandPdoV1\UserlandPdoDecorator\Builder
+    public: false
+    shared: false
+    calls:
+      - [setWorkerDecorationV1DecoratorsUserlandPdoV1UserlandPdoDecoratorFactory, ['@Neighborhoods\KojoWorkerDecoratorComponent\WorkerDecorationV1Decorators\UserlandPdoV1\UserlandPdoDecorator\FactoryInterface']]
+      - [setPrefabDoctrineDbalConnectionDecoratorRepository, ['@Vendor\Product\Prefab5\Doctrine\DBAL\Connection\Decorator\RepositoryInterface']]
+      - [setConnectionId, ['%Neighborhoods\KojoWorkerDecoratorComponent\WorkerDecorationV1Decorators\UserlandPdoV1\UserlandPdoDecorator\BuilderInterface.connectionId%']]

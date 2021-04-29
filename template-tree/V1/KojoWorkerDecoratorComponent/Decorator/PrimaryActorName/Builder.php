@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Neighborhoods\BuphaloTemplateTree\PrimaryActorName;
 
 use Neighborhoods\Kojo\Api;
-use Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1\Worker\DecoratorInterface;
-use Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1\Worker;
+use Neighborhoods\KojoWorkerDecoratorComponent\WorkerDecorationV1\Worker\DecoratorInterface;
+use Neighborhoods\KojoWorkerDecoratorComponent\WorkerDecorationV1\Worker;
 
 class Builder implements BuilderInterface
 {
@@ -22,7 +22,7 @@ class Builder implements BuilderInterface
 
         $decorator->setApiV1RDBMSConnectionService($this->getApiV1RDBMSConnectionService());
         $decorator->setApiV1WorkerService($this->getApiV1WorkerService());
-        $decorator->setWorkerV1Worker($this->getWorkerV1Worker());
+        $decorator->setWorkerDecorationV1Worker($this->getWorkerDecorationV1Worker());
 
         return $decorator;
     }
