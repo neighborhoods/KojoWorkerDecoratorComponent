@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Neighborhoods\BuphaloTemplateTree\PrimaryActorName\Builder;
 
-use Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1\Worker;
+use Neighborhoods\KojoWorkerDecoratorComponent\WorkerDecorationV1\Worker;
 
 class Factory implements FactoryInterface
 {

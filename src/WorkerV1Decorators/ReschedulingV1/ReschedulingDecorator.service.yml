@@ -1,9 +1,0 @@
-services:
-  Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1Decorators\ReschedulingV1\ReschedulingDecoratorInterface:
-    class: Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1Decorators\ReschedulingV1\ReschedulingDecorator
-    public: false
-    shared: false
-    calls:
-      - [setThrowableDiagnosticBuilderFactory, ['@Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1Decorators\ReschedulingV1\ReschedulingDecorator\ThrowableDiagnostic\Builder\FactoryInterface']]
-      - [setJobTypeCode, ['%Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1Decorators\ReschedulingV1\ReschedulingDecoratorInterface.jobTypeCode%']]
-      - [setRescheduleDelaySeconds, ['%Neighborhoods\KojoWorkerDecoratorComponent\WorkerV1Decorators\ReschedulingV1\ReschedulingDecoratorInterface.rescheduleDelaySeconds%']]

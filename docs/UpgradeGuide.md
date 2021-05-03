@@ -1,53 +1,27 @@
-# Upgrading from v1 to v2
+# Upgrading from 2.* to 3.*
 
-## Add Throwable Diagnostic Component source path
-In version 2 the [`ReschedulingDecorator`](https://github.com/neighborhoods/KojoWorkerDecoratorComponent/blob/2.0.0/src/Worker/ReschedulingDecorator.php) was added. It's service definition depends on services defined in the [Throwable Diagnostic Component](https://github.com/neighborhoods/ThrowableDiagnosticComponent). To avoid a `ServiceNotFoundException` when building a container, make sure the path `vendor/neighborhoods/throwable-diagnostic-component/src` is added along kojo worker decorator component paths.
+The upgrade guide from 1.* to 2.* can be found [here](https://github.com/neighborhoods/KojoWorkerDecoratorComponent/blob/2.0.0/docs/UpgradeGuide.md).
 
-Version 1
-``` php
-// Add KojoWorkerDecoratorComponent service definitions
-$containerBuilder->addSourcePath(
-    'vendor/neighborhoods/kojo-worker-decorator-component/fab'
-);
-$containerBuilder->addSourcePath(
-    'vendor/neighborhoods/kojo-worker-decorator-component/src'
-);
+In version 3 all components have been versioned. The structure is refactored causing changes in namespaces, paths and fabricated method names.
+
+Common (not decorator specific) code has been moved from `src` to `src/WorkerDecorationV1`.
+
+Decorators have been moved from `src/Worker` into their own versioned directory. For example `src/Worker/CrashedThresholdDecorator.php` is now in `src/WorkerDecoratorionV1Decorators/CrashedThresholdV1/CrashedThresholdDecorator.php` along with accompanying files.
+
+To quickly switch to the new file structure run the following regex inside your source and possibly test folders.
+``` bash
+grep -RiIl 'KojoWorkerDecoratorComponent' | xargs sed -i 's/Worker\\([a-zA-Z]*)Decorator/WorkerDecorationV1Decorators\\$1V1\\$1Decorator/g'
+grep -RiIl 'KojoWorkerDecoratorComponent' | xargs sed -i 's/KojoWorkerDecoratorComponent\\Worker(?!D)/KojoWorkerDecoratorComponent\\WorkerDecorationV1\\Worker/g'
+grep -RiIl 'KojoWorkerDecoratorComponent' | xargs sed -i 's/KojoWorkerDecoratorComponent\\Connection/KojoWorkerDecoratorComponent\\WorkerDecorationV1\\Connection/g'
+
+# fix getters and setters from fabricated aware traits
+grep -RiIl 'KojoWorkerDecoratorComponent' | xargs sed -i 's/etWorker([a-zA-Z]*)Decorator/etWorkerDecorationV1Decorators$1V1$1Decorator/g'
+grep -RiIl 'KojoWorkerDecoratorComponent' | xargs sed -i 's/etWorker(?!D)/etWorkerDecorationV1Worker/g'
 ```
-Version 2
-``` php
-// Add KojoWorkerDecoratorComponent and ThrowableDiagnosticComponent service definitions
-$containerBuilder->addSourcePath(
-    'vendor/neighborhoods/kojo-worker-decorator-component/fab'
-);
-$containerBuilder->addSourcePath(
-    'vendor/neighborhoods/kojo-worker-decorator-component/src'
-);
-$containerBuilder->addSourcePath(
-    'vendor/neighborhoods/throwable-diagnostic-component/src'
-);
-```
-If the Throwable Diagnostic Component source path is already added, no change is required.
+Review the changes after running the commands. Having a clean git repository will make it easier.
 
-## Proxy Container
+Buphalo fabricated files.
 
-The [template](https://github.com/neighborhoods/KojoWorkerDecoratorComponent/blob/2.0.0/template-tree/V1/KojoWorkerDecoratorComponent/Worker/PrimaryActorName/Proxy.php) for the `Proxy` has been modified.  
-The container configuration, building and caching has been extracted into the [`Container` template](https://github.com/neighborhoods/KojoWorkerDecoratorComponent/blob/2.0.0/template-tree/V1/KojoWorkerDecoratorComponent/Worker/PrimaryActorName/Container.php) with a typed [interface](https://github.com/neighborhoods/KojoWorkerDecoratorComponent/blob/2.0.0/template-tree/V1/KojoWorkerDecoratorComponent/Worker/PrimaryActorName/ContainerInterface.php).
+Run `composer dump-autload` just in case. Clean the cache (built containers).
 
-Since the fabricated `Proxy` class gets modified, your code should work without any changes, but if you want to stay aligned with how things are done in version 2 do the following steps:
- * In the worker's buphalo file add the `Container` and `ContainerInterface` actors.
-``` yaml
-actors:
-  # unmodified existing actors followed by
-  <PrimaryActorName>/Container.php:
-    template: KojoWorkerDecoratorComponent/Worker/PrimaryActorName/Container.php
-  <PrimaryActorName>/ContainerInterface.php:
-    template: KojoWorkerDecoratorComponent/Worker/PrimaryActorName/ContainerInterface.php
-```
- * Run [buphalo](https://github.com/neighborhoods/Buphalo) to fabricate the two new actors.
- * Move the fabricated `Container.php` file from the fabrication into the source folder.
- * Extract the builder configuration, building and caching from the `Proxy`'s `getContainer()` class into the `Container`'s `buildWrappedContainer()` method.
- * (Optional) delete the `Proxy.php` file and generate it in the fab folder by running buphalo once more.
-
-## ConnectionAwareTrait
-
-The `Neighborhoods\KojoWorkerDecoratorComponent\Connection\ConnectionAwareTrait` from version 1 has been replaced by `Neighborhoods\KojoWorkerDecoratorComponent\Connection\PdoAwareTrait` in version 2.
+The migration should be complete. Run tests to see if there are any missed places or anything changed which wasn't supped to.
