@@ -46,7 +46,7 @@ For usage details and list of predefined decorators please refer to the correspo
 The Buphalo templates are provided in a custom template tree. Support for multiple template trees has been added to Buphalo in version 1.1. Ensure you have Buphalo version 1.1 or above installed.  
 You probably have a script in your project's `bin` folder running `vendor/bin/buphalo` with all the needed environment variables. Edit the environment variable for template tree directory paths to include the template tree contained in this package. The environment variable definition might be as below.
 ``` bash
-Neighborhoods_Buphalo_V1_TemplateTree_Map_Builder_FactoryInterface__TemplateTreeDirectoryPaths=default:$PWD/vendor/neighborhoods/buphalo/template-tree/V1,kwdc:$PWD/vendor/neighborhoods/kojo-worker-decorator-component/template-tree/V1
+Neighborhoods_Buphalo_V1_TemplateTree_Map_Builder_FactoryInterface__TemplateTreeDirectoryPaths=default:$PWD/vendor/neighborhoods/buphalo/template-tree/V1,kwdc:$PWD/vendor/neighborhoods/kojo-worker-decorator-component/template-tree/BuphaloV1
 ```
 
 The export above assumes that you have no other custom template trees.

@@ -173,47 +173,47 @@ Create the file `MyWorker.buphalo.v1.fabrication.yml` if it doesn't already exis
 ``` yaml
 actors:
   <PrimaryActorName>.php:
-    template: KojoWorkerDecoratorComponent/Worker/PrimaryActorName.php
+    template: KojoWorkerDecoratorComponent/WorkerDecorationV1/WorkerV1/PrimaryActorName.php
   <PrimaryActorName>.service.yml:
     template: PrimaryActorName.service.yml
   <PrimaryActorName>Interface.php:
-    template: KojoWorkerDecoratorComponent/Worker/PrimaryActorNameInterface.php
+    template: KojoWorkerDecoratorComponent/WorkerDecorationV1/WorkerV1/PrimaryActorNameInterface.php
   <PrimaryActorName>/AwareTrait.php:
     template: PrimaryActorName/AwareTrait.php
   <PrimaryActorName>/Proxy.php:
-    template: KojoWorkerDecoratorComponent/Worker/PrimaryActorName/Proxy.php
+    template: KojoWorkerDecoratorComponent/WorkerDecorationV1/WorkerV1/PrimaryActorName/Proxy.php
   <PrimaryActorName>/Proxy.service.yml:
-    template: KojoWorkerDecoratorComponent/Worker/PrimaryActorName/Proxy.service.yml
+    template: KojoWorkerDecoratorComponent/WorkerDecorationV1/WorkerV1/PrimaryActorName/Proxy.service.yml
   <PrimaryActorName>/ProxyInterface.php:
-    template: KojoWorkerDecoratorComponent/Worker/PrimaryActorName/ProxyInterface.php
+    template: KojoWorkerDecoratorComponent/WorkerDecorationV1/WorkerV1/PrimaryActorName/ProxyInterface.php
   <PrimaryActorName>/Proxy/AwareTrait.php:
-    template: KojoWorkerDecoratorComponent/Worker/PrimaryActorName/Proxy/AwareTrait.php
+    template: KojoWorkerDecoratorComponent/WorkerDecorationV1/WorkerV1/PrimaryActorName/Proxy/AwareTrait.php
   <PrimaryActorName>/Container.php:
-    template: KojoWorkerDecoratorComponent/Worker/PrimaryActorName/Container.php
+    template: KojoWorkerDecoratorComponent/WorkerDecorationV1/WorkerV1/PrimaryActorName/Container.php
   <PrimaryActorName>/ContainerInterface.php:
-    template: KojoWorkerDecoratorComponent/Worker/PrimaryActorName/ContainerInterface.php
+    template: KojoWorkerDecoratorComponent/WorkerDecorationV1/WorkerV1/PrimaryActorName/ContainerInterface.php
   <PrimaryActorName>/Factory.php:
-    template: KojoWorkerDecoratorComponent/Worker/PrimaryActorName/Factory.php
+    template: KojoWorkerDecoratorComponent/WorkerDecorationV1/WorkerV1/PrimaryActorName/Factory.php
   <PrimaryActorName>/Factory.service.yml:
     template: PrimaryActorName/Factory.service.yml
   <PrimaryActorName>/FactoryInterface.php:
-    template: KojoWorkerDecoratorComponent/Worker/PrimaryActorName/FactoryInterface.php
+    template: KojoWorkerDecoratorComponent/WorkerDecorationV1/WorkerV1/PrimaryActorName/FactoryInterface.php
   <PrimaryActorName>/Factory/AwareTrait.php:
     template: PrimaryActorName/Factory/AwareTrait.php
   <PrimaryActorName>/Builder.php:
-    template: KojoWorkerDecoratorComponent/Worker/PrimaryActorName/Builder.php
+    template: KojoWorkerDecoratorComponent/WorkerDecorationV1/WorkerV1/PrimaryActorName/Builder.php
   <PrimaryActorName>/Builder.service.yml:
-    template: KojoWorkerDecoratorComponent/Worker/PrimaryActorName/Builder.service.yml
+    template: KojoWorkerDecoratorComponent/WorkerDecorationV1/WorkerV1/PrimaryActorName/Builder.service.yml
   <PrimaryActorName>/BuilderInterface.php:
-    template: KojoWorkerDecoratorComponent/Worker/PrimaryActorName/BuilderInterface.php
+    template: KojoWorkerDecoratorComponent/WorkerDecorationV1/WorkerV1/PrimaryActorName/BuilderInterface.php
   <PrimaryActorName>/Builder/AwareTrait.php:
     template: PrimaryActorName/Builder/AwareTrait.php
   <PrimaryActorName>/Builder/Factory.php:
-    template: KojoWorkerDecoratorComponent/Worker/PrimaryActorName/Builder/Factory.php
+    template: KojoWorkerDecoratorComponent/WorkerDecorationV1/WorkerV1/PrimaryActorName/Builder/Factory.php
   <PrimaryActorName>/Builder/Factory.service.yml:
     template: PrimaryActorName/Builder/Factory.service.yml
   <PrimaryActorName>/Builder/FactoryInterface.php:
-    template: KojoWorkerDecoratorComponent/Worker/PrimaryActorName/Builder/FactoryInterface.php
+    template: KojoWorkerDecoratorComponent/WorkerDecorationV1/WorkerV1/PrimaryActorName/Builder/FactoryInterface.php
   <PrimaryActorName>/Builder/Factory/AwareTrait.php:
     template: PrimaryActorName/Builder/Factory/AwareTrait.php
 
@@ -232,11 +232,11 @@ If you also want a custom decorator add the `CustomDecorator.buphalo.v1.fabricat
 ``` yaml
 actors:
   <PrimaryActorName>.php:
-    template: KojoWorkerDecoratorComponent/Decorator/PrimaryActorName.php
+    template: KojoWorkerDecoratorComponent/WorkerDecorationV1/DecoratorV1/PrimaryActorName.php
   <PrimaryActorName>.service.yml:
-    template: KojoWorkerDecoratorComponent/Decorator/PrimaryActorName.service.yml
+    template: KojoWorkerDecoratorComponent/WorkerDecorationV1/DecoratorV1/PrimaryActorName.service.yml
   <PrimaryActorName>Interface.php:
-    template: KojoWorkerDecoratorComponent/Decorator/PrimaryActorNameInterface.php
+    template: KojoWorkerDecoratorComponent/WorkerDecorationV1/DecoratorV1/PrimaryActorNameInterface.php
   <PrimaryActorName>/AwareTrait.php:
     template: PrimaryActorName/AwareTrait.php
   <PrimaryActorName>/Factory.php:
@@ -248,19 +248,19 @@ actors:
   <PrimaryActorName>/Factory/AwareTrait.php:
     template: PrimaryActorName/Factory/AwareTrait.php
   <PrimaryActorName>/Builder.php:
-    template: KojoWorkerDecoratorComponent/Decorator/PrimaryActorName/Builder.php
+    template: KojoWorkerDecoratorComponent/WorkerDecorationV1/DecoratorV1/PrimaryActorName/Builder.php
   <PrimaryActorName>/Builder.service.yml:
     template: PrimaryActorName/Builder.service.yml
   <PrimaryActorName>/BuilderInterface.php:
-    template: KojoWorkerDecoratorComponent/Decorator/PrimaryActorName/BuilderInterface.php
+    template: KojoWorkerDecoratorComponent/WorkerDecorationV1/DecoratorV1/PrimaryActorName/BuilderInterface.php
   <PrimaryActorName>/Builder/AwareTrait.php:
     template: PrimaryActorName/Builder/AwareTrait.php
   <PrimaryActorName>/Builder/Factory.php:
-    template: KojoWorkerDecoratorComponent/Decorator/PrimaryActorName/Builder/Factory.php
+    template: KojoWorkerDecoratorComponent/WorkerDecorationV1/DecoratorV1/PrimaryActorName/Builder/Factory.php
   <PrimaryActorName>/Builder/Factory.service.yml:
-    template: KojoWorkerDecoratorComponent/Decorator/PrimaryActorName/Builder/Factory.service.yml
+    template: KojoWorkerDecoratorComponent/WorkerDecorationV1/DecoratorV1/PrimaryActorName/Builder/Factory.service.yml
   <PrimaryActorName>/Builder/FactoryInterface.php:
-    template: KojoWorkerDecoratorComponent/Decorator/PrimaryActorName/Builder/FactoryInterface.php
+    template: KojoWorkerDecoratorComponent/WorkerDecorationV1/DecoratorV1/PrimaryActorName/Builder/FactoryInterface.php
   <PrimaryActorName>/Builder/Factory/AwareTrait.php:
     template: PrimaryActorName/Builder/Factory/AwareTrait.php
 
