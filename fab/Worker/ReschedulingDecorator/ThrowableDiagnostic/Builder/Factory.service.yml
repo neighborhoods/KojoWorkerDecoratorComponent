@@ -4,4 +4,4 @@ services:
     public: false
     shared: true
     calls:
-      - [setThrowableDiagnosticBuilder, ['@Neighborhoods\KojoWorkerDecoratorComponent\Worker\ReschedulingDecorator\ThrowableDiagnostic\BuilderInterface']]
+      - [setThrowableDiagnosticV1ThrowableDiagnosticBuilder, ['@Neighborhoods\KojoWorkerDecoratorComponent\Worker\ReschedulingDecorator\ThrowableDiagnostic\BuilderInterface']]
