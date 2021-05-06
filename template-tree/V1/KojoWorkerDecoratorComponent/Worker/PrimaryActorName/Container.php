@@ -32,6 +32,7 @@ final class Container implements ContainerInterface
         return (new TinyContainerBuilder())
             ->setContainerBuilder(new ContainerBuilder())
             ->setRootPath($rootDirectory)
+            ->addSourcePath('vendor/neighborhoods/throwable-diagnostic-component/fab')
             ->addSourcePath('vendor/neighborhoods/throwable-diagnostic-component/src')
             ->addSourcePath('vendor/neighborhoods/kojo-worker-decorator-component/fab')
             ->addSourcePath('vendor/neighborhoods/kojo-worker-decorator-component/src')
@@ -43,13 +44,15 @@ final class Container implements ContainerInterface
              *
              * throw new \LogicException('Source path not updated. ' .
              *     'Add path to your component, e.g. src/WorkerComponentName.');
-             */)
+             */
+            )
             ->addSourcePath(/**
              * @neighborhoods-buphalo:annotation-processor Neighborhoods\BuphaloTemplateTree\KojoWorker\PrimaryActorName\Proxy.getContainer
              *
              * throw new \LogicException('Fabrication path not updated. ' .
              *     'Add path to your component, e.g. fab/WorkerComponentName.');
-             */)
+             */
+            )
             ->makePublic(Builder\FactoryInterface::class)
             ->addCompilerPass(new \Symfony\Component\DependencyInjection\Compiler\AnalyzeServiceReferencesPass())
             ->addCompilerPass(new \Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass())

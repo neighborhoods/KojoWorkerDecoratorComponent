@@ -10,7 +10,7 @@ use Exception;
 use Neighborhoods\Kojo\Api\V1;
 use Neighborhoods\KojoWorkerDecoratorComponent\Worker\ReschedulingDecorator;
 use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
-use Neighborhoods\ThrowableDiagnosticComponent\ThrowableDiagnostic;
+use Neighborhoods\ThrowableDiagnosticComponent\ThrowableDiagnosticV1\ThrowableDiagnostic;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -41,7 +41,9 @@ class ReschedulingDecoratorTest extends TestCase
 
         $this->decorator->setJobTypeCode('jobTypeCode');
         $this->decorator->setRescheduleDelaySeconds(1);
-        $this->decorator->setThrowableDiagnosticBuilderFactory($this->throwableDiagnosticBuilderFactoryMock);
+        $this->decorator->setThrowableDiagnosticV1ThrowableDiagnosticBuilderFactory(
+            $this->throwableDiagnosticBuilderFactoryMock
+        );
         $this->decorator->setApiV1WorkerService($this->kojoWorkerServiceMock);
         $this->decorator->setPdo($this->pdoMock);
     }

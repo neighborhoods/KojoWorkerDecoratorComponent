@@ -12,7 +12,7 @@ use Neighborhoods\ExceptionComponent\Exception;
 use Neighborhoods\ExceptionComponent\TransientExceptionInterface;
 use Neighborhoods\Kojo\Api;
 use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
-use Neighborhoods\ThrowableDiagnosticComponent\DiagnosedInterface;
+use Neighborhoods\ThrowableDiagnosticComponent\ThrowableDiagnosticV1\DiagnosedInterface;
 use Psr\Log\LogLevel;
 use Throwable;
 
