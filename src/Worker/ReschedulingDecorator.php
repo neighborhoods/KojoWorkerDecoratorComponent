@@ -8,7 +8,7 @@ use DateTime;
 use LogicException;
 use Neighborhoods\KojoWorkerDecoratorComponent\Connection;
 use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
-use Neighborhoods\ThrowableDiagnosticComponent\ThrowableDiagnostic;
+use Neighborhoods\ThrowableDiagnosticComponent\ThrowableDiagnosticV1\ThrowableDiagnostic;
 use OutOfBoundsException;
 use Throwable;
 
@@ -58,7 +58,7 @@ final class ReschedulingDecorator implements ReschedulingDecoratorInterface
             $this->getPdo()->commit();
         } catch (Throwable $throwable) {
             $this->getPdo()->rollBack();
-            $this->getThrowableDiagnosticBuilderFactory()
+            $this->getThrowableDiagnosticV1ThrowableDiagnosticBuilderFactory()
                 ->create()
                 ->build()
                 ->diagnose($throwable);

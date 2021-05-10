@@ -1,12 +1,12 @@
 services:
   Neighborhoods\KojoWorkerDecoratorComponent\Worker\ReschedulingDecorator\ThrowableDiagnostic\BuilderInterface:
-    class: Neighborhoods\ThrowableDiagnosticComponent\ThrowableDiagnostic\Builder
+    class: Neighborhoods\ThrowableDiagnosticComponent\ThrowableDiagnosticV1\ThrowableDiagnostic\Builder
     public: false
     shared: false
     calls:
-      - [setThrowableDiagnosticFactory, ['@Neighborhoods\ThrowableDiagnosticComponent\ThrowableDiagnostic\FactoryInterface']]
+      - [setThrowableDiagnosticV1ThrowableDiagnosticFactory, ['@Neighborhoods\ThrowableDiagnosticComponent\ThrowableDiagnosticV1\ThrowableDiagnostic\FactoryInterface']]
       # Add predefined decorator(s) as shown below
-      - [addFactory, ['@Neighborhoods\ThrowableDiagnosticComponent\ThrowableDiagnostic\PostgresDecorator\FactoryInterface']]
+      - [addFactory, ['@Neighborhoods\ThrowableDiagnosticComponent\ThrowableDiagnosticV1Decorators\PostgresV1\PostgresDecorator\FactoryInterface']]
 
       # Uncomment next line if you have a custom decorator.
       #- [addFactory, ['@Neighborhoods\KojoWorkerDecoratorComponent\Worker\ReschedulingDecorator\ThrowableDiagnostic\Decorator\FactoryInterface']]

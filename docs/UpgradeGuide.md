@@ -1,53 +1,48 @@
-# Upgrading from v1 to v2
+# Upgrading from v2 to v3
 
-## Add Throwable Diagnostic Component source path
-In version 2 the [`ReschedulingDecorator`](https://github.com/neighborhoods/KojoWorkerDecoratorComponent/blob/2.0.0/src/Worker/ReschedulingDecorator.php) was added. It's service definition depends on services defined in the [Throwable Diagnostic Component](https://github.com/neighborhoods/ThrowableDiagnosticComponent). To avoid a `ServiceNotFoundException` when building a container, make sure the path `vendor/neighborhoods/throwable-diagnostic-component/src` is added along kojo worker decorator component paths.
+The upgrade guide from v1 to v2 is available [here](https://github.com/neighborhoods/KojoWorkerDecoratorComponent/blob/2.0.0/docs/UpgradeGuide.md).
 
-Version 1
-``` php
-// Add KojoWorkerDecoratorComponent service definitions
-$containerBuilder->addSourcePath(
-    'vendor/neighborhoods/kojo-worker-decorator-component/fab'
-);
-$containerBuilder->addSourcePath(
-    'vendor/neighborhoods/kojo-worker-decorator-component/src'
-);
+Version 2 of KWDC is compatible with [Throwable Diagnostic Component](https://github.com/neighborhoods/ThrowableDiagnosticComponent) version 3, while KWDC version 3 upgraded to Throwable Diagnostic Component version 4. Except that, no changes have been made.
+
+To upgrade using composer run
+```bash
+composer require neighborhoods/kojo-worker-decorator-component:^3
 ```
-Version 2
-``` php
+Update both packages simultaneously if Throwable Diagnostic Component is listed as a direct dependency.
+```bash
+composer require neighborhoods/kojo-worker-decorator-component:^3 neighborhoods/throwable-diagnostic-component:^4
+```
+If Throwable Diagnostic Component isn't used in your product code, the only needed change is an update of container builder paths.  
+Follow the Throwable Diagnostic Component [upgrade guide](https://github.com/neighborhoods/ThrowableDiagnosticComponent/tree/4.0.0/docs/UpgradeGuide.md) if it is used in your product code.
+
+## Update container builder paths
+Throwable Diagnostic Component version 3 had all the code in the source folder, but in Throwable Diagnostic Component version 4 fabricated files have been moved into the fabrication folder. Therefore, when including the source folder, also include the fabrication folder.
+
+KWDC Version 2 with throwable Diagnostic Component version 3
+```php
 // Add KojoWorkerDecoratorComponent and ThrowableDiagnosticComponent service definitions
-$containerBuilder->addSourcePath(
-    'vendor/neighborhoods/kojo-worker-decorator-component/fab'
-);
-$containerBuilder->addSourcePath(
-    'vendor/neighborhoods/kojo-worker-decorator-component/src'
-);
-$containerBuilder->addSourcePath(
-    'vendor/neighborhoods/throwable-diagnostic-component/src'
-);
+$containerBuilder
+    ->addSourcePath('vendor/neighborhoods/kojo-worker-decorator-component/fab')
+    ->addSourcePath('vendor/neighborhoods/kojo-worker-decorator-component/src')
+    ->addSourcePath('vendor/neighborhoods/throwable-diagnostic-component/src');
 ```
-If the Throwable Diagnostic Component source path is already added, no change is required.
-
-## Proxy Container
-
-The [template](https://github.com/neighborhoods/KojoWorkerDecoratorComponent/blob/2.0.0/template-tree/V1/KojoWorkerDecoratorComponent/Worker/PrimaryActorName/Proxy.php) for the `Proxy` has been modified.  
-The container configuration, building and caching has been extracted into the [`Container` template](https://github.com/neighborhoods/KojoWorkerDecoratorComponent/blob/2.0.0/template-tree/V1/KojoWorkerDecoratorComponent/Worker/PrimaryActorName/Container.php) with a typed [interface](https://github.com/neighborhoods/KojoWorkerDecoratorComponent/blob/2.0.0/template-tree/V1/KojoWorkerDecoratorComponent/Worker/PrimaryActorName/ContainerInterface.php).
-
-Since the fabricated `Proxy` class gets modified, your code should work without any changes, but if you want to stay aligned with how things are done in version 2 do the following steps:
- * In the worker's buphalo file add the `Container` and `ContainerInterface` actors.
-``` yaml
-actors:
-  # unmodified existing actors followed by
-  <PrimaryActorName>/Container.php:
-    template: KojoWorkerDecoratorComponent/Worker/PrimaryActorName/Container.php
-  <PrimaryActorName>/ContainerInterface.php:
-    template: KojoWorkerDecoratorComponent/Worker/PrimaryActorName/ContainerInterface.php
+KWDC Version 3 with Throwable Diagnostic Component version 4
+```php
+// Add KojoWorkerDecoratorComponent and ThrowableDiagnosticComponent service definitions
+$containerBuilder
+    ->addSourcePath('vendor/neighborhoods/kojo-worker-decorator-component/fab')
+    ->addSourcePath('vendor/neighborhoods/kojo-worker-decorator-component/src')
+    ->addSourcePath('vendor/neighborhoods/throwable-diagnostic-component/fab')
+    ->addSourcePath('vendor/neighborhoods/throwable-diagnostic-component/src');
 ```
- * Run [buphalo](https://github.com/neighborhoods/Buphalo) to fabricate the two new actors.
- * Move the fabricated `Container.php` file from the fabrication into the source folder.
- * Extract the builder configuration, building and caching from the `Proxy`'s `getContainer()` class into the `Container`'s `buildWrappedContainer()` method.
- * (Optional) delete the `Proxy.php` file and generate it in the fab folder by running buphalo once more.
-
-## ConnectionAwareTrait
-
-The `Neighborhoods\KojoWorkerDecoratorComponent\Connection\ConnectionAwareTrait` from version 1 has been replaced by `Neighborhoods\KojoWorkerDecoratorComponent\Connection\PdoAwareTrait` in version 2.
+Throwable Diagnostic Component version 4 is designed for selective inclusion of DI services. The only paths needed by KWDC are listed in the [PostgresV1 README](https://github.com/neighborhoods/ThrowableDiagnosticComponent/tree/4.0.0/src/ThrowableDiagnosticV1Decorators/PostgresV1/README.md#paths). If Throwable Diagnostic Component paths are included only because of KWDC, they may be replaced by the following paths.
+```php
+// Add KojoWorkerDecoratorComponent and ThrowableDiagnosticComponent service definitions
+$containerBuilder
+    ->addSourcePath('vendor/neighborhoods/kojo-worker-decorator-component/fab')
+    ->addSourcePath('vendor/neighborhoods/kojo-worker-decorator-component/src')
+    ->addSourcePath('vendor/neighborhoods/throwable-diagnostic-component/fab/ThrowableDiagnosticV1')
+    ->addSourcePath('vendor/neighborhoods/throwable-diagnostic-component/src/ThrowableDiagnosticV1')
+    ->addSourcePath('vendor/neighborhoods/throwable-diagnostic-component/fab/ThrowableDiagnosticV1Decorators/PostgresV1')
+    ->addSourcePath('vendor/neighborhoods/throwable-diagnostic-component/src/ThrowableDiagnosticV1Decorators/PostgresV1');
+```
