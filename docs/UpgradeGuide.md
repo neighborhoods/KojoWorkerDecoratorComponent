@@ -1,8 +1,8 @@
-# Upgrading from 2.* to 3.*
+# Upgrading from 3.* to 4.*
 
-The upgrade guide from 1.* to 2.* can be found [here](https://github.com/neighborhoods/KojoWorkerDecoratorComponent/blob/2.0.0/docs/UpgradeGuide.md).
+The upgrade guide from 2.* to 3.* can be found [here](https://github.com/neighborhoods/KojoWorkerDecoratorComponent/blob/3.0.0/docs/UpgradeGuide.md).
 
-In version 3 all components have been versioned. The structure is refactored causing changes in namespaces, paths and fabricated method names.
+In version 4 all components have been versioned. The structure is refactored causing changes in namespaces, paths and fabricated method names.
 
 Common (not decorator specific) code has been moved from `src` to `src/WorkerDecorationV1`.
 
