@@ -18,11 +18,25 @@ final class Container implements ContainerInterface
         'WorkerDecorationV1Decorators/CrashedThresholdV1',
         'WorkerDecorationV1Decorators/ExceptionHandlingV1',
         // Uncomment ReschedulingV1 for observers
-        // ReschedulingV1 requires throwable diagnostic.
+        // ReschedulingV1 requires ThrowableDiagnosticV1 and PostgresV1
         // 'WorkerDecorationV1Decorators/ReschedulingV1',
         'WorkerDecorationV1Decorators/RetryThresholdV1',
         'WorkerDecorationV1Decorators/UserlandPdoV1',
     ];
+    private const THROWABLE_DIAGNOSTIC_COMPONENTS = [
+        //'ThrowableDiagnosticV1',
+        //'ThrowableDiagnosticV1Decorators/AwsS3V1',
+        //'ThrowableDiagnosticV1Decorators/AwsSnsV1',
+        //'ThrowableDiagnosticV1Decorators/AwsSqsV1',
+        //'ThrowableDiagnosticV1Decorators/AwsV1',
+        //'ThrowableDiagnosticV1Decorators/GuzzleV1',
+        //'ThrowableDiagnosticV1Decorators/NestedDiagnosticV1',
+        //'ThrowableDiagnosticV1Decorators/PostgresV1',
+        //'ThrowableDiagnosticV1Decorators/Psr18V1',
+        //'ThrowableDiagnosticV1Decorators/SymfonyHttpClientV1',
+        //'ThrowableDiagnosticV1Decorators/TransientV1',
+    ];
+
     private $wrappedContainer;
 
     private function buildWrappedContainer(): PsrContainerInterface
@@ -63,11 +77,15 @@ final class Container implements ContainerInterface
             ->addCompilerPass(new \Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass())
             ->setCacheHandler($cacheHandler);
 
-        //$containerBuilder->addSourcePath('vendor/neighborhoods/throwable-diagnostic-component/src');
         foreach (self::KOJO_WORKER_DECORATORS as $decorator) {
             $containerBuilder
                 ->addSourcePath('vendor/neighborhoods/kojo-worker-decorator-component/fab/' . $decorator)
                 ->addSourcePath('vendor/neighborhoods/kojo-worker-decorator-component/src/' . $decorator);
+        }
+        foreach (self::THROWABLE_DIAGNOSTIC_COMPONENTS as $component) {
+            $containerBuilder
+                ->addSourcePath('vendor/neighborhoods/throwable-diagnostic-component/fab/' . $component)
+                ->addSourcePath('vendor/neighborhoods/throwable-diagnostic-component/src/' . $component);
         }
 
         return $containerBuilder->build();
