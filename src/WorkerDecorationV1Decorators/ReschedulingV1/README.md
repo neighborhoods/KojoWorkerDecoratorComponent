@@ -11,6 +11,9 @@ The warning will be logged if another decorator between the Rescheduling Decorat
 This decorator's DI services require DI services from the [Throwable Diagnostic Component](https://github.com/neighborhoods/ThrowableDiagnosticComponent), in addition to the corresponding source and fabrication subfolders.
 ``` php
 $containerBuilder->addSourcePath(
+    'vendor/neighborhoods/throwable-diagnostic-component/fab'
+);
+$containerBuilder->addSourcePath(
     'vendor/neighborhoods/throwable-diagnostic-component/src'
 );
 $containerBuilder->addSourcePath(

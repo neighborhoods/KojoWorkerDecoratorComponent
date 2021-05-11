@@ -1,7 +1,7 @@
 services:
   Neighborhoods\KojoWorkerDecoratorComponent\WorkerDecorationV1Decorators\ReschedulingV1\ReschedulingDecorator\ThrowableDiagnostic\Builder\FactoryInterface:
-    class: Neighborhoods\ThrowableDiagnosticComponent\ThrowableDiagnostic\Builder\Factory
+    class: Neighborhoods\ThrowableDiagnosticComponent\ThrowableDiagnosticV1\ThrowableDiagnostic\Builder\Factory
     public: false
     shared: true
     calls:
-      - [setThrowableDiagnosticBuilder, ['@Neighborhoods\KojoWorkerDecoratorComponent\WorkerDecorationV1Decorators\ReschedulingV1\ReschedulingDecorator\ThrowableDiagnostic\BuilderInterface']]
+      - [setThrowableDiagnosticV1ThrowableDiagnosticBuilder, ['@Neighborhoods\KojoWorkerDecoratorComponent\WorkerDecorationV1Decorators\ReschedulingV1\ReschedulingDecorator\ThrowableDiagnostic\BuilderInterface']]

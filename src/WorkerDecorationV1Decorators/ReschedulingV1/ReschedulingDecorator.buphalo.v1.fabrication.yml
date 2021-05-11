@@ -32,6 +32,6 @@ actors:
   <PrimaryActorName>/Builder/Factory/AwareTrait.php:
     template: PrimaryActorName/Builder/Factory/AwareTrait.php
   <PrimaryActorName>/ThrowableDiagnostic/Builder.service.yml:
-    template: PrimaryActorName/ThrowableDiagnostic/Builder.service.yml
+    template: ThrowableDiagnosticComponent/ThrowableDiagnosticV1/DiagnoserV1/PrimaryActorName/ThrowableDiagnostic/Builder.service.yml
   <PrimaryActorName>/ThrowableDiagnostic/Builder/Factory.service.yml:
-    template: PrimaryActorName/ThrowableDiagnostic/Builder/Factory.service.yml
+    template: ThrowableDiagnosticComponent/ThrowableDiagnosticV1/DiagnoserV1/PrimaryActorName/ThrowableDiagnostic/Builder/Factory.service.yml

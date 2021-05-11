@@ -4,6 +4,6 @@ services:
     public: false
     shared: false
     calls:
-      - [setThrowableDiagnosticBuilderFactory, ['@Neighborhoods\KojoWorkerDecoratorComponent\WorkerDecorationV1Decorators\ReschedulingV1\ReschedulingDecorator\ThrowableDiagnostic\Builder\FactoryInterface']]
+      - [setThrowableDiagnosticV1ThrowableDiagnosticBuilderFactory, ['@Neighborhoods\KojoWorkerDecoratorComponent\WorkerDecorationV1Decorators\ReschedulingV1\ReschedulingDecorator\ThrowableDiagnostic\Builder\FactoryInterface']]
       - [setJobTypeCode, ['%Neighborhoods\KojoWorkerDecoratorComponent\WorkerDecorationV1Decorators\ReschedulingV1\ReschedulingDecoratorInterface.jobTypeCode%']]
       - [setRescheduleDelaySeconds, ['%Neighborhoods\KojoWorkerDecoratorComponent\WorkerDecorationV1Decorators\ReschedulingV1\ReschedulingDecoratorInterface.rescheduleDelaySeconds%']]
