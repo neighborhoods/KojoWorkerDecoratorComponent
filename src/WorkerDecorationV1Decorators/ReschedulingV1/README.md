@@ -9,19 +9,14 @@ The warning will be logged if another decorator between the Rescheduling Decorat
 
 ## Paths
 This decorator's DI services require DI services from the [Throwable Diagnostic Component](https://github.com/neighborhoods/ThrowableDiagnosticComponent), in addition to the corresponding source and fabrication subfolders.
-``` php
-$containerBuilder->addSourcePath(
-    'vendor/neighborhoods/throwable-diagnostic-component/fab'
-);
-$containerBuilder->addSourcePath(
-    'vendor/neighborhoods/throwable-diagnostic-component/src'
-);
-$containerBuilder->addSourcePath(
-    'vendor/neighborhoods/kojo-worker-decorator-component/fab/WorkerDecorationV1Decorators/ReschedulingV1'
-);
-$containerBuilder->addSourcePath(
-    'vendor/neighborhoods/kojo-worker-decorator-component/src/WorkerDecorationV1Decorators/ReschedulingV1'
-);
+```php
+$containerBuilder
+    ->addSourcePath('vendor/neighborhoods/throwable-diagnostic-component/fab/ThrowableDiagnosticV1')
+    ->addSourcePath('vendor/neighborhoods/throwable-diagnostic-component/src/ThrowableDiagnosticV1')
+    ->addSourcePath('vendor/neighborhoods/throwable-diagnostic-component/fab/ThrowableDiagnosticV1Decorators/PostgresV1')
+    ->addSourcePath('vendor/neighborhoods/throwable-diagnostic-component/src/ThrowableDiagnosticV1Decorators/PostgresV1')
+    ->addSourcePath('vendor/neighborhoods/kojo-worker-decorator-component/fab/WorkerDecorationV1Decorators/ReschedulingV1')
+    ->addSourcePath('vendor/neighborhoods/kojo-worker-decorator-component/src/WorkerDecorationV1Decorators/ReschedulingV1');
 ```
 
 ## DI Parameters

@@ -9,7 +9,7 @@ Common (not decorator specific) code has been moved from `src` to `src/WorkerDec
 Decorators have been moved from `src/Worker` into their own versioned directory. For example `src/Worker/CrashedThresholdDecorator.php` is now in `src/WorkerDecoratorionV1Decorators/CrashedThresholdV1/CrashedThresholdDecorator.php` along with accompanying files.
 
 To quickly switch to the new file structure run the following regex inside your source and possibly test folders.
-``` bash
+```bash
 grep -RiIl 'KojoWorkerDecoratorComponent' | xargs sed -i 's/Worker\\([a-zA-Z]*)Decorator/WorkerDecorationV1Decorators\\$1V1\\$1Decorator/g'
 grep -RiIl 'KojoWorkerDecoratorComponent' | xargs sed -i 's/KojoWorkerDecoratorComponent\\Worker(?!D)/KojoWorkerDecoratorComponent\\WorkerDecorationV1\\Worker/g'
 grep -RiIl 'KojoWorkerDecoratorComponent' | xargs sed -i 's/KojoWorkerDecoratorComponent\\Connection/KojoWorkerDecoratorComponent\\WorkerDecorationV1\\Connection/g'

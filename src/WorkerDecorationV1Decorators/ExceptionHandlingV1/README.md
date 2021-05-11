@@ -11,13 +11,10 @@ This is most likely caused by a missing environment variable or invalid value.
 
 ## Paths
 As usual the DI service definition are located in the corresponding source and fabrication subfolders.
-``` php
-$containerBuilder->addSourcePath(
-    'vendor/neighborhoods/kojo-worker-decorator-component/fab/WorkerDecorationV1Decorators/ExceptionHandlingV1'
-);
-$containerBuilder->addSourcePath(
-    'vendor/neighborhoods/kojo-worker-decorator-component/src/WorkerDecorationV1Decorators/ExceptionHandlingV1'
-);
+```php
+$containerBuilder
+    ->addSourcePath('vendor/neighborhoods/kojo-worker-decorator-component/fab/WorkerDecorationV1Decorators/ExceptionHandlingV1')
+    ->addSourcePath('vendor/neighborhoods/kojo-worker-decorator-component/src/WorkerDecorationV1Decorators/ExceptionHandlingV1');
 ```
 
 ## DI Parameters

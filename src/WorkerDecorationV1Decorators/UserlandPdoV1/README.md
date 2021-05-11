@@ -4,13 +4,10 @@ Knowing the connection enables worker logic to isolate job state changes into tr
 
 ## Paths
 As usual the DI service definition are located in the corresponding source and fabrication subfolders.
-``` php
-$containerBuilder->addSourcePath(
-    'vendor/neighborhoods/kojo-worker-decorator-component/fab/WorkerDecorationV1Decorators/UserlandPdoV1'
-);
-$containerBuilder->addSourcePath(
-    'vendor/neighborhoods/kojo-worker-decorator-component/src/WorkerDecorationV1Decorators/UserlandPdoV1'
-);
+```php
+$containerBuilder
+    ->addSourcePath('vendor/neighborhoods/kojo-worker-decorator-component/fab/WorkerDecorationV1Decorators/UserlandPdoV1')
+    ->addSourcePath('vendor/neighborhoods/kojo-worker-decorator-component/src/WorkerDecorationV1Decorators/UserlandPdoV1');
 ```
 
 ## DI Parameters

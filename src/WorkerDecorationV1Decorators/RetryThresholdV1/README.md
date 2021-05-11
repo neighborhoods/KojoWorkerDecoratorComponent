@@ -5,13 +5,10 @@ The decorator holds the job when the number of retries exceeds the threshold.
 
 ## Paths
 As usual the DI service definition are located in the corresponding source and fabrication subfolders.
-``` php
-$containerBuilder->addSourcePath(
-    'vendor/neighborhoods/kojo-worker-decorator-component/fab/WorkerDecorationV1Decorators/RetryThresholdV1'
-);
-$containerBuilder->addSourcePath(
-    'vendor/neighborhoods/kojo-worker-decorator-component/src/WorkerDecorationV1Decorators/RetryThresholdV1'
-);
+```php
+$containerBuilder
+    ->addSourcePath('vendor/neighborhoods/kojo-worker-decorator-component/fab/WorkerDecorationV1Decorators/RetryThresholdV1')
+    ->addSourcePath('vendor/neighborhoods/kojo-worker-decorator-component/src/WorkerDecorationV1Decorators/RetryThresholdV1');
 ```
 
 ## DI Parameters

@@ -19,7 +19,7 @@ All decorators use compatible Buphalo decorator templates.
 Kōjō doesn't enforce any interface to workers, but this component does. To decorate your worker it must implement the
 `Neighborhoods\KojoWorkerDecoratorComponent\WorkerDecorationV1\WorkerInterface`. This can be easily done by using the `AwareTrait` for Kojo API Worker Service and Kojo API RDBMS Connection Service as shown below.
 
-``` php
+```php
 <?php
 namespace Acme;
 
@@ -46,7 +46,7 @@ The Worker will not be used by Kōjō directly. Kōjō will use a Proxy, which w
 Kōjō will provide the Proxy with its API services, which are forwarded to the worker.  
 The Proxy might use the [Neighborhoods Container Builder](https://github.com/neighborhoods/DependencyInjectionContainerBuilderComponent), as shown below, to obtain the builder for the worker and decorators. The decorators and worker can use dependency injection, while the Proxy cannot.
 
-``` php
+```php
 <?php
 namespace Acme\MyWorker;
 
@@ -88,14 +88,11 @@ The `MyWorker\Builder\FactoryInterface` should extend the `Neighborhoods\KojoWor
 
 If predefined decorators are used, add the corresponding paths to the container builder's source paths. Have a look at the predefined decorator documentation to see which those are.  
 The decorator DI service definitions may depend on services defined in other components. To avoid addition of paths to other components only add paths to used decorators. This prevents your code from breaking due to addition of a new decorator with dependency to previously unrelated components.
-``` php
+```php
 // Discover used predefined service definitions
-$containerBuilder->addSourcePath(
-    'vendor/neighborhoods/kojo-worker-decorator-component/fab/WorkerDecorationV1Decorators/ExceptionHandlingV1'
-);
-$containerBuilder->addSourcePath(
-    'vendor/neighborhoods/kojo-worker-decorator-component/src/WorkerDecorationV1Decorators/ExceptionHandlingV1'
-);
+$containerBuilder
+    ->addSourcePath('vendor/neighborhoods/kojo-worker-decorator-component/fab/WorkerDecorationV1Decorators/ExceptionHandlingV1')
+    ->addSourcePath('vendor/neighborhoods/kojo-worker-decorator-component/src/WorkerDecorationV1Decorators/ExceptionHandlingV1');
 ```
 There are no DI service definitions in this folder (`WorkerDecorationV1`), there's no need to list it.
 
@@ -105,7 +102,7 @@ The container building and caching can be extracted from the Proxy into a dedica
 
 Configure the builder using Symfony DI to build a decorator stack tailored to your needs. The `ExceptionHandlingDecorator` should be the last in the list, i.e. the outermost. An example is shown below.
 
-``` yaml
+```yaml
 # Acme\MyWorker\Builder.service.yml
 services:
   Acme\MyWorker\BuilderInterface:
@@ -133,7 +130,7 @@ To avoid mixing worker builder and decorator definitions, provide them in separa
 
 In addition to the decorators provided in this component, you may implement your own decorator(s).  
 It has to extend the `Neighborhoods\KojoWorkerDecoratorComponent\WorkerDecorationV1\Worker\DecoratorInterface` interface, which will be mostly implemented using the `Neighborhoods\KojoWorkerDecoratorComponent\WorkerDecorationV1\Worker\DecoratorTrait` trait. The only method left to implement is the `work()` method, which at some point might run the decorated worker as shown below.
-``` php
+```php
 <?php
 
 namespace Acme\MyWorker;
@@ -170,7 +167,7 @@ To use the buphalo templates follow the steps explained [here](../../README.md#p
 
 Create the file `MyWorker.buphalo.v1.fabrication.yml` if it doesn't already exist and make sure it has the following lines.
 
-``` yaml
+```yaml
 actors:
   <PrimaryActorName>.php:
     template: KojoWorkerDecoratorComponent/WorkerDecorationV1/WorkerV1/PrimaryActorName.php
@@ -229,7 +226,7 @@ The Container template is using [Neighborhoods Container Builder](https://github
 
 If you also want a custom decorator add the `CustomDecorator.buphalo.v1.fabrication.yml` file with the content below. Preferably into the `MyWorker` subdirectory, next to the `Builder.service.yml` using it.
 
-``` yaml
+```yaml
 actors:
   <PrimaryActorName>.php:
     template: KojoWorkerDecoratorComponent/WorkerDecorationV1/DecoratorV1/PrimaryActorName.php
