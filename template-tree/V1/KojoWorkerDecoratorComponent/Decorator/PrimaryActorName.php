@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Neighborhoods\BuphaloTemplateTree;
 
-use Neighborhoods\KojoWorkerDecoratorComponent\Worker\DecoratorTrait;
+use Neighborhoods\KojoWorkerDecoratorComponent\Worker;
 use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
 
 final class PrimaryActorName implements PrimaryActorNameInterface
 {
-    use DecoratorTrait;
+    use Worker\AwareTrait;
 
     public function work(): WorkerInterface
     {
@@ -17,7 +17,7 @@ final class PrimaryActorName implements PrimaryActorNameInterface
         // TODO: Implement work() method.
         throw new \LogicException('Unimplemented custom worker decorator.');
          */
-        $this->runWorker();
+        $this->getWorker()->work();
 
         return $this;
     }

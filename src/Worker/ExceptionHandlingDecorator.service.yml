@@ -7,3 +7,4 @@ services:
     shared: false
     calls:
       - [setRetryIntervalDefinition, ['%Neighborhoods\KojoWorkerDecoratorComponent\Worker\ExceptionHandlingDecoratorInterface.retryIntervalDefinition%']]
+      - [setApiV1WorkerService, ['@Neighborhoods\Kojo\Api\V1\Worker\ServiceInterface']]

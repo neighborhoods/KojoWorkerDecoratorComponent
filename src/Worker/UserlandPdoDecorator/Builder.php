@@ -5,14 +5,11 @@ declare(strict_types=1);
 namespace Neighborhoods\KojoWorkerDecoratorComponent\Worker\UserlandPdoDecorator;
 
 use LogicException;
-use Neighborhoods\Kojo\Api;
 use Neighborhoods\KojoWorkerDecoratorComponent\Worker\DecoratorInterface;
 use Neighborhoods\KojoWorkerDecoratorComponent\Worker;
 
 class Builder implements BuilderInterface
 {
-    use Api\V1\Worker\Service\AwareTrait;
-    use Api\V1\RDBMS\Connection\Service\AwareTrait;
     use Factory\AwareTrait;
     use Worker\AwareTrait;
 
@@ -27,8 +24,6 @@ class Builder implements BuilderInterface
         $connection = $this->getPrefabDoctrineDbalConnectionDecoratorRepository()
             ->getConnection($this->getConnectionId());
 
-        $decorator->setApiV1RDBMSConnectionService($this->getApiV1RDBMSConnectionService());
-        $decorator->setApiV1WorkerService($this->getApiV1WorkerService());
         $decorator->setWorker($this->getWorker());
         $decorator->setPdo($connection->getWrappedConnection());
 

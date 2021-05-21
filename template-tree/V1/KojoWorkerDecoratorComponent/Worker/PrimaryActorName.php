@@ -9,7 +9,6 @@ use Neighborhoods\Kojo\Api\V1;
 class PrimaryActorName implements PrimaryActorNameInterface
 {
     use V1\Worker\Service\AwareTrait;
-    use V1\RDBMS\Connection\Service\AwareTrait;
 
     public function work(): \Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface
     {

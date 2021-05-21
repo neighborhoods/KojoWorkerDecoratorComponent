@@ -51,8 +51,6 @@ class UserlandPdoDecoratorTest extends TestCase
             $newPDO
         ) implements WorkerInterface {
             use AwareTrait;
-            use V1\Worker\Service\AwareTrait;
-            use V1\RDBMS\Connection\Service\AwareTrait;
             use \Neighborhoods\Pylon\Data\Property\Defensive\AwareTrait;
 
             /**

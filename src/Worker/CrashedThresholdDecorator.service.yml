@@ -9,3 +9,4 @@ services:
     calls:
       - [setThreshold, ['%Neighborhoods\KojoWorkerDecoratorComponent\Worker\CrashedThresholdDecoratorInterface.threshold%']]
       - [setDelaySeconds, [ '%Neighborhoods\KojoWorkerDecoratorComponent\Worker\CrashedThresholdDecoratorInterface.delaySeconds%' ] ]
+      - [setApiV1WorkerService, ['@Neighborhoods\Kojo\Api\V1\Worker\ServiceInterface']]

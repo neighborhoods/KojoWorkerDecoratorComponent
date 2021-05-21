@@ -7,3 +7,4 @@ services:
     shared: false
     calls:
       - [setThreshold, ['%Neighborhoods\KojoWorkerDecoratorComponent\Worker\RetryThresholdDecoratorInterface.threshold%']]
+      - [setApiV1WorkerService, ['@Neighborhoods\Kojo\Api\V1\Worker\ServiceInterface']]

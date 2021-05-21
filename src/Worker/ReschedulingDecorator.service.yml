@@ -7,3 +7,4 @@ services:
       - [setThrowableDiagnosticV1ThrowableDiagnosticBuilderFactory, ['@Neighborhoods\KojoWorkerDecoratorComponent\Worker\ReschedulingDecorator\ThrowableDiagnostic\Builder\FactoryInterface']]
       - [setJobTypeCode, ['%Neighborhoods\KojoWorkerDecoratorComponent\Worker\ReschedulingDecoratorInterface.jobTypeCode%']]
       - [setRescheduleDelaySeconds, ['%Neighborhoods\KojoWorkerDecoratorComponent\Worker\ReschedulingDecoratorInterface.rescheduleDelaySeconds%']]
+      - [setApiV1WorkerService, ['@Neighborhoods\Kojo\Api\V1\Worker\ServiceInterface']]

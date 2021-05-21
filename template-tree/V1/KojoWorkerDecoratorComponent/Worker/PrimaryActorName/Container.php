@@ -7,16 +7,16 @@ namespace Neighborhoods\BuphaloTemplateTree\PrimaryActorName;
 use Neighborhoods\DependencyInjectionContainerBuilderComponent\SymfonyConfigCacheHandler;
 use Neighborhoods\DependencyInjectionContainerBuilderComponent\TinyContainerBuilder;
 use Neighborhoods\BuphaloTemplateTree\PrimaryActorName as Worker;
-use Neighborhoods\Kojo\Api;
+use Neighborhoods\Kojo\Api\V1;
 use RuntimeException;
+use Symfony\Component\DependencyInjection\Container as SymfonyContainer;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Psr\Container\ContainerInterface as PsrContainerInterface;
 
 final class Container implements ContainerInterface
 {
     private $wrappedContainer;
 
-    private function buildWrappedContainer(): PsrContainerInterface
+    private function buildWrappedContainer(): SymfonyContainer
     {
         $rootDirectory = realpath(dirname(__DIR__, 3));
         if (false === $rootDirectory) {
@@ -29,7 +29,7 @@ final class Container implements ContainerInterface
             ->setDebug(false)
             ->build();
 
-        return (new TinyContainerBuilder())
+        $container = (new TinyContainerBuilder())
             ->setContainerBuilder(new ContainerBuilder())
             ->setRootPath($rootDirectory)
             ->addSourcePath('vendor/neighborhoods/throwable-diagnostic-component/fab')
@@ -58,9 +58,13 @@ final class Container implements ContainerInterface
             ->addCompilerPass(new \Symfony\Component\DependencyInjection\Compiler\InlineServiceDefinitionsPass())
             ->setCacheHandler($cacheHandler)
             ->build();
+        if ($container instanceof SymfonyContainer) {
+            return $container;
+        }
+        throw new RuntimeException('Symfony container expected');
     }
 
-    private function getWrappedContainer(): PsrContainerInterface
+    private function getWrappedContainer(): SymfonyContainer
     {
         if (!isset($this->wrappedContainer)) {
             $this->wrappedContainer = $this->buildWrappedContainer();
@@ -68,8 +72,15 @@ final class Container implements ContainerInterface
         return $this->wrappedContainer;
     }
 
-    public function getPrimaryActorNameBuilderFactory(): Builder\FactoryInterface
-    {
-        return $this->getWrappedContainer()->get(Builder\FactoryInterface::class);
+    public function getPrimaryActorNameBuilderFactory(
+        V1\Worker\ServiceInterface $workerService,
+        V1\RDBMS\Connection\ServiceInterface $connectionService
+    ): Builder\FactoryInterface {
+        $container = $this->getWrappedContainer();
+        $container->set(V1\Worker\ServiceInterface::class . '.synthetic', $workerService);
+        $container->set(V1\RDBMS\Connection\ServiceInterface::class . '.synthetic', $connectionService);
+        /* @var Builder\FactoryInterface $builderFactory */
+        $builderFactory = $container->get(Builder\FactoryInterface::class);
+        return $builderFactory;
     }
 }

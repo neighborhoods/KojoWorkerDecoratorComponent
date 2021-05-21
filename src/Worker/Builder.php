@@ -10,29 +10,19 @@ use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
 
 class Builder implements BuilderInterface
 {
-    use Api\V1\Worker\Service\AwareTrait;
-    use Api\V1\RDBMS\Connection\Service\AwareTrait;
     use Factory\AwareTrait;
 
     protected /*array*/ $decoratorBuilderFactories = [];
 
     public function build(): WorkerInterface
     {
-        $connectionService = $this->getApiV1RDBMSConnectionService();
-        $workerService = $this->getApiV1WorkerService();
-
         $worker = $this->getWorkerFactory()
             ->create();
-
-        $worker->setApiV1RDBMSConnectionService($connectionService);
-        $worker->setApiV1WorkerService($workerService);
 
         foreach ($this->decoratorBuilderFactories as $decoratorBuilderFactory) {
             $worker = $decoratorBuilderFactory
                 ->create()
                 ->setWorker($worker)
-                ->setApiV1RDBMSConnectionService($connectionService)
-                ->setApiV1WorkerService($workerService)
                 ->build();
         }
 

@@ -6,6 +6,7 @@ namespace Neighborhoods\KojoWorkerDecoratorComponent\Worker;
 
 use DateTime;
 use LogicException;
+use Neighborhoods\Kojo\Api\V1;
 use Neighborhoods\KojoWorkerDecoratorComponent\Connection;
 use Neighborhoods\KojoWorkerDecoratorComponent\WorkerInterface;
 use Neighborhoods\ThrowableDiagnosticComponent\ThrowableDiagnosticV1\ThrowableDiagnostic;
@@ -15,6 +16,7 @@ use Throwable;
 final class ReschedulingDecorator implements ReschedulingDecoratorInterface
 {
     use DecoratorTrait;
+    use V1\Worker\Service\AwareTrait;
     use Connection\PdoAwareTrait;
     use ThrowableDiagnostic\Builder\Factory\AwareTrait;
 
