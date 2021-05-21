@@ -52,6 +52,10 @@ final class Container implements ContainerInterface
             ->setDebug(false)
             ->build();
 
+        if ($cacheHandler->hasInCache()) {
+            return $cacheHandler->getFromCache();
+        }
+
         $containerBuilder = (new TinyContainerBuilder())
             ->setContainerBuilder(new ContainerBuilder())
             ->setRootPath($rootDirectory)
