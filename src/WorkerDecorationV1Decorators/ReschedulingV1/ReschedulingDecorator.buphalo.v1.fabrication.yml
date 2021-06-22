@@ -1,0 +1,37 @@
+actors:
+  <PrimaryActorName>.php:
+    template: KojoWorkerDecoratorComponent/WorkerDecorationV1/DecoratorV1/PrimaryActorName.php
+  <PrimaryActorName>.service.yml:
+    template: KojoWorkerDecoratorComponent/WorkerDecorationV1/DecoratorV1/PrimaryActorName.service.yml
+  <PrimaryActorName>Interface.php:
+    template: KojoWorkerDecoratorComponent/WorkerDecorationV1/DecoratorV1/PrimaryActorNameInterface.php
+  <PrimaryActorName>/AwareTrait.php:
+    template: PrimaryActorName/AwareTrait.php
+  <PrimaryActorName>/Factory.php:
+    template: PrimaryActorName/Factory.php
+  <PrimaryActorName>/Factory.service.yml:
+    template: PrimaryActorName/Factory.service.yml
+  <PrimaryActorName>/FactoryInterface.php:
+    template: PrimaryActorName/FactoryInterface.php
+  <PrimaryActorName>/Factory/AwareTrait.php:
+    template: PrimaryActorName/Factory/AwareTrait.php
+  <PrimaryActorName>/Builder.php:
+    template: KojoWorkerDecoratorComponent/WorkerDecorationV1/DecoratorV1/PrimaryActorName/Builder.php
+  <PrimaryActorName>/Builder.service.yml:
+    template: PrimaryActorName/Builder.service.yml
+  <PrimaryActorName>/BuilderInterface.php:
+    template: KojoWorkerDecoratorComponent/WorkerDecorationV1/DecoratorV1/PrimaryActorName/BuilderInterface.php
+  <PrimaryActorName>/Builder/AwareTrait.php:
+    template: PrimaryActorName/Builder/AwareTrait.php
+  <PrimaryActorName>/Builder/Factory.php:
+    template: KojoWorkerDecoratorComponent/WorkerDecorationV1/DecoratorV1/PrimaryActorName/Builder/Factory.php
+  <PrimaryActorName>/Builder/Factory.service.yml:
+    template: KojoWorkerDecoratorComponent/WorkerDecorationV1/DecoratorV1/PrimaryActorName/Builder/Factory.service.yml
+  <PrimaryActorName>/Builder/FactoryInterface.php:
+    template: KojoWorkerDecoratorComponent/WorkerDecorationV1/DecoratorV1/PrimaryActorName/Builder/FactoryInterface.php
+  <PrimaryActorName>/Builder/Factory/AwareTrait.php:
+    template: PrimaryActorName/Builder/Factory/AwareTrait.php
+  <PrimaryActorName>/ThrowableDiagnostic/Builder.service.yml:
+    template: ThrowableDiagnosticComponent/ThrowableDiagnosticV1/DiagnoserV1/PrimaryActorName/ThrowableDiagnostic/Builder.service.yml
+  <PrimaryActorName>/ThrowableDiagnostic/Builder/Factory.service.yml:
+    template: ThrowableDiagnosticComponent/ThrowableDiagnosticV1/DiagnoserV1/PrimaryActorName/ThrowableDiagnostic/Builder/Factory.service.yml

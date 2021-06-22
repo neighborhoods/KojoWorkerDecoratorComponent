@@ -1,0 +1,12 @@
+services:
+  Neighborhoods\BuphaloTemplateTree\PrimaryActorName\BuilderInterface:
+    class: Neighborhoods\BuphaloTemplateTree\PrimaryActorName\Builder
+    public: false
+    shared: false
+    calls:
+      - [setWorkerDecorationV1WorkerFactory, ['@Neighborhoods\BuphaloTemplateTree\PrimaryActorName\FactoryInterface']]
+      # Add predefined decorator(s) as shown below
+      - [addDecoratorBuilderFactory, ['@Neighborhoods\KojoWorkerDecoratorComponent\WorkerDecorationV1Decorators\RetryThresholdV1\RetryThresholdDecorator\Builder\FactoryInterface']]
+      - [addDecoratorBuilderFactory, ['@Neighborhoods\KojoWorkerDecoratorComponent\WorkerDecorationV1Decorators\CrashedThresholdV1\CrashedThresholdDecorator\Builder\FactoryInterface']]
+      - [addDecoratorBuilderFactory, ['@Neighborhoods\KojoWorkerDecoratorComponent\WorkerDecorationV1Decorators\UserlandPdoV1\UserlandPdoDecorator\Builder\FactoryInterface']]
+      - [addDecoratorBuilderFactory, ['@Neighborhoods\KojoWorkerDecoratorComponent\WorkerDecorationV1Decorators\ExceptionHandlingV1\ExceptionHandlingDecorator\Builder\FactoryInterface']]

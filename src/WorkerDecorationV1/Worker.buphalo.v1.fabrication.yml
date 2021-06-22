@@ -1,0 +1,15 @@
+actors:
+  <PrimaryActorName>Interface.php:
+    template: PrimaryActorNameInterface.php
+  <PrimaryActorName>/AwareTrait.php:
+    template: PrimaryActorName/AwareTrait.php
+  <PrimaryActorName>/FactoryInterface.php:
+    template: PrimaryActorName/FactoryInterface.php
+  <PrimaryActorName>/Factory/AwareTrait.php:
+    template: PrimaryActorName/Factory/AwareTrait.php
+  <PrimaryActorName>/Builder.php:
+    template: PrimaryActorName/Builder.php
+  <PrimaryActorName>/BuilderInterface.php:
+    template: PrimaryActorName/BuilderInterface.php
+  <PrimaryActorName>/Builder/FactoryInterface.php:
+    template: PrimaryActorName/Builder/FactoryInterface.php

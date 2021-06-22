@@ -1,48 +1,47 @@
-# Upgrading from v2 to v3
+# Upgrading from 3.* to 4.*
 
-The upgrade guide from v1 to v2 is available [here](https://github.com/neighborhoods/KojoWorkerDecoratorComponent/blob/2.0.0/docs/UpgradeGuide.md).
+The upgrade guide from 2.* to 3.* can be found [here](https://github.com/neighborhoods/KojoWorkerDecoratorComponent/blob/3.0.0/docs/UpgradeGuide.md).
 
-Version 2 of KWDC is compatible with [Throwable Diagnostic Component](https://github.com/neighborhoods/ThrowableDiagnosticComponent) version 3, while KWDC version 3 upgraded to Throwable Diagnostic Component version 4. Except that, no changes have been made.
+In version 4 all components have been versioned. The structure is refactored causing changes in namespaces, template paths and fabricated method names.
 
-To upgrade using composer run
+Common (not decorator specific) code has been moved from `src` to `src/WorkerDecorationV1`.
+
+Decorators have been moved from `src/Worker` into their own versioned directory. For example `src/Worker/CrashedThresholdDecorator.php` is now in `src/WorkerDecoratorionV1Decorators/CrashedThresholdV1/CrashedThresholdDecorator.php` along with accompanying files.
+
+Buphalo templates have been reorganized. `template-tree/V1` is renamed to `template-tree/BuphaloV1`. `Decorator` templates have been moved into `WorkerDecorationV1/DecoratorV1` and `Worker` templates into `WorkerDecorationV1/WorkerV1`.
+
+Require version 4 using composer.
 ```bash
-composer require neighborhoods/kojo-worker-decorator-component:^3
+composer require neighborhoods/kojo-worker-decorator-component:^4
 ```
-Update both packages simultaneously if Throwable Diagnostic Component is listed as a direct dependency.
+Some products run the buphalo script as part of composer's post-install or post-update script. Composer won't be able to complete the update since the buphalo files changed. Temporary exclude the buphalo script from composer scripts.
+
+To quickly switch to the new file structure run the following regex inside your source and possibly test folders.
 ```bash
-composer require neighborhoods/kojo-worker-decorator-component:^3 neighborhoods/throwable-diagnostic-component:^4
-```
-If Throwable Diagnostic Component isn't used in your product code, the only needed change is an update of container builder paths.  
-Follow the Throwable Diagnostic Component [upgrade guide](https://github.com/neighborhoods/ThrowableDiagnosticComponent/tree/4.0.0/docs/UpgradeGuide.md) if it is used in your product code.
+cd src
 
-## Update container builder paths
-Throwable Diagnostic Component version 3 had all the code in the source folder, but in Throwable Diagnostic Component version 4 fabricated files have been moved into the fabrication folder. Therefore, when including the source folder, also include the fabrication folder.
+# fix namespaces
+grep -RiIl 'KojoWorkerDecoratorComponent\\Worker' | xargs sed -i 's/KojoWorkerDecoratorComponent\\Worker\\\([a-zA-Z0-9]\+\)Decorator/KojoWorkerDecoratorComponent\\WorkerDecorationV1Decorators\\\1V1\\\1Decorator/g'
+grep -RiIl 'KojoWorkerDecoratorComponent\\Worker' | xargs sed -i 's/KojoWorkerDecoratorComponent\\\(Worker[^D]\)/KojoWorkerDecoratorComponent\\WorkerDecorationV1\\\1/g'
+grep -RiIl 'KojoWorkerDecoratorComponent\\Connection' | xargs sed -i 's/KojoWorkerDecoratorComponent\\Connection/KojoWorkerDecoratorComponent\\WorkerDecorationV1\\Connection/g'
 
-KWDC Version 2 with throwable Diagnostic Component version 3
-```php
-// Add KojoWorkerDecoratorComponent and ThrowableDiagnosticComponent service definitions
-$containerBuilder
-    ->addSourcePath('vendor/neighborhoods/kojo-worker-decorator-component/fab')
-    ->addSourcePath('vendor/neighborhoods/kojo-worker-decorator-component/src')
-    ->addSourcePath('vendor/neighborhoods/throwable-diagnostic-component/src');
+# fix getters and setters from fabricated aware traits
+grep -RiIl 'etWorker' | xargs sed -i 's/etWorker\([a-zA-Z0-9]\+\)Decorator/etWorkerDecorationV1Decorators\1V1\1Decorator/g'
+grep -RiIl 'etWorker' | xargs sed -i 's/et\(Worker[^D]\)/etWorkerDecorationV1\1/g'
+
+#fix buphalo templates
+grep -RiIl 'template: KojoWorkerDecoratorComponent\/Decorator\/PrimaryActorName' | grep \.buphalo\.v1\.fabrication\.yml$ | xargs sed -i 's/template: KojoWorkerDecoratorComponent\/Decorator\/PrimaryActorName/template: KojoWorkerDecoratorComponent\/WorkerDecorationV1\/DecoratorV1\/PrimaryActorName/g'
+grep -RiIl 'template: KojoWorkerDecoratorComponent\/Worker\/PrimaryActorName' | grep \.buphalo\.v1\.fabrication\.yml$ | xargs sed -i 's/template: KojoWorkerDecoratorComponent\/Worker\/PrimaryActorName/template: KojoWorkerDecoratorComponent\/WorkerDecorationV1\/WorkerV1\/PrimaryActorName/g'
+
+cd ..
+# do the same in the test folder
 ```
-KWDC Version 3 with Throwable Diagnostic Component version 4
-```php
-// Add KojoWorkerDecoratorComponent and ThrowableDiagnosticComponent service definitions
-$containerBuilder
-    ->addSourcePath('vendor/neighborhoods/kojo-worker-decorator-component/fab')
-    ->addSourcePath('vendor/neighborhoods/kojo-worker-decorator-component/src')
-    ->addSourcePath('vendor/neighborhoods/throwable-diagnostic-component/fab')
-    ->addSourcePath('vendor/neighborhoods/throwable-diagnostic-component/src');
+Review the changes after running the commands. Having a clean git repository will make it easier.
+
+Buphalo fabricated files, but before that update the path to the template tree.
+```bash
+sed -i 's/\(vendor\/neighborhoods\/kojo-worker-decorator-component\/template-tree\/\)V1/\1BuphaloV1/g' bin/buphalo
 ```
-Throwable Diagnostic Component version 4 is designed for selective inclusion of DI services. The only paths needed by KWDC are listed in the [PostgresV1 README](https://github.com/neighborhoods/ThrowableDiagnosticComponent/tree/4.0.0/src/ThrowableDiagnosticV1Decorators/PostgresV1/README.md#paths). If Throwable Diagnostic Component paths are included only because of KWDC, they may be replaced by the following paths.
-```php
-// Add KojoWorkerDecoratorComponent and ThrowableDiagnosticComponent service definitions
-$containerBuilder
-    ->addSourcePath('vendor/neighborhoods/kojo-worker-decorator-component/fab')
-    ->addSourcePath('vendor/neighborhoods/kojo-worker-decorator-component/src')
-    ->addSourcePath('vendor/neighborhoods/throwable-diagnostic-component/fab/ThrowableDiagnosticV1')
-    ->addSourcePath('vendor/neighborhoods/throwable-diagnostic-component/src/ThrowableDiagnosticV1')
-    ->addSourcePath('vendor/neighborhoods/throwable-diagnostic-component/fab/ThrowableDiagnosticV1Decorators/PostgresV1')
-    ->addSourcePath('vendor/neighborhoods/throwable-diagnostic-component/src/ThrowableDiagnosticV1Decorators/PostgresV1');
-```
+If you had the buphalo script as part of the composer scripts, enable them. Run `composer dump-autoload` just in case. Clean the cache (built containers).
+
+The migration should be complete. Run tests to see if there are any missed places or anything changed which wasn't supped to.

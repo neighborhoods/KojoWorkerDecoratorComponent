@@ -1,7 +1,0 @@
-services:
-  Neighborhoods\KojoWorkerDecoratorComponent\Worker\RetryThresholdDecorator\BuilderInterface:
-    class: Neighborhoods\KojoWorkerDecoratorComponent\Worker\RetryThresholdDecorator\Builder
-    public: false
-    shared: false
-    calls:
-      - [setWorkerRetryThresholdDecoratorFactory, ['@Neighborhoods\KojoWorkerDecoratorComponent\Worker\RetryThresholdDecorator\FactoryInterface']]
