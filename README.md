@@ -12,12 +12,12 @@ $ composer require neighborhoods/kojo-worker-decorator-component
 
 ### Versioning
 
-Don't confuse releases on [packagist](https://packagist.org/packages/neighborhoods/kojo-worker-decorator-component), e.g. 3.0.0, with versions of components contained within this package, e.g. ExceptionHandlingV1. One release may contain multiple versions of the same component.  
+Don't confuse releases on [packagist](https://packagist.org/packages/neighborhoods/kojo-worker-decorator-component), e.g. 4.0.0, with versions of components contained within this package, e.g. ExceptionHandlingV1. One release may contain multiple versions of the same component.  
 Parts of your code may use older versions of components, while others use the latest.
 
 ### Upgrade
 
-For upgrading from release 2 to release 3 follow the [Upgrade Guide](docs/UpgradeGuide.md).
+For upgrading from release 3 to release 4 follow the [Upgrade Guide](docs/UpgradeGuide.md).
 
 ## Usage
 
