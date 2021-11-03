@@ -21,7 +21,7 @@ final class RetryThresholdDecorator implements RetryThresholdDecoratorInterface
     public function work(): WorkerInterface
     {
         $threshold = $this->getThreshold();
-        if ($this->getApiV1WorkerService()->getTimesCrashed() >= $threshold) {
+        if ($this->getApiV1WorkerService()->getTimesRetried() >= $threshold) {
             $this->getApiV1WorkerService()->requestHold()->applyRequest();
             $this->getApiV1WorkerService()->getLogger()
                 ->critical('Worker exceeded retry threshold', ['threshold' => $threshold]);
