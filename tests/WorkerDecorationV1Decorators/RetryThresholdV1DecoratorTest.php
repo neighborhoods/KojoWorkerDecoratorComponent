@@ -34,7 +34,7 @@ class RetryThresholdV1DecoratorTest extends TestCase
         $workerService = $this->createMock(V1\Worker\ServiceInterface::class);
         $workerService->expects(self::once())->method('requestHold')->willReturnSelf();
         $workerService->expects(self::once())->method('applyRequest')->willReturnSelf();
-        $workerService->method('getTimesCrashed')->willReturn(10);
+        $workerService->method('getTimesRetried')->willReturn(10);
 
         $worker = $this->createMock(WorkerInterface::class);
         $worker->expects(self::never())->method('work');
